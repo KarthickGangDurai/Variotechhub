@@ -572,6 +572,89 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 }
 
 /* ============================================
+   MOBILE SETTINGS DRAWER & 3D FIX
+   ============================================ */
+
+.mobile-settings {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border-top: 2px solid var(--primary);
+  border-radius: 20px 20px 0 0;
+  z-index: 2500;
+  padding: 1.2rem 1.2rem calc(1.2rem + env(safe-area-inset-bottom));
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-settings.show {
+  display: block;
+  transform: translateY(0);
+}
+.mobile-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--card-border);
+}
+.mobile-setting-item {
+  margin-bottom: 1.2rem;
+}
+.mobile-setting-item label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.mobile-settings-trigger {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  z-index: 1500;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.mobile-settings-trigger:active {
+  transform: scale(0.9);
+}
+
+@media (max-width: 768px) {
+  .mobile-settings-trigger {
+    display: flex;
+  }
+  /* Hide desktop nav-right on mobile (moved to drawer) */
+  .main-nav .nav-right {
+    display: none !important;
+  }
+  /* Fix squished 3D view */
+  #three-container {
+    height: auto !important;
+    aspect-ratio: 4/3;
+    min-height: 260px;
+    touch-action: none;
+  }
+}
+
+/* ============================================
    MOBILE & PWA ENHANCEMENTS
    Paste this at the very end of <style>
    ============================================ */
@@ -3509,6 +3592,9 @@ CAN.<span class="function">send</span>(<span class="number">0x605</span>, [<span
 <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width: 0%"></div></div>
 
 <script>
+function toggleMobileSettings() {
+  document.getElementById('mobileSettings').classList.toggle('show');
+}
 /* ===== Inventory Toggle & Row Detail ===== */
 function toggleInventory() {
   const wrap = document.getElementById('inventoryTableWrap');
@@ -3896,6 +3982,22 @@ function goToModule(index) {
     if (index === 2) { initPositionChart(); if (!threeInitialized3D) initThreeJS(); }
     if (index === 3) initSafetyChart();
   }, 100);
+  
+  // Fix 3D canvas resize when module becomes visible
+  setTimeout(function() {
+    if (index === 2 && threeInitialized3D && renderer3D && camera3D) {
+      const container = document.getElementById('three-container');
+      if (container) {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w > 0 && h > 0) {
+          renderer3D.setSize(w, h);
+          camera3D.aspect = w / h;
+          camera3D.updateProjectionMatrix();
+        }
+      }
+    }
+  }, 400);
 }
 
 // ============================================================
@@ -5565,5 +5667,42 @@ if (document.readyState === 'loading') {
     document.body.appendChild(btn);
   });
 </script>
+<!-- Mobile Settings Drawer -->
+<div id="mobileSettings" class="mobile-settings">
+  <div class="mobile-settings-header">
+    <span style="color:var(--cyan);font-weight:700;font-size:1.1rem;">Settings & Tools</span>
+    <button onclick="toggleMobileSettings()" style="background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="mobile-settings-body">
+    <div class="mobile-setting-item">
+      <label>Theme</label>
+      <div class="theme-switcher" style="display:flex;gap:0.5rem;">
+        <button class="theme-btn dark active" onclick="setTheme('dark')" title="Dark"></button>
+        <button class="theme-btn light" onclick="setTheme('light')" title="Light"></button>
+        <button class="theme-btn industrial" onclick="setTheme('industrial')" title="Industrial"></button>
+        <button class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight"></button>
+      </div>
+    </div>
+    <div class="mobile-setting-item">
+      <label>Text Size</label>
+      <input type="range" min="80" max="140" value="100" oninput="setTextSize(this.value)" style="width:100%;accent-color:var(--primary);">
+    </div>
+    <div class="mobile-setting-item">
+      <label>Brightness</label>
+      <input type="range" min="50" max="150" value="100" oninput="setBrightness(this.value)" style="width:100%;accent-color:var(--primary);">
+    </div>
+    <div class="mobile-setting-item">
+      <label>Jump to Module</label>
+      <button class="module-dialog-btn" onclick="openModuleDialog();toggleMobileSettings();" style="width:100%;">
+        <i class="fa-solid fa-layer-group"></i> Select Module
+      </button>
+    </div>
+  </div>
+</div>
+<button class="mobile-settings-trigger" onclick="toggleMobileSettings()" title="Settings">
+  <i class="fa-solid fa-gear"></i>
+</button>
 </body>
 </html>
