@@ -794,6 +794,132 @@ a, button, .system-node, .scenario-card, .quiz-option,
 /* Smooth scrolling for iOS momentum */
 body { -webkit-overflow-scrolling: touch; }
 
+@media (max-width: 768px) {
+  /* Give the 3D box proper height */
+  #three-container {
+    height: 380px !important;
+    min-height: 380px;
+    aspect-ratio: auto !important;
+    touch-action: none;
+  }
+
+  /* Hide the legend and call panel that block the view */
+  #three-container > div[style*="bottom:1rem;left:1rem"] {
+    display: none !important;
+  }
+  #three-container #three-call-panel {
+    display: none !important;
+  }
+
+  /* Shrink the status overlay to a small corner badge */
+  #three-container .three-overlay {
+    top: 0.4rem;
+    left: 0.4rem;
+    max-width: 150px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.65rem;
+    border-radius: 6px;
+  }
+  #three-container .three-overlay div[style*="font-weight:700"] {
+    font-size: 0.75rem !important;
+  }
+
+  /* Controls stay small at bottom */
+  #three-container .three-controls {
+    bottom: 0.4rem;
+    right: 0.4rem;
+    gap: 0.25rem;
+  }
+  .three-btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+
+  /* Fullscreen button still works */
+  #three-container.fullscreen {
+    height: 100vh !important;
+  }
+  #three-container.fullscreen > div[style*="bottom:1rem;left:1rem"] {
+    display: block !important;
+  }
+  #three-container.fullscreen #three-call-panel {
+    display: flex !important;
+  }
+}
+
+/* Prevent sideways scroll on all modules */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Force wide diagrams to stay inside the screen */
+.svg-diagram svg,
+.system-diagram svg,
+.can-builder svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Code blocks and tables scroll internally instead of pushing the page */
+.code-block,
+.json-viewer,
+.can-builder,
+.comparison-table,
+.chart-container {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Step visuals stay inside the box */
+.step-visual {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Module inner container never grows past screen */
+.module-inner,
+.module-container,
+.ws-content {
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* If user zoomed text, prevent breaking */
+.card, .ws-glass, .scenario-card {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  /* Workstation cards: stack everything in single column */
+  .ws-station-zone .grid-cols-3,
+  .ws-station-zone .grid-cols-2,
+  .ws-station-zone .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tags inside workstation cards wrap properly */
+  .ws-station-zone span,
+  .ws-station-zone .text-xs {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+  }
+
+  /* The big layout grid becomes vertical */
+  .ws-content .grid-cols-12 > div {
+    grid-column: span 12 / span 12 !important;
+  }
+
+  /* Stats row stays readable */
+  .grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 </style>
 
 <base target="_blank">
@@ -5351,7 +5477,16 @@ const WS_EQUIPMENT = {
 };
 
 let wsCurrentTab = 'all';
+// Load saved checklist state, or start fresh
 let wsChecklistState = {};
+try {
+  const saved = localStorage.getItem('vario_ws_checklist');
+  if (saved) wsChecklistState = JSON.parse(saved);
+} catch (e) { console.log('No saved checklist'); }
+
+function saveWSChecklist() {
+  localStorage.setItem('vario_ws_checklist', JSON.stringify(wsChecklistState));
+}
 let wsDailyChecklistState = {};
 
 function initWS() {
@@ -5478,6 +5613,7 @@ function toggleWSCheck(day, idx, element) {
   icon.className = wsChecklistState[key] ? 'fa-solid fa-square-check ws-check-icon text-lg text-green-400' : 'fa-regular fa-square ws-check-icon text-lg text-slate-500';
   updateDayCount(day);
   saveWSChecklistState();
+  saveWSChecklist();
 }
 
 function updateDayCount(day) {
@@ -5539,6 +5675,7 @@ function resetChecklist() {
     localStorage.removeItem('wsDailyChecklist');
     renderWSChecklist();
     renderWSDailyChecklist();
+    updateWSChecklistProgress();
   }
 }
 
