@@ -146,7 +146,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .start-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; border: none; border-radius: 100px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; }
 .start-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--shadow-color); }
 
-.section-container { display: none; min-height: 100vh; padding: 4.5rem 0 3rem; position: relative; z-index: 1; }
+.section-container { display: none; padding: 4.5rem 0 3rem; position: relative; z-index: 1; }
 .section-container.active { display: block; }
 
 .module-container { display: none; min-height: 100vh; padding: 5rem 2rem 3rem; position: relative; z-index: 1; }
@@ -846,14 +846,22 @@ body { -webkit-overflow-scrolling: touch; }
   #three-container .three-controls {
     bottom: 0.4rem;
     right: 0.4rem;
+    left: auto;                /* ADD: cancel desktop left:50% */
+    transform: none;         /* ADD: cancel desktop translateX */
     gap: 0.25rem;
+    flex-wrap: wrap;           /* ADD: let buttons wrap to next row */
+    justify-content: flex-end; /* ADD: keep them right-aligned */
+    max-width: calc(100% - 0.8rem); /* ADD: never exceed container */
   }
   .three-btn {
     padding: 0.35rem 0.6rem;
     font-size: 0.7rem;
     border-radius: 4px;
   }
-
+  /* ADD THIS NEW RULE — hides only the Wireframe button on mobile */
+  .three-btn[onclick*="toggleWireframe"] {
+    display: none;
+  }
   /* Fullscreen button still works */
   #three-container.fullscreen {
     height: 100vh !important;
@@ -899,7 +907,9 @@ html, body {
 
 /* Module inner container never grows past screen */
 .module-inner,
-.module-container,
+.module-container {
+  padding: 1.5rem 1rem 7rem !important;
+}
 .ws-content {
   max-width: 100vw;
   box-sizing: border-box;
@@ -3317,7 +3327,6 @@ Line3=For configuration with CANopenNode, Vector CANalyzer, or Peak PCAN</pre></
       </div>
     </div>
   </div>
-</div>
 
   <!-- Module 6: Practical Exercises & Case Studies -->
   <div class="module-container" id="module-6">
@@ -3336,7 +3345,6 @@ Line3=For configuration with CANopenNode, Vector CANalyzer, or Peak PCAN</pre></
         <div class="step-visual"><div class="step-number">3</div><div class="step-content"><h4>Measure CAN_H to CAN_L</h4><p>Place probes on CAN_H and CAN_L at any accessible point. <strong>Expected: ~60 Ω</strong> (two 120 Ω resistors in parallel).</p><div class="step-simple-explanation"><p><span class="label">Interpretation:</span> 60 Ω = perfect. 120 Ω = one missing terminator. ∞ Ω = both missing or cable break. < 50 Ω = possible short or too many terminators.</p></div></div></div>
         <div class="step-visual"><div class="step-number">4</div><div class="step-content"><h4>Document & Resolve</h4><p>Record the reading in your test log. Install or remove terminators as needed until you read 60 Ω.</p></div></div>
       </div>
-
       <div class="card">
         <h3>Exercise 2: Configure a Replacement Device via LSS</h3>
         <p>When a CANopen node fails in the field, the replacement must assume the same Node ID. LSS lets you do this over the bus without opening enclosures.</p>
