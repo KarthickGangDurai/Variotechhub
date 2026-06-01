@@ -146,7 +146,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .start-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; border: none; border-radius: 100px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; }
 .start-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--shadow-color); }
 
-.section-container { display: none; padding: 4.5rem 0 3rem; position: relative; z-index: 1; }
+.section-container { display: none; min-height: 100vh; padding: 4.5rem 0 3rem; position: relative; z-index: 1; }
 .section-container.active { display: block; }
 
 .module-container { display: none; min-height: 100vh; padding: 5rem 2rem 3rem; position: relative; z-index: 1; }
@@ -156,7 +156,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .module-number { display: inline-block; padding: 0.3rem 1rem; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 100px; font-size: 0.8rem; color: var(--cyan); margin-bottom: 1rem; }
 .module-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
 .module-header p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; }
-.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; transition: all 0.3s; overflow-x: auto; min-width: 0; }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; transition: all 0.3s; }
 .card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
 .card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--cyan); }
 .card p, .card li { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
@@ -173,7 +173,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .three-btn { padding: 0.5rem 1.2rem; background: rgba(10,14,39,0.85); backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
 .three-btn:hover { border-color: var(--primary); background: rgba(0,102,255,0.2); }
 
-.system-diagram { background: var(--darker); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; position: relative; overflow-x: auto; }
+.system-diagram { background: var(--darker); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; position: relative; }
 .system-diagram h4 { text-align: center; color: var(--cyan); margin-bottom: 1.5rem; }
 .elevator-system { position: relative; width: 100%; max-width: 900px; margin: 0 auto; }
 .shaft-container { display: flex; justify-content: space-around; align-items: flex-start; gap: 2rem; }
@@ -192,7 +192,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
 .node-detail-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; padding: 2rem; }
 .node-detail-popup.show { display: flex; }
-.popup-content { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; overflow-x: auto; padding: 2.5rem; position: relative; }
+.popup-content { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2.5rem; position: relative; }
 .popup-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; border-radius: 50%; background: var(--card-border); border: none; color: var(--text); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .popup-close:hover { background: var(--danger); }
 .popup-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
@@ -261,30 +261,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .flow-message .msg-type { font-weight: 600; }
 .flow-message .msg-detail { color: var(--text-muted); font-size: 0.75rem; }
 
-.code-block { background: #0D1117; border: 1px solid #21262D; border-radius: 12px; overflow: auto; margin: 1rem 0; }
-.code-block.fullscreen {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 9999;
-  margin: 0;
-  border-radius: 0;
-  display: flex;
-  flex-direction: column;
-}
-.code-block.fullscreen .code-header {
-  border-radius: 0;
-  flex-shrink: 0;
-}
-.code-block.fullscreen .code-body {
-  flex: 1;
-  font-size: 1rem;
-}
+.code-block { background: #0D1117; border: 1px solid #21262D; border-radius: 12px; overflow: hidden; margin: 1rem 0; }
 .code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: #161B22; border-bottom: 1px solid #21262D; }
 .code-header span { font-size: 0.8rem; color: var(--text-muted); }
 .code-copy { padding: 0.3rem 0.8rem; background: rgba(0,102,255,0.15); border: none; color: var(--cyan); border-radius: 6px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
 .code-copy:hover { background: var(--primary); color: white; }
 .code-body { padding: 1rem; overflow-x: auto; }
-.code-body pre { font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; color: #C9D1D9; min-width: max-content; white-space: pre; }
+.code-body pre { font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; color: #C9D1D9; }
 .code-body .comment { color: #8B949E; }
 .code-body .keyword { color: #FF7B72; }
 .code-body .string { color: #A5D6FF; }
@@ -342,7 +325,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
 .can-builder { background: var(--darker); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
 .can-builder h4 { color: var(--cyan); margin-bottom: 1.5rem; }
-.can-frame-visual { display: flex; gap: 3px; flex-wrap: nowrap; min-width: max-content; justify-content: center; margin: 1.5rem 0; }
+.can-frame-visual { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; margin: 1.5rem 0; }
 .can-bit { width: 30px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s; position: relative; }
 .can-bit:hover { transform: scale(1.2); z-index: 10; }
 .can-bit.sof { background: #4A90D9; }
@@ -414,7 +397,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .svg-diagram { background: var(--darker); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
 .svg-diagram svg { width: 100%; max-width: 800px; margin: 0 auto; display: block; }
 
-.json-viewer { background: var(--darker); border: 1px solid var(--card-border); border-radius: 12px; overflow: auto; margin: 1.5rem 0; }
+.json-viewer { background: var(--darker); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; margin: 1.5rem 0; }
 .json-header { padding: 0.75rem 1rem; background: var(--card); border-bottom: 1px solid var(--card-border); display: flex; align-items: center; gap: 0.5rem; }
 .json-header .dot { width: 12px; height: 12px; border-radius: 50%; }
 .json-header .dot.red { background: #FF5F57; }
@@ -714,7 +697,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
   .section-container,
   .ws-section,
   #ws-section {
-    padding-bottom: 7rem !important;
+    padding-bottom: 5.5rem !important;
   }
   .hero { min-height: 70vh; padding-bottom: 6rem; }
   .progress-bar { display: none; }
@@ -760,7 +743,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
   .popup-content {
     margin: 0;
     border-radius: 16px 16px 0 0;
-    overflow-x: auto;
     max-width: 100%;
     max-height: 85vh;
     padding: 1.5rem;
@@ -842,76 +824,22 @@ body { -webkit-overflow-scrolling: touch; }
     font-size: 0.75rem !important;
   }
 
-  /* FORCE controls visible and override inline styles with !important */
+  /* Controls stay small at bottom */
   #three-container .three-controls {
-    position: absolute !important;
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    display: flex !important;
-    gap: 0.4rem !important;
-    flex-wrap: wrap !important;
-    justify-content: flex-end !important;
-    max-width: calc(100% - 1rem) !important;
-    z-index: 100 !important;
+    bottom: 0.4rem;
+    right: 0.4rem;
+    gap: 0.25rem;
   }
-
-  /* Make ALL 3D buttons proper touch targets */
   .three-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 40px !important;
-    min-width: 44px !important;
-    padding: 0.5rem 0.7rem !important;
-    font-size: 0.8rem !important;
-    border-radius: 6px !important;
-    background: rgba(15, 23, 42, 0.95) !important;
-    border: 1px solid var(--card-border) !important;
-    color: var(--text) !important;
-    -webkit-tap-highlight-color: rgba(0,0,0,0.3) !important;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
   }
 
-  /* Explicitly show Fullscreen button with brand color so users can find it */
-  .three-btn[onclick*="toggleThreeFullscreen"] {
-    display: inline-flex !important;
-    background: var(--primary) !important;
-    color: white !important;
-    border-color: var(--primary) !important;
-    font-weight: 700 !important;
-    order: -1 !important; /* Move to start of row so it doesn't get pushed off */
-  }
-
-  /* Hide wireframe on mobile as before */
-  .three-btn[onclick*="toggleWireframe"] {
-    display: none !important;
-  }
-
-  /* Fullscreen mode uses dynamic viewport height for mobile browsers */
+  /* Fullscreen button still works */
   #three-container.fullscreen {
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 9999 !important;
-    border-radius: 0 !important;
+    height: 100vh !important;
   }
-
-  /* Ensure close button is big enough to tap */
-  #three-close-fs {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 10001;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
-    min-height: 44px;
-    min-width: 90px;
-  }
-
-  /* Restore legend/call panel when in fullscreen */
   #three-container.fullscreen > div[style*="bottom:1rem;left:1rem"] {
     display: block !important;
   }
@@ -948,26 +876,12 @@ html, body {
 /* Step visuals stay inside the box */
 .step-visual {
   max-width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 /* Module inner container never grows past screen */
-@media (max-width: 768px) {
-  /* Only the outer shell needs bottom padding to clear the fixed nav */
-  .module-container {
-    padding: 1.5rem 1rem 7rem !important;
-  }
-  
-  /* Inner wrapper must NOT add extra bottom padding */
-  .module-inner {
-    padding: 0 !important;
-  }
-  
-  /* Optional: tighten the last nav-buttons so they don't hang in mid-air */
-  .module-inner .nav-buttons:last-child {
-    margin-bottom: 0 !important;
-  }
-}
+.module-inner,
+.module-container,
 .ws-content {
   max-width: 100vw;
   box-sizing: border-box;
@@ -979,85 +893,6 @@ html, body {
   overflow-wrap: break-word;
 }
 
-.card p, .card li, .step-content p, .popup-section p, .highlight-box p, .scenario-body p {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-/* ==================== MOBILE 3D FULLSCREEN OVERRIDE ==================== */
-@media (max-width: 768px) {
-  #three-container .three-controls {
-    position: absolute !important;
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    display: flex !important;
-    gap: 0.4rem !important;
-    flex-wrap: wrap !important;
-    justify-content: flex-end !important;
-    max-width: calc(100% - 1rem) !important;
-    z-index: 100 !important;
-  }
-  .three-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 40px !important;
-    min-width: 44px !important;
-    padding: 0.5rem 0.7rem !important;
-    font-size: 0.8rem !important;
-    background: rgba(15, 23, 42, 0.95) !important;
-    border: 1px solid var(--card-border) !important;
-    color: var(--text) !important;
-  }
-  /* Make Fullscreen button impossible to miss */
-  .three-btn[onclick*="toggleThreeFullscreen"] {
-    display: inline-flex !important;
-    background: var(--primary) !important;
-    color: white !important;
-    border-color: var(--primary) !important;
-    font-weight: 700 !important;
-    order: -1 !important;
-  }
-  #three-container.fullscreen {
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 9999 !important;
-    border-radius: 0 !important;
-  }
-  #three-close-fs {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 10001;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
-    min-height: 44px;
-    min-width: 90px;
-    background: var(--danger);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-  }
-}
-/* ==================== MODULE BOTTOM SPACE FIX ==================== */
-@media (max-width: 768px) {
-  .module-container {
-    padding: 1.5rem 1rem 7rem !important;
-  }
-  .module-inner {
-    padding: 0 !important;
-  }
-  .module-inner .nav-buttons:last-child {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-}
 </style>
 
 <base target="_blank">
@@ -2308,13 +2143,7 @@ CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span
           </div>
           <div class="tab-content active" id="tab-init">
             <div class="code-block">
-              <div class="code-header">
-                <span>CAN Initialization</span>
-                <div style="display:flex;gap:0.5rem;">
-                  <button class="code-copy" onclick="copyCode(this)">Copy</button>
-                  <button class="code-copy" onclick="toggleCodeFullscreen(this.parentElement.parentElement.parentElement)" title="Fullscreen">⛶</button>
-                </div>
-              </div>
+              <div class="code-header"><span>CAN Initialization</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
               <div class="code-body"><pre><span class="comment">// Initialize CAN controller at 250 kbps</span>
 <span class="keyword">#include</span> <span class="string">&lt;CAN.h&gt;</span>
 
@@ -3459,6 +3288,7 @@ Line3=For configuration with CANopenNode, Vector CANalyzer, or Peak PCAN</pre></
       </div>
     </div>
   </div>
+</div>
 
   <!-- Module 6: Practical Exercises & Case Studies -->
   <div class="module-container" id="module-6">
@@ -3477,6 +3307,7 @@ Line3=For configuration with CANopenNode, Vector CANalyzer, or Peak PCAN</pre></
         <div class="step-visual"><div class="step-number">3</div><div class="step-content"><h4>Measure CAN_H to CAN_L</h4><p>Place probes on CAN_H and CAN_L at any accessible point. <strong>Expected: ~60 Ω</strong> (two 120 Ω resistors in parallel).</p><div class="step-simple-explanation"><p><span class="label">Interpretation:</span> 60 Ω = perfect. 120 Ω = one missing terminator. ∞ Ω = both missing or cable break. < 50 Ω = possible short or too many terminators.</p></div></div></div>
         <div class="step-visual"><div class="step-number">4</div><div class="step-content"><h4>Document & Resolve</h4><p>Record the reading in your test log. Install or remove terminators as needed until you read 60 Ω.</p></div></div>
       </div>
+
       <div class="card">
         <h3>Exercise 2: Configure a Replacement Device via LSS</h3>
         <p>When a CANopen node fails in the field, the replacement must assume the same Node ID. LSS lets you do this over the bus without opening enclosures.</p>
@@ -5170,371 +5001,925 @@ function calculateCAN() {
   const propDelay = (length * 0.005).toFixed(2);
 
   document.getElementById('maxLength').textContent = maxLen + 'm';
+  document.getElementById('bitTime').textContent = bitTime + ' µs';
   document.getElementById('propDelay').textContent = propDelay + ' µs';
-  const statusEl = document.getElementById('calcStatus');
-  if (statusEl) {
-    if (length <= maxLen) {
-      statusEl.innerHTML = '<span style="color: var(--secondary);">✓ Valid Configuration</span>';
-    } else {
-      statusEl.innerHTML = '<span style="color: var(--danger);">✗ Exceeds maximum length!</span>';
-    }
+
+  const status = document.getElementById('calcStatus');
+  if (length > maxLen) {
+    status.innerHTML = '<span style="color: var(--danger);">✗ Exceeds maximum length!</span>';
+  } else if (length > maxLen * 0.8) {
+    status.innerHTML = '<span style="color: var(--warning);">⚠ Near maximum limit</span>';
+  } else {
+    status.innerHTML = '<span style="color: var(--secondary);">✓ Valid Configuration</span>';
   }
 }
 
-/* ==================== MISSING UI FUNCTIONS ==================== */
-
-function switchTab(event, tabId) {
-  const container = event.target.closest('.tab-container') || event.target.closest('.card');
-  if (!container) return;
-  container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  event.target.classList.add('active');
-  const tab = document.getElementById(tabId);
-  if (tab) tab.classList.add('active');
-}
-
-function checkQuiz(el, correct, id) {
-  const container = el.closest('.quiz-container');
-  if (!container) return;
-  container.querySelectorAll('.quiz-option').forEach(opt => {
-    opt.style.pointerEvents = 'none';
-    if (opt === el) opt.classList.add(correct ? 'correct' : 'wrong');
-  });
-  if (!correct) {
-    container.querySelectorAll('.quiz-option').forEach(opt => {
-      const onclickStr = opt.getAttribute('onclick') || '';
-      if (onclickStr.includes('true') && opt !== el) opt.classList.add('correct');
-    });
-  }
-  const feedback = document.getElementById('quiz-feedback-' + id);
-  if (feedback) {
-    feedback.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong');
-    feedback.innerHTML = correct ? '<strong>Correct!</strong> Great job.' : '<strong>Incorrect.</strong> Review the material and try again.';
-  }
-  const actions = document.getElementById('quiz-actions-' + id);
-  if (actions) actions.style.display = 'flex';
-}
-
-function resetQuiz(id) {
-  const container = document.getElementById('quiz-' + id);
-  if (!container) return;
-  container.querySelectorAll('.quiz-option').forEach(opt => {
-    opt.classList.remove('correct', 'wrong');
-    opt.style.pointerEvents = 'auto';
-  });
-  const feedback = document.getElementById('quiz-feedback-' + id);
-  if (feedback) { feedback.className = 'quiz-feedback'; feedback.innerHTML = ''; }
-  const actions = document.getElementById('quiz-actions-' + id);
-  if (actions) actions.style.display = 'none';
-  const expl = document.getElementById('quiz-explanation-' + id);
-  if (expl) expl.style.display = 'none';
-}
-
-function showQuizExplanation(id) {
-  const expl = document.getElementById('quiz-explanation-' + id);
-  if (expl) expl.style.display = 'block';
-}
+// Node Details - Enhanced
+const nodeDetails = {
+  'car-controller': { icon: '💻', title: 'Car Controller', subtitle: 'Node ID: 0x01 | CANopen Master', whatIs: 'The main brain of the elevator system. It coordinates all other devices, makes decisions about movement, and ensures safety protocols are followed.', plainEnglish: 'Think of this as the elevator\'s brain. It decides when to move, where to go, and constantly checks that everything is safe.', ciA: 'CANopen Master node. Manages NMT states, monitors heartbeats, and processes all incoming data. Uses CiA 301 for general communication and CiA 306 for safety coordination.', canUse: 'Sends commands via RPDOs (like speed setpoints, door commands). Receives status via TPDOs (position, door status, safety confirmations). Broadcasts NMT commands to control network state.', safety: 'Primary safety controller. If any safety device reports a problem, this controller immediately initiates safe stop procedures. It must respond to safety messages within 50ms.', troubleshoot: 'If unresponsive: Check power (24V DC), verify CAN connections (termination, baud rate), check for EMC interference. Use SDO read of Object Dictionary 0x1000 to verify device identity.' },
+  'door-system': { icon: '🚪', title: 'Door System Controller', subtitle: 'Node ID: 0x02 | CiA 406 Compliant', whatIs: 'Controls elevator door opening, closing, and safety monitoring. Manages door motor, light curtain, safety edge, and interlock sensors.', plainEnglish: 'This controls the elevator doors - opening, closing, and making sure no one gets hurt.', ciA: 'CiA 406 device profile for generic I/O. Uses Object Dictionary entries 0x6000-0x6FFF for digital inputs (sensors) and 0x6200-0x6FFF for digital outputs (motor commands).', canUse: 'Receives open/close commands via RPDO from car controller. Sends status (closed, opening, obstacle detected) via TPDO. Safety-critical messages use CiA 306 protocol.', safety: 'Critical safety device. Must report obstruction within 50ms. If door fails to close within timeout, controller prevents elevator movement. Light curtain and safety edge are dual-channel (redundant).', troubleshoot: 'If doors don\'t respond: Check RPDO mapping (should map to 0x6200). Verify 24V power to door motor. Check light curtain alignment (LEDs should be solid green). Test safety edge with Ohm meter.' },
+  'vfd-drive': { icon: '⚡', title: 'Variable Frequency Drive', subtitle: 'Node ID: 0x04 | Motor Control', whatIs: 'Controls the elevator motor speed and direction by varying frequency and voltage. Converts DC bus power to 3-phase AC for the motor.', plainEnglish: 'This is the muscle of the elevator. It takes commands like "go 1.5 m/s up" and makes the motor do exactly that.', ciA: 'Motor drive profile (CiA 402 - Drives and Motion Control). Uses Object Dictionary 0x6040 (Control Word) and 0x6041 (Status Word).', canUse: 'Receives speed setpoint (0x60FF) and control word (0x6040) via RPDO. Sends actual speed (0x606C), current (0x6078), and status word (0x6041) via TPDO.', safety: 'Must stop motor immediately on emergency command (control word bit 0 = 0). Supports Safe Torque Off (STO) via hardware safety relay. Deceleration ramp must be configured per EN 81-20.', troubleshoot: 'If motor doesn\'t run: Check main power (3-phase 400V), verify DC bus voltage (~565V), check STO safety relay is released, verify RPDO mapping to 0x6040/0x60FF.' },
+  'safety-plc': { icon: '🛡️', title: 'Safety PLC', subtitle: 'Node ID: 0x06 | CiA 306 Compliant', whatIs: 'Dedicated safety controller independent of main controller. Monitors safety chain (doors, governor, limits, emergency stop) and can override main controller.', plainEnglish: 'This is the elevator\'s safety guard. Even if the main brain makes a mistake, this device ensures no one gets hurt.', ciA: 'Full CiA 306 implementation with dual-channel redundant CAN interfaces. Uses safety PDOs with CRC-32 and sequence counters. Certified to SIL 3 / PL e.', canUse: 'Sends safety status via dedicated safety PDOs every 10-50ms. Monitors heartbeat from all safety devices. Can trigger emergency stop via safety relay output.', safety: 'Highest safety level. Can override main controller. Dual-channel architecture - both channels must agree or system goes safe. Self-testing every cycle.', troubleshoot: 'Verify both safety channels agree (check dual CAN interfaces). Test safety outputs with load. Verify SIL certification is current. Never bypass safety PLC for testing.' },
+  'encoder': { icon: '📋', title: 'Encoder (Position Sensor)', subtitle: 'Node ID: 0x05 | CiA 407 Compliant', whatIs: 'Measures exact elevator position and speed using optical or magnetic sensing. Typically mounted on motor shaft or governor sheave.', plainEnglish: 'This is like a GPS for the elevator. It tells the controller exactly where the car is, down to the millimeter.', ciA: 'CiA 407 encoder profile. Position mapped to 0x6064 (Position Actual Value). Velocity mapped to 0x606C (Velocity Actual Value). Resolution configured in 0x608F.', canUse: 'Sends position and velocity via high-frequency TPDO (every 10ms). Used for floor leveling, speed verification, and UCM detection. Absolute encoders retain position after power loss.', safety: 'Critical for precise floor leveling (±3mm). UCM detection compares encoder position with expected door zone. If position changes while doors are open, triggers emergency stop.', troubleshoot: 'If position jumps: Check encoder coupling (set screws tight). Verify shield grounding. Check for electrical noise from VFD (use shielded cable). Compare with mechanical floor marks.' },
+  'limit-switches': { icon: '📍', title: 'Limit Switches', subtitle: 'Node ID: 0x08 | CiA 406 Compliant', whatIs: 'Physical switches at top and bottom of shaft that detect when elevator has reached travel limits. Independent backup to encoder-based positioning.', plainEnglish: 'These are physical "stop" signs. If the elevator goes too high or too low, these switches physically cut power.', ciA: 'CiA 406 digital input device. Switch status mapped to Object Dictionary 0x6000 subindex. Normally closed contacts for fail-safe operation.', canUse: 'Sends switch status via TPDO. Top limit (up terminal) and bottom limit (down terminal) both monitored. Pre-terminal slowdown switches provide advance warning.', safety: 'Last line of defense. If encoder fails, limit switches prevent elevator from crashing into shaft ends. Must be hardwired in safety chain (not just CAN bus).', troubleshoot: 'Test by slowly moving elevator near limits. Verify NC contacts open when activated. Check for mechanical wear (switch roller condition). Verify wiring integrity.' },
+  'call-buttons': { icon: '🔴', title: 'Call Button Panel', subtitle: 'Node ID: 0x03 | CiA 406 Compliant', whatIs: 'Floor call buttons inside the elevator car and at landings. Includes floor buttons, door open/close, and alarm.', plainEnglish: 'These are the buttons passengers press. They send requests to the controller.', ciA: 'CiA 406 digital input device. Button presses mapped to 0x6000. LED control mapped to 0x6200. Supports braille buttons and audible feedback.', canUse: 'Sends button press events via event-driven TPDO (not periodic - only when pressed). Receives LED control commands via RPDO (to light up active floor buttons).', safety: 'Not safety-critical. Alarm button typically hardwired to alarm bell/buzzer independent of CAN bus. Fire service switch overrides normal operation.', troubleshoot: 'If button doesn\'t work: Check wiring to node. Verify TPDO is event-driven (not periodic). Test LED RPDO mapping. Check for moisture ingress in button panel.' },
+  'display': { icon: '📺', title: 'Floor Display', subtitle: 'Node ID: 0x07 | CiA 406 Compliant', whatIs: 'Shows current floor, direction arrows, and special messages (overload, fire service, inspection). LCD, LED, or dot-matrix types.', plainEnglish: 'This is the screen that shows "Floor 5" and the up/down arrows. Some also show news or ads.', ciA: 'CiA 406 output device. Floor number mapped to RPDO byte 0. Direction mapped to byte 1. Special messages via bytes 2-3.', canUse: 'Receives floor number and direction via RPDO from car controller. Updates display in real-time. Some displays support multimedia content via separate interface.', safety: 'Not safety-critical, but must not display false information that could confuse passengers. Fire service display shows "FS" or similar override.', troubleshoot: 'If display wrong: Check RPDO data (verify floor mapping). Check for CAN bus errors causing corrupted data. Verify display node ID matches controller configuration.' },
+  'gateway': { icon: '🌐', title: 'CAN Gateway', subtitle: 'Node ID: 0x09 | Protocol Bridge', whatIs: 'Translates CANopen messages to other protocols (Modbus TCP, BACnet, MQTT) for building management systems and remote monitoring.', plainEnglish: 'This is a translator. It lets the elevator talk to the building\'s computer system or the internet.', ciA: 'CANopen gateway device. Bridges CANopen to Ethernet/IP networks. Supports SDO access to gateway configuration (0x2000-0x5FFF).', canUse: 'Bridges CANopen to Modbus TCP, BACnet, or MQTT. Allows remote monitoring of elevator status, fault logging, and predictive maintenance alerts.', safety: 'Gateway failure doesn\'t affect elevator safety. Must not introduce cybersecurity vulnerabilities. Use VLANs and firewalls to isolate elevator network.', troubleshoot: 'If building system loses data: Check gateway power and Ethernet connection. Verify protocol translation settings. Check firewall rules. Monitor gateway heartbeat.' },
+  'termination': { icon: '🔧', title: 'Termination Resistors', subtitle: '120 Ohm at each end of bus', whatIs: 'Resistors placed at both ends of the CAN bus to prevent signal reflections. Essential for reliable communication.', plainEnglish: 'These prevent electrical "echoes" that would garble messages. Like putting cushions at the end of a hallway to absorb sound.', ciA: 'Not a CANopen device - physical layer component. Must be 120Ω ± 10% at both ends. No termination in middle of bus.', canUse: 'N/A - passive component.', safety: 'Missing termination causes communication failures that can be mistaken for device faults. Always verify termination before troubleshooting device issues.', troubleshoot: 'Measure resistance between CAN_H and CAN_L with power OFF: Should read ~60Ω (two 120Ω in parallel). If 0Ω = short. If 120Ω = one terminator missing. If ∞Ω = both missing.' }
+};
 
 function showNodeDetail(nodeId) {
-  const details = {
-    'car-controller': { title: 'Car Controller', icon: '💻', desc: 'Master node (0x01) managing all elevator operations, scheduling, and safety supervision.' },
-    'door-system': { title: 'Door System', icon: '🚪', desc: 'Controls door motors, safety edges, and light curtains via CiA 406.' },
-    'vfd-drive': { title: 'VFD Drive', icon: '⚡', desc: 'Variable Frequency Drive controlling motor speed and torque.' },
-    'safety-plc': { title: 'Safety PLC', icon: '🛡️', desc: 'Dedicated safety controller handling emergency stops and CiA 306 messages.' },
-    'display': { title: 'Floor Display', icon: '📺', desc: 'CANopen display node showing floor number and direction arrows.' },
-    'encoder': { title: 'Encoder', icon: '📋', desc: 'CiA 407 position feedback device for precise floor leveling.' },
-    'limit-switches': { title: 'Limit Switches', icon: '📍', desc: 'Physical end-of-travel safety switches.' },
-    'call-buttons': { title: 'Call Buttons', icon: '🔴', desc: 'Hall and car call button panels using CiA 406 digital inputs.' },
-    'gateway': { title: 'Gateway', icon: '🌐', desc: 'Bridge between CAN bus and building management networks.' },
-    'termination': { title: 'Termination', icon: '🔧', desc: '120 Ω resistors at both physical ends of the CAN bus.' }
-  };
-  const d = details[nodeId];
-  if (!d) return;
-  const popup = document.getElementById('nodePopup');
-  const body = document.getElementById('popupBody');
-  if (!popup || !body) return;
-  body.innerHTML = `
-    <div class="popup-header"><div class="popup-icon">${d.icon}</div><div class="popup-title"><h3>${d.title}</h3><p>Node ID: ${nodeId}</p></div></div>
-    <div class="popup-section"><h4>Description</h4><p>${d.desc}</p></div>
-  `;
-  popup.classList.add('show');
+  const detail = nodeDetails[nodeId];
+  if (!detail) return;
+  let html = '<div class="popup-header"><div class="popup-icon">' + detail.icon + '</div><div class="popup-title"><h3>' + detail.title + '</h3><p>' + detail.subtitle + '</p></div></div>';
+  html += '<div class="popup-section"><h4>What is this device?</h4><p>' + detail.whatIs + '</p></div>';
+  html += '<div class="popup-simple"><h5>In Plain English</h5><p>' + detail.plainEnglish + '</p></div>';
+  html += '<div class="popup-section"><h4>CANopen Protocol Details</h4><p>' + detail.ciA + '</p></div>';
+  html += '<div class="popup-section"><h4>CAN Communication</h4><p>' + detail.canUse + '</p></div>';
+  html += '<div class="popup-section"><h4>Safety Role</h4><p>' + detail.safety + '</p></div>';
+  html += '<div class="popup-section"><h4>Troubleshooting Tips</h4><p>' + detail.troubleshoot + '</p></div>';
+  html += '<div style="margin-top:1rem; text-align:center;"><button onclick="addBookmark(\'' + detail.title + '\', ' + currentModule + '); closePopup();" style="padding:0.5rem 1rem; background:var(--primary); border:none; border-radius:6px; color:white; cursor:pointer;"><i class="fa-solid fa-bookmark mr-2"></i>Bookmark This</button></div>';
+  document.getElementById('popupBody').innerHTML = html;
+  document.getElementById('nodePopup').classList.add('show');
 }
-
-function closePopup() {
-  const popup = document.getElementById('nodePopup');
-  if (popup) popup.classList.remove('show');
-}
+function closePopup() { document.getElementById('nodePopup').classList.remove('show'); }
+document.getElementById('nodePopup').addEventListener('click', function(e) { if (e.target === this) closePopup(); });
 
 function showProtocolDetail(protocol) {
   const details = {
-    cia301: { title: 'CiA 301 - CANopen Application Layer', desc: 'Foundation protocol defining Object Dictionary, SDO, PDO, NMT, and Heartbeat services.' },
-    cia306: { title: 'CiA 306 - Safety Profile', desc: 'Safety communication with CRC-32, sequence counters, dual-channel redundancy, and safety timeouts.' },
-    cia406: { title: 'CiA 406 - Sensors & Actuators', desc: 'Standardized I/O profile for limit switches, door sensors, call buttons, and relay outputs.' },
-    cia407: { title: 'CiA 407 - Encoders', desc: 'Position feedback profile for incremental and absolute encoders used in lift control.' }
+    'cia301': { title: 'CiA 301 - CANopen Application Layer', content: 'The foundation of all CANopen communication. Defines the Object Dictionary structure, communication objects (NMT, SDO, PDO, EMCY, Sync, Time), and network management services. Every CANopen device must implement CiA 301.', elevator: 'Provides the common language all devices speak. Without CiA 301, every manufacturer would use different message formats, making interoperability impossible.' },
+    'cia306': { title: 'CiA 306 - Safety Profile', content: 'Defines safety-related communication with CRC-32 checksums, sequence counters, safety timeouts, and dual-channel redundancy. Ensures safety messages are never lost or corrupted without detection.', elevator: 'Ensures safety messages (door status, emergency stop, overspeed) are transmitted with mathematical certainty. If a safety message is corrupted or lost, the system knows within milliseconds and goes to safe state.' },
+    'cia406': { title: 'CiA 406 - Sensors & Actuators', content: 'Standardizes digital and analog I/O devices. Defines how buttons, switches, relays, and sensors map their data into the Object Dictionary. Covers encoders, limit switches, temperature sensors, and more.', elevator: 'Makes it easy to add sensors from any manufacturer. A door sensor from Brand A uses the same Object Dictionary addresses as Brand B, so controllers can read either without custom programming.' },
+    'cia407': { title: 'CiA 407 - Encoders', content: 'Defines encoder device profiles for position feedback. Covers incremental and absolute encoders, resolution settings, and scaling factors. Ensures precise position reporting across all manufacturers.', elevator: 'Ensures precise floor leveling within ±3mm. The controller knows exactly where the car is because all encoders report position using the same standardized format (counts, resolution, scaling).' }
   };
-  const d = details[protocol];
-  if (d) alert(d.title + '\n\n' + d.desc);
+  const detail = details[protocol];
+  let html = '<div class="popup-header"><div class="popup-icon">' + protocol.replace('cia', '') + '</div><div class="popup-title"><h3>' + detail.title + '</h3></div></div>';
+  html += '<div class="popup-section"><h4>Protocol Overview</h4><p>' + detail.content + '</p></div>';
+  html += '<div class="popup-simple"><h5>Elevator Application</h5><p>' + detail.elevator + '</p></div>';
+  html += '<div style="margin-top:1rem; text-align:center;"><button onclick="addBookmark(\'' + detail.title + '\', 1); closePopup();" style="padding:0.5rem 1rem; background:var(--primary); border:none; border-radius:6px; color:white; cursor:pointer;"><i class="fa-solid fa-bookmark mr-2"></i>Bookmark This</button></div>';
+  document.getElementById('popupBody').innerHTML = html;
+  document.getElementById('nodePopup').classList.add('show');
 }
 
 function showNmtInfo(state) {
-  const box = document.getElementById('nmtInfoBox');
-  if (!box) return;
+  const infoBox = document.getElementById('nmtInfoBox');
   const info = {
-    initializing: { title: 'Initializing (0x00)', desc: 'Device is booting, running POST, and preparing communication parameters. PDOs are disabled.' },
-    'pre-operational': { title: 'Pre-Operational (0x7F)', desc: 'SDO communication is active for configuration. PDOs remain disabled until Operational.' },
-    operational: { title: 'Operational (0x05)', desc: 'Full communication active. TPDOs and RPDOs are transmitted according to their mapping.' },
-    stopped: { title: 'Stopped (0x04)', desc: 'Emergency or halted state. Only NMT commands are accepted. All outputs are safe.' }
+    'initializing': { title: 'Initializing / Boot-up State', color: 'warning', text: 'Device powers on and performs self-test. Sends BOOT-UP message (COB-ID 0x700+NodeID, data = 0x00). Only NMT messages accepted. PDOs are disabled.' },
+    'pre-operational': { title: 'Pre-Operational State', color: 'info', text: 'SDO communication enabled for configuration. PDO transmission disabled. Used for setup, parameter changes, and diagnostics. Heartbeat active.' },
+    'operational': { title: 'Operational State', color: 'success', text: 'Full communication enabled. PDO transmission and reception active. Normal running state. This is where the elevator does its work.' },
+    'stopped': { title: 'Stopped State', color: 'danger', text: 'All communication halted except NMT. Device should enter safe state. Used for emergency shutdown or maintenance. Requires NMT Start to resume.' }
   };
-  const i = info[state];
-  if (i) { box.className = 'highlight-box info'; box.innerHTML = `<h4>${i.title}</h4><p>${i.desc}</p>`; }
+  const stateInfo = info[state];
+  infoBox.className = 'highlight-box ' + stateInfo.color;
+  infoBox.innerHTML = '<h4>' + stateInfo.title + '</h4><p>' + stateInfo.text + '</p>';
 }
 
-function toggleScenario(card) { card.classList.toggle('expanded'); }
-
 function pressFloor(floor) {
-  document.querySelectorAll('.floor-btn[data-floor]').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector('.floor-btn[data-floor="' + floor + '"]');
-  if (btn) btn.classList.add('active');
+  // Update button states
+  document.querySelectorAll('.floor-btn[data-floor]').forEach(btn => {
+    btn.classList.remove('active', 'pressed');
+    if (parseInt(btn.getAttribute('data-floor')) === floor) {
+      btn.classList.add('active', 'pressed');
+      setTimeout(() => btn.classList.remove('pressed'), 300);
+    }
+  });
+
+  // Update display
   const display = document.getElementById('floorDisplay');
-  const dir = document.getElementById('directionDisplay');
-  if (display) display.textContent = floor === 0 ? 'G' : floor;
-  if (dir) dir.textContent = floor > 1 ? '▲' : (floor < 1 ? '▼' : '⬍');
-  resetMessageFlow();
-  setTimeout(startMessageFlow, 100);
+  const dirDisplay = document.getElementById('directionDisplay');
+  const currentFloor = parseInt(display.textContent === 'G' ? 0 : display.textContent);
+  const targetFloor = floor;
+
+  display.textContent = floor === 0 ? 'G' : floor;
+  if (targetFloor > currentFloor) {
+    dirDisplay.textContent = '▲';
+    dirDisplay.style.color = 'var(--secondary)';
+  } else if (targetFloor < currentFloor) {
+    dirDisplay.textContent = '▼';
+    dirDisplay.style.color = 'var(--danger)';
+  } else {
+    dirDisplay.textContent = '⬍';
+    dirDisplay.style.color = 'var(--text-muted)';
+  }
+
+  // Update status
+  const status = document.getElementById('flowStatus');
+  if (status) {
+    status.innerHTML = '<span style="color:var(--cyan);font-weight:600;">Passenger pressed ' + (floor === 0 ? 'Ground' : 'Floor ' + floor) + '</span><br><span style="font-size:0.8rem;">Message flow starting...</span>';
+    status.style.borderColor = 'var(--cyan)';
+  }
+
+  // Show back button, hide auto/step buttons during animation
+  const btnBack = document.getElementById('btnBackFlow');
+  const btnStart = document.getElementById('btnStartFlow');
+  const btnStep = document.getElementById('btnStepFlow');
+  if (btnBack) btnBack.style.display = 'inline-block';
+  if (btnStart) btnStart.style.display = 'none';
+  if (btnStep) btnStep.style.display = 'none';
+
+  // Start flow after brief delay
+  setTimeout(function() {
+    resetMessageFlow();
+    flowStep = 0;
+    runFlowStep();
+  }, 400);
 }
 
 function pressDoor(action) {
   const status = document.getElementById('flowStatus');
-  if (status) status.innerHTML = '<span style="color: var(--cyan);">Door ' + action + ' command sent via CAN bus</span>';
-}
-
-let flowAnimation = null;
-function startMessageFlow() {
-  resetMessageFlow();
-  let step = 0;
-  const steps = 11;
-  flowAnimation = setInterval(() => {
-    if (step >= steps) { clearInterval(flowAnimation); return; }
-    const dev = document.getElementById('flow-device-' + Math.floor(step / 2));
-    const msg = document.getElementById('flow-msg-' + Math.floor((step - 1) / 2));
-    if (dev) dev.classList.add('active');
-    if (msg && step % 2 === 1) msg.classList.add('visible');
-    step++;
-  }, 600);
-  const status = document.getElementById('flowStatus');
-  if (status) status.innerHTML = '<span style="color: var(--secondary);">▶ Auto-playing message flow...</span>';
-  const backBtn = document.getElementById('btnBackFlow');
-  if (backBtn) backBtn.style.display = 'inline-flex';
-}
-
-function stepMessageFlow() { startMessageFlow(); }
-
-function resetMessageFlow() {
-  if (flowAnimation) clearInterval(flowAnimation);
-  document.querySelectorAll('.flow-device').forEach(d => d.classList.remove('active'));
-  document.querySelectorAll('.flow-message').forEach(m => m.classList.remove('visible'));
-  const status = document.getElementById('flowStatus');
-  if (status) status.innerHTML = 'Click a floor button above to start the message flow simulation';
-  const backBtn = document.getElementById('btnBackFlow');
-  if (backBtn) backBtn.style.display = 'none';
-}
-
-function runSafetySim(type) {
-  resetSafetySim();
-  const scenes = document.querySelectorAll('.safety-floor');
-  if (type === 'normal') {
-    scenes.forEach(s => { s.classList.remove('alert', 'resolved'); s.classList.add('resolved'); });
-    document.querySelectorAll('.safety-timeline-item').forEach(item => item.classList.add('visible'));
-  } else if (type === 'overspeed') {
-    if (scenes[1]) scenes[1].classList.add('alert');
-    setTimeout(() => { if (scenes[1]) scenes[1].classList.add('resolved'); }, 2000);
-    document.querySelectorAll('#timeline-2 .safety-timeline-item').forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 400));
-  } else if (type === 'door-fail') {
-    if (scenes[0]) scenes[0].classList.add('alert');
-    setTimeout(() => { if (scenes[0]) scenes[0].classList.add('resolved'); }, 2000);
-    document.querySelectorAll('#timeline-1 .safety-timeline-item').forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 400));
+  if (status) {
+    status.innerHTML = '<span style="color:var(--cyan);font-weight:600;">Door ' + action + ' requested</span><br><span style="font-size:0.8rem;">Signal sent to Door System Controller (Node 0x02)</span>';
+    status.style.borderColor = 'var(--secondary)';
   }
-}
-
-function resetSafetySim() {
-  document.querySelectorAll('.safety-floor').forEach(s => s.classList.remove('alert', 'resolved'));
-  document.querySelectorAll('.safety-timeline-item').forEach(item => item.classList.remove('visible'));
-}
-
-function playSafetyResponse() {
-  resetSafetyResponse();
-  document.querySelectorAll('.safety-step-anim').forEach((step, i) => setTimeout(() => step.classList.add('visible'), i * 400));
-}
-
-function resetSafetyResponse() {
-  document.querySelectorAll('.safety-step-anim').forEach(s => s.classList.remove('visible'));
-}
-
-function toggleTrouble(node) {
-  const children = node.nextElementSibling;
-  if (children && children.classList.contains('trouble-children')) {
-    children.classList.toggle('show');
-    node.classList.toggle('active');
-  }
-}
-
-function copyCode(btn) {
-  const block = btn.closest('.code-block');
-  if (!block) return;
-  const code = block.querySelector('pre');
-  if (!code) return;
-  navigator.clipboard.writeText(code.textContent).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = orig, 1500);
+  // Flash door buttons
+  document.querySelectorAll('.floor-btn').forEach(btn => {
+    if (btn.textContent === '◀▶' || btn.textContent === '▶◀') {
+      btn.classList.add('pressed');
+      setTimeout(() => btn.classList.remove('pressed'), 300);
+    }
   });
 }
 
-function toggleCodeFullscreen(block) { block.classList.toggle('fullscreen'); }
-
-let packetAnimFrame = null;
-function animateCanPacket() {
-  const packet = document.getElementById('canPacket');
-  if (!packet) return;
-  resetCanDiagram();
-  let progress = 0;
-  function step() {
-    progress += 0.008;
-    packet.setAttribute('cx', 50 + progress * 700);
-    packet.setAttribute('opacity', 1);
-    if (progress < 1) packetAnimFrame = requestAnimationFrame(step);
-    else setTimeout(resetCanDiagram, 500);
+function startMessageFlow() {
+  resetMessageFlow();
+  flowStep = 0;
+  runFlowStep();
+}
+function runFlowStep() {
+  if (flowStep >= 5) {
+    // Animation complete - show completion status
+    const status = document.getElementById('flowStatus');
+    if (status) {
+      const floor = document.getElementById('floorDisplay').textContent;
+      status.innerHTML = '<span style="color:var(--secondary);font-weight:600;">✓ Message flow complete!</span><br><span style="font-size:0.8rem;">Elevator is moving to ' + (floor === 'G' ? 'Ground Floor' : 'Floor ' + floor) + '</span>';
+      status.style.borderColor = 'var(--secondary)';
+    }
+    return;
   }
-  packetAnimFrame = requestAnimationFrame(step);
+  const device = document.getElementById('flow-device-' + flowStep);
+  const msg = document.getElementById('flow-msg-' + flowStep);
+  if (device) device.classList.add('active');
+  setTimeout(function() {
+    if (msg) msg.classList.add('visible');
+    setTimeout(function() {
+      if (device) device.classList.remove('active');
+      flowStep++;
+      if (flowStep < 5) setTimeout(runFlowStep, 300);
+      else runFlowStep(); // Call once more to show completion
+    }, 800);
+  }, 500);
+}
+function resetMessageFlow() {
+  flowStep = -1;
+  for (let i = 0; i <= 5; i++) {
+    const device = document.getElementById('flow-device-' + i);
+    const msg = document.getElementById('flow-msg-' + i);
+    if (device) device.classList.remove('active');
+    if (msg) msg.classList.remove('visible');
+  }
+  // Show auto/step buttons, hide back button
+  const btnBack = document.getElementById('btnBackFlow');
+  const btnStart = document.getElementById('btnStartFlow');
+  const btnStep = document.getElementById('btnStepFlow');
+  if (btnBack) btnBack.style.display = 'none';
+  if (btnStart) btnStart.style.display = 'inline-block';
+  if (btnStep) btnStep.style.display = 'inline-block';
+
+  const status = document.getElementById('flowStatus');
+  if (status) {
+    status.innerHTML = 'Click a floor button above to start the message flow simulation';
+    status.style.borderColor = 'var(--card-border)';
+  }
+}
+function stepMessageFlow() {
+  if (flowStep < 0) flowStep = 0;
+  if (flowStep >= 5) return;
+  const device = document.getElementById('flow-device-' + flowStep);
+  const msg = document.getElementById('flow-msg-' + flowStep);
+  if (device) device.classList.add('active');
+  setTimeout(function() {
+    if (msg) msg.classList.add('visible');
+    flowStep++;
+  }, 500);
+}
+
+
+// ==================== INTERACTIVE CAN WIRING DIAGRAM ====================
+const canNodeInfo = {
+  car: { title: 'Car Controller (0x01)', desc: 'Main brain. Coordinates all devices.', cob: 'RPDO: 0x200+01 | TPDO: 0x180+01', color: '#38bdf8' },
+  door: { title: 'Door System (0x02)', desc: 'Controls door open/close & safety.', cob: 'RPDO: 0x200+02 | TPDO: 0x180+02', color: '#10b981' },
+  buttons: { title: 'Call Buttons (0x03)', desc: 'Floor selection & door requests.', cob: 'RPDO: 0x200+03 | TPDO: 0x180+03', color: '#f59e0b' },
+  vfd: { title: 'VFD Drive (0x04)', desc: 'Motor speed & direction control.', cob: 'RPDO: 0x200+04 | TPDO: 0x180+04', color: '#a78bfa' },
+  encoder: { title: 'Encoder (0x05)', desc: 'Position & velocity feedback.', cob: 'TPDO: 0x180+05 (10ms)', color: '#f472b6' }
+};
+
+function highlightNode(nodeId) {
+  document.querySelectorAll('.can-node .node-rect').forEach(function(r) {
+    r.setAttribute('stroke-width', '2');
+    r.setAttribute('opacity', '1');
+  });
+  var node = document.querySelector('.can-node[data-node="' + nodeId + '"] .node-rect');
+  if (node) {
+    node.setAttribute('stroke-width', '4');
+    node.setAttribute('opacity', '1');
+  }
+  document.querySelectorAll('.can-node').forEach(function(n) {
+    if (n.getAttribute('data-node') !== nodeId) {
+      var rect = n.querySelector('.node-rect');
+      if (rect) rect.setAttribute('opacity', '0.4');
+    }
+  });
 }
 
 function resetCanDiagram() {
-  if (packetAnimFrame) cancelAnimationFrame(packetAnimFrame);
-  const packet = document.getElementById('canPacket');
-  if (packet) { packet.setAttribute('cx', 50); packet.setAttribute('opacity', 0); }
-  document.querySelectorAll('.node-rect').forEach(r => r.setAttribute('stroke-width', '2'));
-}
-
-function highlightNode(nodeId) {
-  document.querySelectorAll('.node-rect').forEach(r => r.setAttribute('stroke-width', '2'));
-  const node = document.querySelector('.can-node[data-node="' + nodeId + '"]');
-  if (node) { const rect = node.querySelector('.node-rect'); if (rect) rect.setAttribute('stroke-width', '4'); }
+  document.querySelectorAll('.can-node .node-rect').forEach(function(r) {
+    r.setAttribute('stroke-width', '2');
+    r.setAttribute('opacity', '1');
+  });
+  var pkt = document.getElementById('canPacket');
+  if (pkt) pkt.setAttribute('opacity', '0');
 }
 
 function showNodeTooltip(nodeId) {
-  const tooltip = document.getElementById('canTooltip');
-  const title = document.getElementById('canTooltipTitle');
-  const desc = document.getElementById('canTooltipDesc');
-  const cob = document.getElementById('canTooltipCob');
-  if (!tooltip) return;
-  const data = {
-    car: { t: 'Car Controller', d: 'Master node (0x01)', c: 'TPDO: 0x181, RPDO: 0x201' },
-    door: { t: 'Door System', d: 'Door controller (0x02)', c: 'TPDO: 0x182, RPDO: 0x202' },
-    buttons: { t: 'Call Buttons', d: 'Input panel (0x03)', c: 'TPDO: 0x183, RPDO: 0x203' },
-    vfd: { t: 'VFD Drive', d: 'Motor drive (0x04)', c: 'TPDO: 0x184, RPDO: 0x204' },
-    encoder: { t: 'Encoder', d: 'Position sensor (0x05)', c: 'TPDO: 0x185, RPDO: 0x205' }
-  };
-  const info = data[nodeId];
-  if (info && title && desc && cob) {
-    title.textContent = info.t; desc.textContent = info.d; cob.textContent = info.c;
-    tooltip.setAttribute('opacity', '1');
-    const node = document.querySelector('.can-node[data-node="' + nodeId + '"]');
+  var info = canNodeInfo[nodeId];
+  if (!info) return;
+  var tooltip = document.getElementById('canTooltip');
+  var title = document.getElementById('canTooltipTitle');
+  var desc = document.getElementById('canTooltipDesc');
+  var cob = document.getElementById('canTooltipCob');
+  if (tooltip && title && desc && cob) {
+    title.textContent = info.title;
+    desc.textContent = info.desc;
+    cob.textContent = info.cob;
+    var node = document.querySelector('.can-node[data-node="' + nodeId + '"]');
     if (node) {
-      const m = node.getAttribute('transform');
-      const match = m && m.match(/translate\(([^,]+),\s*([^)]+)\)/);
-      if (match) tooltip.setAttribute('transform', 'translate(' + (parseFloat(match[1]) + 100) + ',' + match[2] + ')');
+      var transform = node.getAttribute('transform');
+      var match = /translate\(([^,]+),\s*([^)]+)\)/.exec(transform);
+      if (match) {
+        var x = parseFloat(match[1]) + 100;
+        var y = parseFloat(match[2]) + 90;
+        tooltip.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+      }
     }
+    tooltip.setAttribute('opacity', '1');
   }
 }
 
 function hideNodeTooltip() {
-  const t = document.getElementById('canTooltip');
-  if (t) t.setAttribute('opacity', '0');
+  var tooltip = document.getElementById('canTooltip');
+  if (tooltip) tooltip.setAttribute('opacity', '0');
 }
 
-function activateZone(zone, el) {
-  document.querySelectorAll('.ws-station-zone').forEach(z => z.classList.remove('active'));
-  if (el) el.classList.add('active');
-  switchWSTab(zone, null);
-}
+var packetAnimId = null;
+function animateCanPacket() {
+  resetCanDiagram();
+  var pkt = document.getElementById('canPacket');
+  if (!pkt) return;
+  pkt.setAttribute('opacity', '1');
+  var pos = 50;
+  var targets = [145, 285, 425, 565, 705];
+  var targetIdx = 0;
 
-function switchWSTab(tab, btn) {
-  if (btn) {
-    document.querySelectorAll('.ws-tab-nav').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  function step() {
+    if (targetIdx >= targets.length) {
+      pkt.setAttribute('opacity', '0');
+      return;
+    }
+    var target = targets[targetIdx];
+    var dx = target - pos;
+    if (Math.abs(dx) < 3) {
+      pos = target;
+      targetIdx++;
+      var nodes = ['car', 'door', 'buttons', 'vfd', 'encoder'];
+      if (nodes[targetIdx - 1]) highlightNode(nodes[targetIdx - 1]);
+      setTimeout(step, 300);
+      return;
+    }
+    pos += dx * 0.08;
+    pkt.setAttribute('cx', pos);
+    packetAnimId = requestAnimationFrame(step);
   }
-  const show = (id, display) => { const el = document.getElementById(id); if (el) el.style.display = display; };
-  const hide = (id) => { const el = document.getElementById(id); if (el) el.style.display = 'none'; };
-  
-  if (tab === 'all') {
-    show('toolsGrid', 'grid');
-    hide('standardsTab'); hide('checklistTab'); hide('compareTab');
-  } else if (tab === 'standards') {
-    hide('toolsGrid'); hide('checklistTab'); hide('compareTab');
-    const st = document.getElementById('standardsTab'); if (st) { st.classList.remove('hidden'); st.style.display = 'block'; }
-  } else if (tab === 'checklist') {
-    hide('toolsGrid'); hide('standardsTab'); hide('compareTab');
-    const ct = document.getElementById('checklistTab'); if (ct) { ct.classList.remove('hidden'); ct.style.display = 'block'; }
-  } else if (tab === 'compare') {
-    hide('toolsGrid'); hide('standardsTab'); hide('checklistTab');
-    const cmp = document.getElementById('compareTab'); if (cmp) { cmp.classList.remove('hidden'); cmp.style.display = 'block'; }
+  step();
+}
+
+
+function runSafetySim(type) {
+  resetSafetySim();
+  if (type === 'normal') {
+    document.getElementById('safety-floor-1').classList.add('resolved');
+    animateTimeline('timeline-1', 200);
+    setTimeout(function() { document.getElementById('safety-floor-2').classList.add('resolved'); animateTimeline('timeline-2', 200); }, 1000);
+    setTimeout(function() { document.getElementById('safety-floor-3').classList.add('resolved'); animateTimeline('timeline-3', 200); }, 2000);
+  } else if (type === 'overspeed') {
+    document.getElementById('safety-floor-2').classList.add('alert');
+    setTimeout(function() { animateTimeline('timeline-2', 300); }, 500);
+    setTimeout(function() { document.getElementById('safety-floor-2').classList.remove('alert'); document.getElementById('safety-floor-2').classList.add('resolved'); }, 2500);
+  } else if (type === 'door-fail') {
+    document.getElementById('safety-floor-1').classList.add('alert');
+    setTimeout(function() { document.getElementById('safety-floor-1').classList.remove('alert'); document.getElementById('safety-floor-1').classList.add('resolved'); }, 2000);
+  }
+}
+function animateTimeline(timelineId, delay) {
+  document.querySelectorAll('#' + timelineId + ' .safety-timeline-item').forEach(function(item, i) {
+    setTimeout(function() { item.classList.add('visible'); }, i * delay);
+  });
+}
+function resetSafetySim() {
+  document.querySelectorAll('.safety-floor').forEach(function(f) { f.classList.remove('alert', 'resolved'); });
+  document.querySelectorAll('.safety-timeline-item').forEach(function(i) { i.classList.remove('visible'); });
+}
+function playSafetyResponse() {
+  resetSafetyResponse();
+  document.querySelectorAll('#safetyResponseAnim .safety-step-anim').forEach(function(step, i) {
+    setTimeout(function() { step.classList.add('visible'); }, i * 600);
+  });
+}
+function resetSafetyResponse() {
+  document.querySelectorAll('#safetyResponseAnim .safety-step-anim').forEach(function(s) { s.classList.remove('visible'); });
+}
+
+function toggleScenario(card) { card.classList.toggle('expanded'); }
+function switchTab(event, tabId) {
+  const container = event.target.closest('.tab-container');
+  container.querySelectorAll('.tab-btn').forEach(function(btn) { btn.classList.remove('active'); });
+  container.querySelectorAll('.tab-content').forEach(function(content) { content.classList.remove('active'); });
+  event.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// Enhanced Quiz with Try Again
+function checkQuiz(option, isCorrect, quizId) {
+  const container = option.closest('.quiz-container');
+  const feedback = document.getElementById('quiz-feedback-' + quizId);
+  const actions = document.getElementById('quiz-actions-' + quizId);
+
+  container.querySelectorAll('.quiz-option').forEach(function(opt) { 
+    opt.style.pointerEvents = 'none'; 
+  });
+
+  if (isCorrect) {
+    option.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct';
+    feedback.innerHTML = '<strong><i class="fa-solid fa-check-circle mr-2"></i>Correct!</strong> You understand the concept well.';
+    actions.style.display = 'flex';
+    // Keep try-again visible so others can retry too
+    actions.querySelector('.sim-btn').style.display = 'inline-flex';
+    actions.querySelector('.sim-btn').textContent = '🔄 Try Again';
+    actions.querySelector('.sim-btn').onclick = function() {
+    resetQuiz(quizId);
+    actions.querySelector('.sim-btn').style.display = 'none';
+  };
   } else {
-    hide('toolsGrid'); hide('standardsTab'); hide('checklistTab'); hide('compareTab');
+    option.classList.add('wrong');
+    feedback.className = 'quiz-feedback show wrong';
+    feedback.innerHTML = '<strong><i class="fa-solid fa-xmark-circle mr-2"></i>Not quite.</strong> Review the module and try again, or click "Learn More" for the explanation.';
+    actions.style.display = 'flex';
+    actions.querySelector('.sim-btn').style.display = 'inline-flex'; // Show try again
   }
+}
+
+function resetQuiz(quizId) {
+  const container = document.getElementById('quiz-' + quizId);
+  if (!container) return;
+  container.querySelectorAll('.quiz-option').forEach(function(opt) {
+    opt.classList.remove('correct', 'wrong');
+    opt.style.pointerEvents = 'auto';
+  });
+  document.getElementById('quiz-feedback-' + quizId).classList.remove('show');
+  document.getElementById('quiz-actions-' + quizId).style.display = 'none';
+  document.getElementById('quiz-explanation-' + quizId).style.display = 'none';
+}
+
+function showQuizExplanation(quizId) {
+  const expl = document.getElementById('quiz-explanation-' + quizId);
+  expl.style.display = expl.style.display === 'none' ? 'block' : 'none';
+}
+
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('pre').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+
+// Troubleshooting Tree
+function toggleTrouble(node) {
+  node.classList.toggle('active');
+  const children = node.nextElementSibling;
+  if (children && children.classList.contains('trouble-children')) {
+    children.classList.toggle('show');
+  }
+}
+
+
+
+// ==================== WORKSTATION GUIDE ====================
+const WS_EQUIPMENT = {
+  metadata: { version: "1.0", company: "Variotech", standards: ["EN 81-20", "EN 81-50", "ISO 22201", "IEC 61508", "CANopen CiA 417"] },
+  categories: {
+    electronic: { name: "Electronic & Measurement", icon: "fa-wave-square", color: "blue" },
+    power: { name: "Power & Electrical", icon: "fa-bolt", color: "amber" },
+    mechanical: { name: "Mechanical & Assembly", icon: "fa-wrench", color: "green" },
+    specialized: { name: "Elevator Test Equipment", icon: "fa-elevator", color: "cyan" },
+    software: { name: "Software & Computing", icon: "fa-code", color: "indigo" }
+  },
+  tools: [
+    { id: "multimeter", name: "Digital Multimeter", model: "Fluke 87V or equivalent", specs: "True RMS, 0.05% accuracy, 1000V CAT III", qty: 2, priority: "Essential", category: "electronic", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/117a19c5c-e13d-49d9-a567-94351b1bb8cd.png", function: "Precise measurement of AC/DC voltage, current, resistance, continuity, and diode testing across all test circuits.", usage: ["Daily verification of bench power supply outputs", "Validate safety circuit voltage ranges", "Check continuity in door zone circuits", "Cross-check PSU display readings", "Measure current consumption during tests"], safety: "• Always verify calibration sticker is current\n• Never leave connected to high voltage unattended\n• Use correct probe ratings", standards: ["EN 81-20", "IEC 61000"] },
+    { id: "oscilloscope", name: "Oscilloscope", model: "4-Channel, 100 MHz+", specs: "Isolated inputs, deep memory, color display", qty: 1, priority: "Essential", category: "electronic", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/16c16a4cc-12ed-4aa8-bd59-b4a8a9cad898.png", function: "Capture and analyze transient signals, PWM waveforms, communication buses, and timing relationships.", usage: ["Measure response time from movement detection to brake trigger", "Capture transient events during fault injection", "Verify CAN bus signal integrity", "Save captures as PNG for reports", "Monitor signal quality during stress testing"], safety: "• Warm up 20-30 minutes for stable references\n• Enable trigger before capturing transients\n• Use isolated probes for high-voltage circuits", standards: ["IEC 61000-4-5"] },
+    { id: "power_supply", name: "Bench Power Supply", model: "0-60V, 0-10A Dual Output", specs: "Programmable CV/CC mode, dual channel", qty: 2, priority: "Essential", category: "electronic", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1efe92663-40ec-474e-bdda-f16429919f7a.png", function: "Provide stable, adjustable DC power for control logic and actuator simulation during functional testing.", usage: ["Simulate 24V DC control power for ENA3/REA3", "Switch between CV and CC mode", "Program voltage/current limits", "Monitor real-time consumption during burn-in", "Ramp voltage slowly during initial power-on"], safety: "• Verify CV/CC mode indicator before powering DUT\n• Double-check polarity before connection\n• Set current limits below DUT max rating", standards: ["EN 81-20"] },
+    { id: "insulation_tester", name: "Insulation Tester", model: "500V/1000V Megohmmeter", specs: "500V/1000V test voltage, IEC compliant", qty: 1, priority: "Essential", category: "electronic", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/168a270d5-ebbf-4680-b709-2dfcd6740970.png", function: "Verify dielectric strength and insulation resistance between conductive parts and chassis/earth.", usage: ["Perform dielectric withstand testing before power-on", "Check insulation integrity after rework", "Validate safety isolation barriers", "Document resistance values for certification", "Test isolation between primary and secondary circuits"], safety: "• Isolate DUT completely before applying test voltage\n• Do not touch test points during measurement\n• Ensure no sensitive semiconductors are connected", standards: ["IEC 61000-4-2", "EN 81-20"] },
+    { id: "isolation_transformer", name: "Isolation Transformer", model: "230V 1kVA Medical Grade", specs: "230V in/out, 1kVA+, medical grade", qty: 1, priority: "Essential", category: "power", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1a9bb9a94-8237-4076-af45-cb3fe62abf4d.png", function: "Electrically isolate the test circuit from mains earth to prevent shock and ground loops.", usage: ["Power all 230V test equipment for personnel safety", "Break ground loops causing oscilloscope noise", "Enable safe probing of live circuits", "Required for high-voltage fault injection tests"], safety: "• Verify primary/secondary winding resistance\n• Never bypass isolation\n• Monitor thermal load; do not exceed 1kVA rating", standards: ["IEC 61508"] },
+    { id: "soldering_station", name: "Soldering Station", model: "80W+ Temperature Controlled", specs: "80W+, temp controlled, ESD-safe", qty: 1, priority: "Essential", category: "mechanical", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1bf79c131-6dcd-455d-a7d4-db8260aa275c.png", function: "Precision soldering for through-hole and SMD component assembly and repair.", usage: ["Reflow solder joints during fixture assembly", "Replace failed components", "Tin wire ends and terminal lugs", "Maintain tip temperature per solder alloy", "Build custom test cables and adapters"], safety: "• Always use ESD-safe mat and wrist strap\n• Use fume extraction\n• Clean tip frequently", standards: ["IPC-7711/7721"] },
+    { id: "torque_screwdriver", name: "Torque Screwdriver", model: "0.1-2.0 Nm Calibrated", specs: "0.1-2.0 Nm, click/slip type, calibrated", qty: 1, priority: "Essential", category: "mechanical", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1f0c83577-d466-461c-8b2b-e9f317f284db.png", function: "Apply precise torque to terminal screws, DIN rail clamps, and enclosure fasteners.", usage: ["Torque all safety circuit terminal screws", "Verify DIN rail mounting clip tension", "Secure enclosure lids to maintain IP rating", "Include torque values in documentation", "Calibrate every 6 months"], safety: "• Calibrate every 6 months\n• Use correct bit size\n• Listen/feel for click to confirm torque", standards: ["EN 81-20"] },
+    { id: "test_leads", name: "Test Lead Set", model: "4mm Banana, Assorted Probes", specs: "4mm banana, assorted clips/probes", qty: 4, priority: "Essential", category: "mechanical", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/12640049b-8854-45ff-a454-650101305334.png", function: "Universal interconnection for power, signal, and ground across test equipment.", usage: ["Label every cable before connecting", "Use insulated clips for hands-free probing", "Route leads away from moving parts", "Replace damaged insulation immediately"], safety: "• Never probe with bare hands on live circuits\n• Verify lead rating matches circuit voltage", standards: [] },
+    { id: "can_interface", name: "CAN Interface", model: "USB-CAN Adapter (Vector/Kvaser)", specs: "USB-CAN adapter, CANopen capable", qty: 2, priority: "Essential", category: "specialized", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/140a0625e-1879-4e95-830a-ef140177210a.png", function: "Bridge between PC and CAN bus for diagnostics, configuration, and real-time data logging.", usage: ["Monitor NMT state transitions", "Configure SDO parameters and read PDO data", "Capture EMCY objects for fault analysis", "Validate heartbeat timing", "Log CAN traffic for integration testing"], safety: "• Power down nodes before connecting\n• Verify baud rate matches DUT\n• Use proper termination\n• Backup configs before writing", standards: ["CANopen CiA 417"] },
+    { id: "magnetic_tape", name: "Magnetic Tape + Switches", model: "Variotech MAG-BAND-020 + MS-KIT", specs: "Variotech MAG-BAND-020 + MS-KIT", qty: 5, priority: "Essential", category: "specialized", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/10bc459e1-cf77-4a5d-b93c-3d58e538ea72.png", function: "Simulate elevator door zone and position detection for UCM device testing.", usage: ["Mount switches on test fixture at exact spacing", "Install tape on linear rail/car simulator", "Verify door zone recognition within ±5 mm", "Test exit detection at 0.05-0.5 m/s speeds", "Double-check alignment"], safety: "• Double-check alignment; 1mm offset affects accuracy\n• Keep tape clean of metal debris\n• Secure firmly to prevent shifting", standards: ["EN 81-20"] },
+    { id: "linear_test_rail", name: "Linear Test Rail", model: "Servo-Driven, 1m Travel", specs: "Servo-driven, 1m travel, programmable", qty: 1, priority: "Recommended", category: "specialized", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/16da049dc-1c57-4444-94a2-b9d752bcf3d7.png", function: "Physically simulate car movement for UCM detection distance and response time testing.", usage: ["Move fixture out of door zone at varying speeds", "Measure stopping distance (<1200 mm per EN 81-20)", "Record 10 tests in each direction", "Validate response time from movement to brake", "Test at speeds from 0.05 m/s to rated speed"], safety: "• Use emergency stop and safety barriers\n• Verify fixture secure mounting\n• Keep hands clear of moving carriage", standards: ["EN 81-20", "EN 81-50"] },
+    { id: "function_generator", name: "Function Generator", model: "0-10 MHz Arbitrary Waveform", specs: "0-10 MHz, arbitrary waveform", qty: 1, priority: "Recommended", category: "electronic", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1dae58641-5078-4fe5-a97c-35069bb4fe7f.png", function: "Generate precise test signals for circuit stimulation.", usage: ["Simulate magnetic switch pulse rates", "Test frequency response of monitoring circuits", "Inject controlled noise for EMC pre-validation", "Verify comparator thresholds"], safety: "• Keep output amplitude within DUT limits\n• Use shielded coaxial cables", standards: ["IEC 61000-4-4"] },
+    { id: "computing_hub", name: "Computing Hub", model: "Workstation + CAN Software", specs: "Windows/Linux, CAN tools, documentation", qty: 1, priority: "Essential", category: "software", image: "https://image.qwenlm.ai/public_source/1555e7be-bf5b-494d-8767-135872dadfbd/1b69ec8d8-4bb8-43e2-9292-c3535086b05a.png", function: "Central computing station for CAN analysis, documentation, and test management.", usage: ["Run CAN bus analysis software", "Manage test documentation", "Access technical specifications", "Configure test parameters", "Backup and archive test data"], safety: "• Keep software updated\n• Maintain backup copies\n• Secure access to test data", standards: [] }
+  ],
+  checklist: {
+    day1: ["Tour the facility: production, test lab, warehouse", "Meet key colleagues: R&D lead, production manager, quality manager", "Collect access cards, keys, laptop, and safety equipment", "Review company quality policy and safety procedures", "Read Variotech product catalog", "Identify fire extinguishers, first aid kit, and emergency exits"],
+    day2: ["Inventory your test equipment: verify against equipment list", "Check calibration dates on all instruments", "Install software: CAN tools, oscilloscope applications", "Configure your workstation: dual monitors, keyboard", "Test ESD wrist strap and verify workstation grounding"],
+    day3: ["Study ENA3 datasheet and user manual thoroughly", "Study REA3 datasheet — note differences from ENA3", "Watch ENA3 door zone setup demonstration", "Read EN 81-20 Section 5.6 (UCM requirements)", "Request sample UCM test reports"],
+    day4: ["Set up magnetic tape and switches on test fixture", "Configure ENA3 for first test", "Run basic door zone detection test", "Practice oscilloscope capture", "Write your first practice test report"],
+    day5: ["Perform a complete UCM test independently", "Review your test report with the quality manager", "Set up your weekly test schedule", "Identify training needs: CANopen, EMC testing", "Attend weekly team meeting"],
+    daily: ["Check calibration sticker on every instrument", "Verify power supply voltage with independent meter", "Warm up oscilloscope (20-30 minutes)", "Check ESD wrist strap continuity", "Label every cable before connecting", "Verify DUT serial number and firmware version", "Review test procedure version", "Power down equipment in correct sequence", "Store DUTs in ESD bags with desiccant", "Tidy cables: coiled, labeled, and hung", "Update test log with today's progress", "Backup test data to network drive"]
+  }
+};
+
+let wsCurrentTab = 'all';
+// Load saved checklist state, or start fresh
+let wsChecklistState = {};
+try {
+  const saved = localStorage.getItem('vario_ws_checklist');
+  if (saved) wsChecklistState = JSON.parse(saved);
+} catch (e) { console.log('No saved checklist'); }
+
+function saveWSChecklist() {
+  localStorage.setItem('vario_ws_checklist', JSON.stringify(wsChecklistState));
+}
+let wsDailyChecklistState = {};
+
+function initWS() {
+  renderWSTools();
+  renderWSChecklist();
+  renderWSDailyChecklist();
+  populateWSCompareDropdowns();
+  loadWSChecklistState();
+  setupWSEventListeners();
+  updateWSStats();
+}
+
+function renderWSTools(filter, search) {
+  filter = filter || 'all';
+  search = search || '';
+  const grid = document.getElementById('toolsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  let tools = WS_EQUIPMENT.tools;
+  if (filter !== 'all') tools = tools.filter(t => t.category === filter);
+  if (search) {
+    const s = search.toLowerCase();
+    tools = tools.filter(t => t.name.toLowerCase().includes(s) || t.specs.toLowerCase().includes(s) || t.function.toLowerCase().includes(s));
+  }
+  tools.forEach((tool, i) => {
+    const card = document.createElement('div');
+    card.className = 'ws-tool-card';
+    card.style.animationDelay = (i * 0.05) + 's';
+    const priorityClass = tool.priority === 'Essential' ? 'ws-priority-essential' : tool.priority === 'Recommended' ? 'ws-priority-recommended' : 'ws-priority-optional';
+    const catInfo = WS_EQUIPMENT.categories[tool.category];
+    card.innerHTML = '<div class="relative overflow-hidden"><img src="' + tool.image + '" alt="' + tool.name + '" class="ws-tool-image w-full h-48 object-cover"><div class="absolute top-3 left-3"><span class="' + priorityClass + ' px-2.5 py-1 text-xs font-bold rounded-full shadow-lg">' + tool.priority + '</span></div><div class="absolute top-3 right-3"><span class="bg-slate-900/80 backdrop-blur px-2 py-1 text-xs font-medium rounded-full text-slate-300 border border-slate-600/50"><i class="fa-solid fa-' + catInfo.icon + ' mr-1"></i>' + catInfo.name.split(' ')[0] + '</span></div></div><div class="p-4"><h3 class="text-lg font-bold text-white mb-1 leading-tight">' + tool.name + '</h3><p class="text-xs text-slate-400 mb-3 font-mono">' + tool.model + '</p><p class="text-xs text-slate-500 font-mono bg-slate-900/50 p-2 rounded-lg border border-slate-700/30 mb-3">' + tool.specs + '</p><p class="text-sm text-slate-400 line-clamp-2 mb-3">' + tool.function + '</p><div class="flex justify-between items-center pt-3 border-t border-slate-700/30"><span class="text-xs text-slate-500"><i class="fa-solid fa-boxes-stacked mr-1"></i>Qty: ' + tool.qty + '</span><span class="text-xs text-blue-400 font-medium">View Details <i class="fa-solid fa-arrow-right ml-1"></i></span></div></div>';
+    card.addEventListener('click', () => openWSModal(tool));
+    grid.appendChild(card);
+  });
+  if (tools.length === 0) {
+    grid.innerHTML = '<div class="col-span-full text-center py-16"><i class="fa-solid fa-search text-4xl text-slate-600 mb-4"></i><p class="text-slate-400 text-lg">No tools match your search</p></div>';
+  }
+}
+
+function openWSModal(tool) {
+  document.getElementById('modalTitle').textContent = tool.name;
+  document.getElementById('modalCategory').textContent = WS_EQUIPMENT.categories[tool.category].name;
+  document.getElementById('modalSpecs').textContent = tool.specs;
+  document.getElementById('modalQty').textContent = tool.qty;
+  document.getElementById('modalFunction').textContent = tool.function;
+  document.getElementById('modalSafety').textContent = tool.safety;
+  const badgeClass = tool.priority === 'Essential' ? 'ws-priority-essential' : tool.priority === 'Recommended' ? 'ws-priority-recommended' : 'ws-priority-optional';
+  document.getElementById('modalBadge').className = 'inline-block px-2.5 py-0.5 text-xs font-semibold rounded-full mb-2 ' + badgeClass;
+  document.getElementById('modalBadge').textContent = tool.priority;
+  document.getElementById('modalImage').src = tool.image;
+  document.getElementById('modalImage').alt = tool.name;
+  const usageContainer = document.getElementById('modalUsage');
+  usageContainer.innerHTML = '';
+  tool.usage.forEach((step, idx) => {
+    const div = document.createElement('div');
+    div.className = 'flex gap-3 items-start';
+    div.innerHTML = '<span class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">' + (idx + 1) + '</span><p class="text-sm text-slate-300">' + step + '</p>';
+    usageContainer.appendChild(div);
+  });
+  const standardsContainer = document.getElementById('modalStandards');
+  const standardsList = document.getElementById('modalStandardsList');
+  if (tool.standards && tool.standards.length > 0) {
+    standardsContainer.classList.remove('hidden');
+    standardsList.innerHTML = '';
+    tool.standards.forEach(std => {
+      const badge = document.createElement('span');
+      badge.className = 'px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-medium border border-purple-500/20';
+      badge.textContent = std;
+      standardsList.appendChild(badge);
+    });
+  } else {
+    standardsContainer.classList.add('hidden');
+  }
+  const modal = document.getElementById('detailModal');
+  modal.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    document.getElementById('modalPanel').classList.remove('translate-x-full');
+  });
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  const panel = document.getElementById('modalPanel');
-  if (panel) panel.classList.add('translate-x-full');
-  setTimeout(() => { const m = document.getElementById('detailModal'); if (m) m.classList.add('hidden'); }, 300);
+  document.getElementById('modalPanel').classList.add('translate-x-full');
+  setTimeout(() => {
+    document.getElementById('detailModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+function renderWSChecklist() {
+  const container = document.getElementById('checklistContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  Object.entries(WS_EQUIPMENT.checklist).forEach(([day, items]) => {
+    if (day === 'daily') return;
+    const section = document.createElement('div');
+    section.className = 'bg-slate-800/50 rounded-xl border border-slate-700/50 overflow-hidden';
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1).replace(/(\d)/, ' $1');
+    let html = '<button onclick="toggleDay(\'' + day + '\')" class="w-full px-5 py-4 flex justify-between items-center hover:bg-slate-700/30 transition"><div class="flex items-center gap-3"><span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">' + day.replace('day', '') + '</span><span class="font-semibold text-white">' + dayLabel + '</span></div><div class="flex items-center gap-2"><span class="text-xs text-slate-400" id="dayCount-' + day + '">0/' + items.length + '</span><i class="fa-solid fa-chevron-down text-slate-500 transition-transform" id="dayArrow-' + day + '"></i></div></button><div class="hidden px-5 pb-4 space-y-2" id="dayItems-' + day + '">';
+    items.forEach((item, idx) => {
+      const key = day + '-' + idx;
+      html += '<div class="ws-checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-700/30 hover:bg-slate-700/30 cursor-pointer transition ' + (wsChecklistState[key] ? 'checked' : '') + '" onclick="toggleWSCheck(\'' + day + '\', ' + idx + ', this)"><i class="fa-' + (wsChecklistState[key] ? 'solid fa-square-check' : 'regular fa-square') + ' ws-check-icon text-lg ' + (wsChecklistState[key] ? 'text-green-400' : 'text-slate-500') + ' transition-colors"></i><span class="text-sm text-slate-300 flex-1">' + item + '</span></div>';
+    });
+    html += '</div>';
+    section.innerHTML = html;
+    container.appendChild(section);
+  });
+}
+
+function toggleDay(day) {
+  const items = document.getElementById('dayItems-' + day);
+  const arrow = document.getElementById('dayArrow-' + day);
+  if (items) {
+    items.classList.toggle('hidden');
+    if (arrow) arrow.style.transform = items.classList.contains('hidden') ? '' : 'rotate(180deg)';
+  }
+}
+
+function toggleWSCheck(day, idx, element) {
+  const key = day + '-' + idx;
+  wsChecklistState[key] = !wsChecklistState[key];
+  element.classList.toggle('checked');
+  const icon = element.querySelector('.ws-check-icon');
+  icon.className = wsChecklistState[key] ? 'fa-solid fa-square-check ws-check-icon text-lg text-green-400' : 'fa-regular fa-square ws-check-icon text-lg text-slate-500';
+  updateDayCount(day);
+  saveWSChecklistState();
+  saveWSChecklist();
+}
+
+function updateDayCount(day) {
+  const items = WS_EQUIPMENT.checklist[day];
+  let count = 0;
+  items.forEach((_, idx) => { if (wsChecklistState[day + '-' + idx]) count++; });
+  const el = document.getElementById('dayCount-' + day);
+  if (el) el.textContent = count + '/' + items.length;
+  updateWSChecklistProgress();
+}
+
+function updateWSChecklistProgress() {
+  let total = 0, completed = 0;
+  Object.entries(WS_EQUIPMENT.checklist).forEach(([day, items]) => {
+    if (day === 'daily') return;
+    total += items.length;
+    items.forEach((_, idx) => { if (wsChecklistState[day + '-' + idx]) completed++; });
+  });
+  const el = document.getElementById('checklistProgress');
+  if (el) el.textContent = completed + ' / ' + total + ' completed';
+}
+
+function renderWSDailyChecklist() {
+  const container = document.getElementById('dailyChecklist');
+  if (!container) return;
+  container.innerHTML = '';
+  WS_EQUIPMENT.checklist.daily.forEach((item, idx) => {
+    const key = 'daily-' + idx;
+    const div = document.createElement('div');
+    div.className = 'ws-checklist-item flex items-start gap-3 p-3 rounded-lg border border-slate-700/30 hover:bg-slate-700/30 cursor-pointer transition ' + (wsDailyChecklistState[key] ? 'checked' : '');
+    div.onclick = function() {
+      wsDailyChecklistState[key] = !wsDailyChecklistState[key];
+      this.classList.toggle('checked');
+      const icon = this.querySelector('.ws-check-icon');
+      icon.className = wsDailyChecklistState[key] ? 'fa-solid fa-square-check ws-check-icon text-lg text-green-400' : 'fa-regular fa-square ws-check-icon text-lg text-slate-500';
+      localStorage.setItem('wsDailyChecklist', JSON.stringify(wsDailyChecklistState));
+    };
+    div.innerHTML = '<i class="fa-' + (wsDailyChecklistState[key] ? 'solid fa-square-check' : 'regular fa-square') + ' ws-check-icon text-lg ' + (wsDailyChecklistState[key] ? 'text-green-400' : 'text-slate-500') + '"></i><span class="text-sm text-slate-300 flex-1">' + item + '</span>';
+    container.appendChild(div);
+  });
+}
+
+function loadWSChecklistState() {
+  const saved = localStorage.getItem('wsChecklistState');
+  if (saved) wsChecklistState = JSON.parse(saved);
+  const savedDaily = localStorage.getItem('wsDailyChecklist');
+  if (savedDaily) wsDailyChecklistState = JSON.parse(savedDaily);
+}
+
+function saveWSChecklistState() {
+  localStorage.setItem('wsChecklistState', JSON.stringify(wsChecklistState));
 }
 
 function resetChecklist() {
-  document.querySelectorAll('.ws-checklist-item').forEach(item => {
-    item.classList.remove('checked');
-    const icon = item.querySelector('.ws-check-icon');
-    if (icon) icon.innerHTML = '<i class="fa-regular fa-circle"></i>';
-  });
-  updateChecklistProgress();
+  if (confirm('Reset all checklist progress?')) {
+    wsChecklistState = {};
+    wsDailyChecklistState = {};
+    localStorage.removeItem('wsChecklistState');
+    localStorage.removeItem('wsDailyChecklist');
+    renderWSChecklist();
+    renderWSDailyChecklist();
+    updateWSChecklistProgress();
+  }
 }
 
-function updateChecklistProgress() {
-  const total = document.querySelectorAll('.ws-checklist-item').length;
-  const checked = document.querySelectorAll('.ws-checklist-item.checked').length;
-  const prog = document.getElementById('checklistProgress');
-  if (prog) prog.textContent = checked + ' / ' + total + ' completed';
+function populateWSCompareDropdowns() {
+  const select1 = document.getElementById('compare1');
+  const select2 = document.getElementById('compare2');
+  if (!select1 || !select2) return;
+  WS_EQUIPMENT.tools.forEach(tool => {
+    const opt1 = document.createElement('option');
+    opt1.value = tool.id;
+    opt1.textContent = tool.name;
+    select1.appendChild(opt1);
+    const opt2 = document.createElement('option');
+    opt2.value = tool.id;
+    opt2.textContent = tool.name;
+    select2.appendChild(opt2);
+  });
 }
 
 function runCompare() {
-  const s1 = document.getElementById('compare1');
-  const s2 = document.getElementById('compare2');
+  const id1 = document.getElementById('compare1').value;
+  const id2 = document.getElementById('compare2').value;
+  if (!id1 || !id2) { alert('Please select two tools to compare'); return; }
+  const tool1 = WS_EQUIPMENT.tools.find(t => t.id === id1);
+  const tool2 = WS_EQUIPMENT.tools.find(t => t.id === id2);
   const result = document.getElementById('compareResult');
-  if (!s1 || !s2 || !result) return;
-  if (!s1.value || !s2.value) {
-    result.innerHTML = '<p class="text-slate-400 text-sm">Select two tools to compare.</p>';
-    result.classList.remove('hidden');
-    return;
-  }
-  result.innerHTML = '<div class="grid grid-cols-2 gap-4"><div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50"><h4 class="font-bold text-white mb-2">' + s1.value + '</h4><p class="text-sm text-slate-400">Details for ' + s1.value + '.</p></div><div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50"><h4 class="font-bold text-white mb-2">' + s2.value + '</h4><p class="text-sm text-slate-400">Details for ' + s2.value + '.</p></div></div>';
   result.classList.remove('hidden');
+  result.innerHTML = '<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b border-slate-700"><th class="text-left py-3 px-4 text-slate-400 font-medium">Attribute</th><th class="text-left py-3 px-4 text-blue-400 font-medium">' + tool1.name + '</th><th class="text-left py-3 px-4 text-purple-400 font-medium">' + tool2.name + '</th></tr></thead><tbody><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Category</td><td class="py-3 px-4 text-slate-200">' + WS_EQUIPMENT.categories[tool1.category].name + '</td><td class="py-3 px-4 text-slate-200">' + WS_EQUIPMENT.categories[tool2.category].name + '</td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Model</td><td class="py-3 px-4 text-slate-200">' + tool1.model + '</td><td class="py-3 px-4 text-slate-200">' + tool2.model + '</td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Specifications</td><td class="py-3 px-4 text-slate-200">' + tool1.specs + '</td><td class="py-3 px-4 text-slate-200">' + tool2.specs + '</td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Priority</td><td class="py-3 px-4"><span class="' + (tool1.priority === 'Essential' ? 'text-green-400' : tool1.priority === 'Recommended' ? 'text-amber-400' : 'text-purple-400') + ' font-medium">' + tool1.priority + '</span></td><td class="py-3 px-4"><span class="' + (tool2.priority === 'Essential' ? 'text-green-400' : tool2.priority === 'Recommended' ? 'text-amber-400' : 'text-purple-400') + ' font-medium">' + tool2.priority + '</span></td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Quantity</td><td class="py-3 px-4 text-slate-200">' + tool1.qty + '</td><td class="py-3 px-4 text-slate-200">' + tool2.qty + '</td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Primary Function</td><td class="py-3 px-4 text-slate-200">' + tool1.function + '</td><td class="py-3 px-4 text-slate-200">' + tool2.function + '</td></tr><tr class="ws-comparison-row"><td class="py-3 px-4 text-slate-400">Related Standards</td><td class="py-3 px-4">' + tool1.standards.map(s => '<span class="text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-300 mr-1">' + s + '</span>').join('') + '</td><td class="py-3 px-4">' + tool2.standards.map(s => '<span class="text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-300 mr-1">' + s + '</span>').join('') + '</td></tr></tbody></table></div>';
 }
 
-document.addEventListener('click', function(e) {
-  if (e.target.id === 'detailModal') closeModal();
-  if (!e.target.closest('.search-bar')) {
-    const sr = document.getElementById('searchResults');
-    if (sr) sr.classList.remove('show');
-  }
-});
+function updateWSStats() {
+  const total = WS_EQUIPMENT.tools.length;
+  const essential = WS_EQUIPMENT.tools.filter(t => t.priority === 'Essential').length;
+  const recommended = WS_EQUIPMENT.tools.filter(t => t.priority === 'Recommended').length;
+  const optional = WS_EQUIPMENT.tools.filter(t => t.priority === 'Optional').length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statEssential').textContent = essential;
+  document.getElementById('statRecommended').textContent = recommended;
+  document.getElementById('statOptional').textContent = optional;
+}
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closePopup();
-    closeModal();
-    const mobile = document.getElementById('mobileSettings');
-    if (mobile) mobile.classList.remove('show');
+function activateZone(category, element) {
+  document.querySelectorAll('.ws-station-zone').forEach(z => z.classList.remove('active'));
+  element.classList.add('active');
+  document.querySelectorAll('.ws-tab-nav').forEach(b => b.classList.remove('active'));
+  const tabBtn = document.querySelector('.ws-tab-nav[data-tab="' + category + '"]');
+  if (tabBtn) tabBtn.classList.add('active');
+  wsCurrentTab = category;
+  document.getElementById('toolsGrid').classList.remove('hidden');
+  document.getElementById('standardsTab').classList.add('hidden');
+  document.getElementById('checklistTab').classList.add('hidden');
+  document.getElementById('compareTab').classList.add('hidden');
+  renderWSTools(category);
+}
+
+function switchWSTab(tab, btn) {
+  document.querySelectorAll('.ws-tab-nav').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  wsCurrentTab = tab;
+  document.getElementById('toolsGrid').classList.add('hidden');
+  document.getElementById('standardsTab').classList.add('hidden');
+  document.getElementById('checklistTab').classList.add('hidden');
+  document.getElementById('compareTab').classList.add('hidden');
+  if (tab === 'standards') {
+    document.getElementById('standardsTab').classList.remove('hidden');
+  } else if (tab === 'checklist') {
+    document.getElementById('checklistTab').classList.remove('hidden');
+  } else if (tab === 'compare') {
+    document.getElementById('compareTab').classList.remove('hidden');
+  } else {
+    document.getElementById('toolsGrid').classList.remove('hidden');
+    renderWSTools(tab);
+  }
+}
+
+function setupWSEventListeners() {
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+
+
+
+// Initialize workstation
+// Initialize when DOM is ready
+function initApp() {
+  initWS();
+  calculateCAN(); // Initialize calculator
+
+  // Direct event listener for start button (CSP-safe)
+  var startBtn = document.getElementById('startBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      startLearning();
+    });
+  }
+
+  // Direct event listeners for navigation buttons
+  document.querySelectorAll('.nav-next').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var target = parseInt(this.getAttribute('data-target'));
+      if (!isNaN(target)) goToModule(target);
+    });
+  });
+
+  document.querySelectorAll('.nav-prev').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var target = parseInt(this.getAttribute('data-target'));
+      if (!isNaN(target)) goToModule(target);
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (currentModule === -1) return;
+    if (e.key === 'ArrowRight' && currentModule < 6) goToModule(currentModule + 1);
+    else if (e.key === 'ArrowLeft' && currentModule > 0) goToModule(currentModule - 1);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+<!-- Module Jump Dialog -->
+<div id="module-dialog" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:3000;justify-content:center;align-items:center;padding:2rem;">
+  <div style="background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:2rem;max-width:420px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <h3 style="color:var(--cyan);margin:0;font-size:1.2rem;font-weight:700;"><i class="fa-solid fa-layer-group mr-2"></i>Jump to Module</h3>
+      <button onclick="closeModuleDialog()" style="background:var(--card-border);border:none;color:var(--text);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;">×</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      <button class="module-dialog-btn" onclick="goToModuleDialog(-1)">
+        <span style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--purple));display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">🏠</span>
+        <span>Hero / Start Page</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(0)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--cyan);display:flex;align-items:center;justify-content:center;color:var(--dark);font-size:0.75rem;font-weight:700;">1</span>
+        <span>CAN Bus Fundamentals</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(1)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--secondary);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">2</span>
+        <span>CiA Protocol Profiles</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(2)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--warning);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">3</span>
+        <span>Interactive System Demo</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(3)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--danger);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">4</span>
+        <span>Safety Systems</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(4)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--purple);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">5</span>
+        <span>Implementation Guide</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(5)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--pink);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;">6</span>
+        <span>Advanced Topics</span>
+      </button>
+      <button class="module-dialog-btn" onclick="goToModuleDialog(6)">
+        <span style="width:28px;height:28px;border-radius:8px;background:var(--cyan);display:flex;align-items:center;justify-content:center;color:var(--dark);font-size:0.75rem;font-weight:700;">7</span>
+        <span>Practical Exercises</span>
+      </button>
+    </div>
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--card-border);text-align:center;">
+      <button onclick="closeModuleDialog()" style="padding:0.5rem 1.5rem;background:var(--card-border);border:none;border-radius:8px;color:var(--text);cursor:pointer;font-size:0.85rem;">Cancel</button>
+    </div>
+  </div>
+</div>
+<script>
+  // 1. Register Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('PWA ready:', reg.scope))
+        .catch(err => console.log('PWA failed:', err));
+    });
+  }
+
+  // 2. Make wide tables scrollable on mobile
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll('.comparison-table').forEach(table => {
+        const parent = table.parentElement;
+        if (parent && (parent.tagName !== 'DIV' || !parent.style.overflowX)) {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflowX = 'auto';
+          wrapper.style.webkitOverflowScrolling = 'touch';
+          wrapper.style.marginBottom = '1rem';
+          parent.insertBefore(wrapper, table);
+          wrapper.appendChild(table);
+        }
+      });
+    }
+  });
+
+  // 3. "Install to Home Screen" prompt
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show floating install button on mobile
+  if (window.innerWidth <= 768) {
+    const existing = document.getElementById('manual-install-btn');
+    if (existing) return; // don't create duplicates
+    
+    const btn = document.createElement('button');
+    btn.id = 'manual-install-btn';
+    btn.innerHTML = '<i class="fa-solid fa-download" style="margin-right:0.5rem;"></i>Install App';
+    btn.style.cssText = 'position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:3000;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#0066FF,#8B5CF6);color:white;border:none;border-radius:100px;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 4px 15px rgba(0,102,255,0.3);display:none;';
+    btn.onclick = () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            console.log('User installed the PWA');
+            btn.remove();
+          }
+          deferredPrompt = null;
+        });
+      }
+    };
+    document.body.appendChild(btn);
+    setTimeout(() => { btn.style.display = 'block'; }, 2000);
   }
 });
 </script>
+<!-- Mobile Settings Drawer -->
+<div id="mobileSettings" class="mobile-settings">
+  <div class="mobile-settings-header">
+    <span style="color:var(--cyan);font-weight:700;font-size:1.1rem;">Settings & Tools</span>
+    <button onclick="toggleMobileSettings()" style="background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="mobile-settings-body">
+    <div class="mobile-setting-item">
+      <label>Theme</label>
+      <div class="theme-switcher" style="display:flex;gap:0.5rem;">
+        <button class="theme-btn dark active" onclick="setTheme('dark')" title="Dark"></button>
+        <button class="theme-btn light" onclick="setTheme('light')" title="Light"></button>
+        <button class="theme-btn industrial" onclick="setTheme('industrial')" title="Industrial"></button>
+        <button class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight"></button>
+      </div>
+    </div>
+    <div class="mobile-setting-item">
+      <label>Text Size</label>
+      <input type="range" min="80" max="140" value="100" oninput="setTextSize(this.value)" style="width:100%;accent-color:var(--primary);">
+    </div>
+    <div class="mobile-setting-item">
+      <label>Brightness</label>
+      <input type="range" min="50" max="150" value="100" oninput="setBrightness(this.value)" style="width:100%;accent-color:var(--primary);">
+    </div>
+    <div class="mobile-setting-item">
+      <label>Jump to Module</label>
+      <button class="module-dialog-btn" onclick="openModuleDialog();toggleMobileSettings();" style="width:100%;">
+        <i class="fa-solid fa-layer-group"></i> Select Module
+      </button>
+    </div>
+  </div>
+</div>
+<button class="mobile-settings-trigger" onclick="toggleMobileSettings()" title="Settings">
+  <i class="fa-solid fa-gear"></i>
+</button>
 </body>
 </html>
