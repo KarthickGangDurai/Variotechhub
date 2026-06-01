@@ -1548,6 +1548,7 @@ CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span
           <button class="three-btn" onclick="zoomOut()" title="Zoom Out">🔍−</button>
           <button class="three-btn" onclick="resetCamera()">🎥 Reset</button>
           <button class="three-btn" onclick="toggleWireframe()">🔲 Wireframe</button>
+          <button class="three-btn" onclick="toggleThreeFullscreen()" title="Fullscreen">⛶ Full</button>
         </div>
       </div>
 
@@ -1632,6 +1633,52 @@ CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span
           0% { transform: scale(1); }
           50% { transform: scale(0.92); background: var(--primary); color: white; }
           100% { transform: scale(1); }
+        }
+                /* 3D Fullscreen Mode */
+        #three-container.fullscreen {
+          position: fixed !important;
+          top: 0;
+          left: 0;
+          width: 100vw !important;
+          height: 100vh !important;
+          z-index: 9999;
+          border-radius: 0;
+          margin: 0;
+          border: none;
+        }
+        #three-container.fullscreen .three-overlay {
+          max-width: 180px;
+          font-size: 0.7rem;
+          padding: 0.5rem;
+          top: 0.5rem;
+          left: 0.5rem;
+        }
+        #three-container.fullscreen #three-call-panel {
+          top: 0.5rem;
+          right: 0.5rem;
+          padding: 0.5rem;
+        }
+        #three-container.fullscreen .three-controls {
+          bottom: 1.5rem;
+          gap: 0.75rem;
+        }
+        #three-container.fullscreen .three-btn {
+          padding: 0.7rem 1rem;
+          font-size: 0.85rem;
+        }
+        #three-close-fs {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          z-index: 10001;
+          padding: 0.5rem 1rem;
+          background: var(--danger);
+          color: white;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-family: Inter, sans-serif;
         }
       </style>
 
@@ -3592,8 +3639,47 @@ CAN.<span class="function">send</span>(<span class="number">0x605</span>, [<span
 <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width: 0%"></div></div>
 
 <script>
+
 function toggleMobileSettings() {
   document.getElementById('mobileSettings').classList.toggle('show');
+}
+function toggleThreeFullscreen() {
+  const container = document.getElementById('three-container');
+  const isFullscreen = container.classList.toggle('fullscreen');
+  
+  if (isFullscreen) {
+    // Add a close button
+    if (!document.getElementById('three-close-fs')) {
+      const closeBtn = document.createElement('button');
+      closeBtn.id = 'three-close-fs';
+      closeBtn.innerHTML = '✕ Close';
+      closeBtn.onclick = toggleThreeFullscreen;
+      container.appendChild(closeBtn);
+    }
+    // Hide bottom nav so it doesn't overlap
+    const nav = document.getElementById('mainNav');
+    if (nav) nav.style.display = 'none';
+  } else {
+    // Remove close button
+    const closeBtn = document.getElementById('three-close-fs');
+    if (closeBtn) closeBtn.remove();
+    // Restore nav
+    const nav = document.getElementById('mainNav');
+    if (nav) nav.style.display = '';
+  }
+  
+  // Resize the renderer after the transition
+  setTimeout(() => {
+    if (renderer3D && camera3D) {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w > 0 && h > 0) {
+        renderer3D.setSize(w, h);
+        camera3D.aspect = w / h;
+        camera3D.updateProjectionMatrix();
+      }
+    }
+  }, 150);
 }
 /* ===== Inventory Toggle & Row Detail ===== */
 function toggleInventory() {
@@ -5656,16 +5742,37 @@ if (document.readyState === 'loading') {
   });
 
   // 3. "Install to Home Screen" prompt
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show floating install button on mobile
+  if (window.innerWidth <= 768) {
+    const existing = document.getElementById('manual-install-btn');
+    if (existing) return; // don't create duplicates
+    
     const btn = document.createElement('button');
+    btn.id = 'manual-install-btn';
     btn.innerHTML = '<i class="fa-solid fa-download" style="margin-right:0.5rem;"></i>Install App';
-    btn.style.cssText = 'position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:9999;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#0066FF,#8B5CF6);color:white;border:none;border-radius:100px;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 4px 15px rgba(0,102,255,0.3);';
-    btn.onclick = () => { deferredPrompt.prompt(); deferredPrompt = null; btn.remove(); };
+    btn.style.cssText = 'position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:3000;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#0066FF,#8B5CF6);color:white;border:none;border-radius:100px;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 4px 15px rgba(0,102,255,0.3);display:none;';
+    btn.onclick = () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            console.log('User installed the PWA');
+            btn.remove();
+          }
+          deferredPrompt = null;
+        });
+      }
+    };
     document.body.appendChild(btn);
-  });
+    setTimeout(() => { btn.style.display = 'block'; }, 2000);
+  }
+});
 </script>
 <!-- Mobile Settings Drawer -->
 <div id="mobileSettings" class="mobile-settings">
