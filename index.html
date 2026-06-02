@@ -503,24 +503,23 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
 @media (max-width: 768px) {
-  /* ===== ADD THIS NEW CODE HERE ===== */
   .module-container {
-      padding-top: 6rem !important;
+      padding-top: 1rem !important;
       padding-bottom: 6rem !important;
   }
   
   .section-container {
-      padding-top: 5rem !important;
+      padding-top: 0.5rem !important;
       padding-bottom: 6rem !important;
   }
   
   .module-header {
-      margin-bottom: 1.5rem;
-      padding-top: 0.5rem;
+      margin-bottom: 1.2rem;
+      padding-top: 0;
   }
   
   .module-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       line-height: 1.2;
   }
   .nav-progress { width: 100px; }
@@ -805,7 +804,30 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
   /* Horizontal scroll for wide content */
   .comparison-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .comparison-table td, .comparison-table th { white-space: nowrap; }
-  .can-frame-visual { min-width: 600px; }
+  .can-frame-visual {
+    min-width: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+  
+  .can-bit {
+    width: 24px;
+    height: 32px;
+    font-size: 0.6rem;
+  }
+  
+  .card, .protocol-card, .scenario-card, .step-visual {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .step-content {
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
   .can-builder, .code-block, .json-viewer, .svg-diagram {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -903,22 +925,28 @@ body { -webkit-overflow-scrolling: touch; }
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
-    gap: 0.3rem !important;
-    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
+    flex-wrap: nowrap !important;
     justify-content: center !important;
-    max-width: calc(100% - 1rem) !important;
-    background: rgba(15, 23, 42, 0.85);
-    padding: 0.4rem 0.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
+    max-width: 98% !important;
+    width: max-content !important;
+    background: rgba(15, 23, 42, 0.92) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 0.3rem 0.4rem !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--card-border) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
   
   .three-btn {
-    padding: 0.4rem 0.6rem !important;
-    font-size: 0.7rem !important;
-    border-radius: 4px;
-    white-space: nowrap;
-    min-height: 32px;
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.6rem !important;
+    border-radius: 4px !important;
+    white-space: nowrap !important;
+    min-height: 26px !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
   }
   
   /* Make Full button more prominent */
@@ -999,8 +1027,6 @@ body { -webkit-overflow-scrolling: touch; }
   #three-container.fullscreen #three-call-panel {
     display: flex !important;
   }
-}
-
 /* Prevent sideways scroll on all modules */
 html, body {
   overflow-x: hidden;
@@ -1045,7 +1071,232 @@ html, body {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
+/* ============================================
+   MOBILE & RESPONSIVE FIXES
+   Paste this at the very end of <style>
+   ============================================ */
 
+/* ---- FIX 1: Remove huge blank space at top when nav is at bottom ---- */
+@media (max-width: 768px) {
+  .module-container {
+    padding-top: 1.2rem !important;
+    padding-bottom: 5.5rem !important;
+  }
+  .section-container {
+    padding-top: 0.8rem !important;
+    padding-bottom: 5.5rem !important;
+  }
+  .module-header {
+    margin-bottom: 1.2rem;
+    padding-top: 0;
+  }
+  .module-header h2 {
+    font-size: 1.6rem;
+  }
+  /* Keep settings gear above bottom nav */
+  .mobile-settings-trigger {
+    bottom: 80px !important;
+    z-index: 2501;
+  }
+  .mobile-settings {
+    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom) + 70px);
+    z-index: 2500;
+  }
+}
+
+/* ---- FIX 2: Force content to fit viewport or scroll internally ---- */
+@media (max-width: 768px) {
+  .module-inner,
+  .ws-content {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Cards must never exceed screen width */
+  .card {
+    max-width: 100%;
+    overflow-x: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Step visuals must shrink and wrap text */
+  .step-visual {
+    min-width: 0 !important;
+    gap: 0.75rem;
+  }
+  .step-content {
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* Single-column grids only */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* NMT circles: shrink so they don’t overflow */
+  .nmt-states {
+    gap: 0.75rem;
+  }
+  .nmt-state {
+    width: 85px;
+    height: 85px;
+    font-size: 0.8rem;
+  }
+  
+  /* Live data tiles: wrap instead of pushing out */
+  .live-data {
+    flex-wrap: wrap;
+  }
+  .data-item {
+    flex: 1 1 45%;
+    min-width: 120px;
+  }
+  
+  /* CAN frame bits: wrap instead of forcing 600px wide */
+  .can-frame-visual {
+    min-width: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+  .can-bit {
+    width: 24px;
+    height: 32px;
+    font-size: 0.6rem;
+  }
+  
+  /* Force all text blocks to wrap */
+  .card p, .card li, .card h3, .card h4,
+  .step-content p, .step-content h4,
+  .highlight-box p, .highlight-box h4,
+  .popup-section p, .scenario-card .scenario-body {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  /* Protocol / scenario cards must not overflow */
+  .protocol-card,
+  .scenario-card {
+    max-width: 100%;
+  }
+  
+  /* Bottom-sheet popups with safe padding */
+  .node-detail-popup {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .popup-content {
+    margin: 0;
+    border-radius: 16px 16px 0 0;
+    max-width: 100%;
+    max-height: 85vh;
+    padding: 1.25rem;
+  }
+}
+
+/* ---- FIX 3: 3D Controls forced horizontal & compact ---- */
+@media (max-width: 768px) {
+  #three-container {
+    height: 360px !important;
+    min-height: 360px;
+  }
+  
+  /* KEY CHANGE: single horizontal row, never wrap */
+  #three-container .three-controls {
+    position: absolute !important;
+    bottom: 0.5rem !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;          /* prevents vertical stacking */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+    max-width: 98% !important;
+    width: max-content !important;
+    background: rgba(15, 23, 42, 0.92) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 0.3rem 0.4rem !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--card-border) !important;
+    overflow-x: auto !important;           /* scroll horizontally if still too many */
+    -webkit-overflow-scrolling: touch !important;
+    z-index: 10 !important;
+  }
+  
+  /* Ultra-compact buttons so they all fit in one row */
+  .three-btn {
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.6rem !important;
+    border-radius: 4px !important;
+    white-space: nowrap !important;
+    min-height: 26px !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* Keep Full button distinct */
+  #three-container .three-btn[onclick*="toggleThreeFullscreen"] {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+  }
+  
+  /* Hide legend/call panel on small screens to reduce clutter */
+  #three-container > div[style*="bottom:1rem;left:1rem"] {
+    display: none !important;
+  }
+  #three-container #three-call-panel {
+    display: none !important;
+  }
+  
+  /* Compact status overlay */
+  #three-container .three-overlay {
+    top: 0.3rem;
+    left: 0.3rem;
+    max-width: 150px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.62rem;
+  }
+  
+  /* Fullscreen mode: restore larger controls and side panels */
+  #three-container.fullscreen {
+    height: 100vh !important;
+    width: 100vw !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+  #three-container.fullscreen > div[style*="bottom:1rem;left:1rem"] {
+    display: block !important;
+  }
+  #three-container.fullscreen #three-call-panel {
+    display: flex !important;
+  }
+  #three-container.fullscreen .three-controls {
+    bottom: 1rem !important;
+    padding: 0.5rem 0.8rem !important;
+    gap: 0.5rem !important;
+  }
+  #three-container.fullscreen .three-btn {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Desktop safety: keep controls horizontal */
+.three-controls {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
 </style>
 
 <base target="_blank">
@@ -1526,15 +1777,15 @@ html, body {
           <div class="json-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div><span>Object Dictionary Example - Door Controller</span></div>
           <div class="json-body">
             <pre>{
-  <span class="json-key">"0x1000"</span>: <span class="json-string">"Device Type"</span>        → <span class="json-string">"Door Controller (0x00020196)"</span>,
-  <span class="json-key">"0x1001"</span>: <span class="json-string">"Error Register"</span>     → <span class="json-number">0x00</span>,
-  <span class="json-key">"0x1018"</span>: <span class="json-string">"Identity"</span>           → { VendorID, ProductCode, Revision },
-  <span class="json-key">"0x2000"</span>: <span class="json-string">"Door Open Time"</span>     → <span class="json-number">3000</span> ms,
-  <span class="json-key">"0x2001"</span>: <span class="json-string">"Door Close Time"</span>    → <span class="json-number">2500</span> ms,
-  <span class="json-key">"0x2002"</span>: <span class="json-string">"Safety Edge Enable"</span> → <span class="json-boolean">true</span>,
-  <span class="json-key">"0x6000"</span>: <span class="json-string">"Door Status"</span>        → <span class="json-string">"Closed & Locked"</span>,
-  <span class="json-key">"0x6001"</span>: <span class="json-string">"Obstruction Detected"</span> → <span class="json-boolean">false</span>
-}</pre>
+              <span class="json-key">"0x1000"</span>: <span class="json-string">"Device Type"</span>        → <span class="json-string">"Door Controller (0x00020196)"</span>,
+              <span class="json-key">"0x1001"</span>: <span class="json-string">"Error Register"</span>     → <span class="json-number">0x00</span>,
+              <span class="json-key">"0x1018"</span>: <span class="json-string">"Identity"</span>           → { VendorID, ProductCode, Revision },
+              <span class="json-key">"0x2000"</span>: <span class="json-string">"Door Open Time"</span>     → <span class="json-number">3000</span> ms,
+              <span class="json-key">"0x2001"</span>: <span class="json-string">"Door Close Time"</span>    → <span class="json-number">2500</span> ms,
+              <span class="json-key">"0x2002"</span>: <span class="json-string">"Safety Edge Enable"</span> → <span class="json-boolean">true</span>,
+              <span class="json-key">"0x6000"</span>: <span class="json-string">"Door Status"</span>        → <span class="json-string">"Closed & Locked"</span>,
+              <span class="json-key">"0x6001"</span>: <span class="json-string">"Obstruction Detected"</span> → <span class="json-boolean">false</span>
+            }</pre>
           </div>
         </div>
 
@@ -1665,20 +1916,20 @@ html, body {
             <div class="code-header"><span>NMT Commands (Master sends to all slaves)</span></div>
             <div class="code-body">
               <pre><span class="comment">// COB-ID 0x000 = NMT Command</span>
-<span class="comment">// Byte 0 = Command, Byte 1 = Target Node ID (0 = all nodes)</span>
+              <span class="comment">// Byte 0 = Command, Byte 1 = Target Node ID (0 = all nodes)</span>
 
-<span class="comment">// Start all nodes (Go Operational)</span>
-CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x01</span>, <span class="number">0x00</span>]);  <span class="comment">// Command: Start, Target: All</span>
+              <span class="comment">// Start all nodes (Go Operational)</span>
+              CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x01</span>, <span class="number">0x00</span>]);  <span class="comment">// Command: Start, Target: All</span>
 
-<span class="comment">// Stop all nodes (Emergency stop)</span>
-CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x02</span>, <span class="number">0x00</span>]);  <span class="comment">// Command: Stop, Target: All</span>
+              <span class="comment">// Stop all nodes (Emergency stop)</span>
+              CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x02</span>, <span class="number">0x00</span>]);  <span class="comment">// Command: Stop, Target: All</span>
 
-<span class="comment">// Put Node 5 in Pre-Operational (for configuration)</span>
-CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x80</span>, <span class="number">0x05</span>]);  <span class="comment">// Command: Pre-Op, Target: Node 5</span>
+              <span class="comment">// Put Node 5 in Pre-Operational (for configuration)</span>
+              CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x80</span>, <span class="number">0x05</span>]);  <span class="comment">// Command: Pre-Op, Target: Node 5</span>
 
-<span class="comment">// Reset Node 3 (reboot)</span>
-CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x81</span>, <span class="number">0x03</span>]);  <span class="comment">// Command: Reset Node, Target: Node 3</span></pre>
-            </div>
+              <span class="comment">// Reset Node 3 (reboot)</span>
+              CAN.<span class="function">send</span>(<span class="number">0x000</span>, [<span class="number">0x81</span>, <span class="number">0x03</span>]);  <span class="comment">// Command: Reset Node, Target: Node 3</span></pre>
+              </div>
           </div>
         </div>
       </div>
@@ -3440,7 +3691,6 @@ Line3=For configuration with CANopenNode, Vector CANalyzer, or Peak PCAN</pre></
       </div>
     </div>
   </div>
-</div>
 
   <!-- Module 6: Practical Exercises & Case Studies -->
   <div class="module-container" id="module-6">
@@ -6045,5 +6295,127 @@ window.addEventListener('beforeinstallprompt', (e) => {
 <button class="mobile-settings-trigger" onclick="toggleMobileSettings()" title="Settings">
   <i class="fa-solid fa-gear"></i>
 </button>
+<!-- All your existing HTML content above -->
+
+<!-- ============================================ -->
+<!-- FINAL MOBILE OVERRIDE — place this last -->
+<!-- ============================================ -->
+<style>
+@media (max-width: 768px) {
+  .module-container {
+    padding-top: 0.5rem !important;
+    padding-bottom: 5.5rem !important;
+  }
+  .section-container {
+    padding-top: 0.5rem !important;
+    padding-bottom: 5.5rem !important;
+  }
+  .module-header {
+    padding-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  .module-header h2 {
+    font-size: 1.6rem !important;
+  }
+  .card, .protocol-card, .scenario-card {
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .step-visual {
+    min-width: 0 !important;
+    gap: 0.75rem !important;
+  }
+  .step-content {
+    min-width: 0 !important;
+    word-break: break-word !important;
+  }
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .can-frame-visual {
+    min-width: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+  }
+  .can-bit {
+    width: 24px !important;
+    height: 32px !important;
+    font-size: 0.6rem !important;
+  }
+  .live-data {
+    flex-wrap: wrap !important;
+  }
+  .data-item {
+    flex: 1 1 45% !important;
+    min-width: 120px !important;
+  }
+  .comparison-table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  /* 3D controls horizontal */
+  #three-container .three-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    bottom: 0.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    max-width: 98% !important;
+    background: rgba(15, 23, 42, 0.92) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 0.25rem 0.4rem !important;
+    gap: 0.25rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 8px !important;
+  }
+  .three-btn {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.65rem !important;
+    min-height: 28px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+  #three-container .three-btn[onclick*="toggleThreeFullscreen"] {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+  }
+  #three-container > div[style*="bottom:1rem;left:1rem"] {
+    display: none !important;
+  }
+  #three-container #three-call-panel {
+    display: none !important;
+  }
+  #three-container .three-overlay {
+    top: 0.3rem !important;
+    left: 0.3rem !important;
+    max-width: 150px !important;
+    padding: 0.35rem 0.5rem !important;
+    font-size: 0.62rem !important;
+  }
+  #three-container.fullscreen > div[style*="bottom:1rem;left:1rem"] {
+    display: block !important;
+  }
+  #three-container.fullscreen #three-call-panel {
+    display: flex !important;
+  }
+  #three-container.fullscreen .three-controls {
+    bottom: 1rem !important;
+    padding: 0.5rem 0.8rem !important;
+    gap: 0.5rem !important;
+  }
+  #three-container.fullscreen .three-btn {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+</style>
 </body>
 </html>
