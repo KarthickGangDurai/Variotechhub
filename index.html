@@ -902,10 +902,6 @@ body { -webkit-overflow-scrolling: touch; }
   #three-container > div[style*="bottom:1rem;left:1rem"] {
     display: none !important;
   }
-  #three-container #three-call-panel {
-    display: none !important;
-  }
-  
   /* Shrink the status overlay to a small corner badge */
   #three-container .three-overlay {
     top: 0.4rem;
@@ -988,10 +984,6 @@ body { -webkit-overflow-scrolling: touch; }
   #three-container > div[style*="bottom:1rem;left:1rem"] {
     display: none !important;
   }
-  #three-container #three-call-panel {
-    display: none !important;
-  }
-
   /* Shrink the status overlay to a small corner badge */
   #three-container .three-overlay {
     top: 0.4rem;
@@ -1252,11 +1244,7 @@ html, body {
   /* Hide legend/call panel on small screens to reduce clutter */
   #three-container > div[style*="bottom:1rem;left:1rem"] {
     display: none !important;
-  }
-  #three-container #three-call-panel {
-    display: none !important;
-  }
-  
+  }  
   /* Compact status overlay */
   #three-container .three-overlay {
     top: 0.3rem;
@@ -6412,9 +6400,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   #three-container > div[style*="bottom:1rem;left:1rem"] {
     display: none !important;
   }
-  #three-container #three-call-panel {
-    display: none !important;
-  }
   #three-container .three-overlay {
     top: 0.3rem !important;
     left: 0.3rem !important;
@@ -6439,5 +6424,57 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 }
 </style>
+<!-- ============================================
+MOBILE FIX: Settings panel + WS visibility
+============================================ -->
+<style>
+@media (max-width: 768px) {
+/* 1. Kill transforms that break position:fixed */
+.section-container,
+.module-container,
+.module-inner,
+.ws-content {
+transform: none !important;
+}
+
+/* 2. Ensure Test Workstation is visible when active */
+#ws-section.section-container.active {
+display: block !important;
+min-height: 100vh;
+padding-top: 0.5rem !important;
+padding-bottom: 5.5rem !important;
+}
+
+/* 3. Force mobile settings panel to viewport */
+.mobile-settings {
+position: fixed !important;
+bottom: 0 !important;
+left: 0 !important;
+right: 0 !important;
+z-index: 9999 !important;
+}
+
+.mobile-settings-trigger {
+position: fixed !important;
+bottom: 90px !important;
+left: 20px !important;
+z-index: 9998 !important;
+}
+}
+</style>
+
+<script>
+/* 4. Guarantee settings panel lives at <body> level */
+document.addEventListener('DOMContentLoaded', function() {
+var panel = document.getElementById('mobileSettings');
+var trigger = document.querySelector('.mobile-settings-trigger');
+if (panel && panel.parentElement !== document.body) {
+document.body.appendChild(panel);
+}
+if (trigger && trigger.parentElement !== document.body) {
+document.body.appendChild(trigger);
+}
+});
+</script>
 </body>
 </html>
