@@ -1198,6 +1198,7 @@ html, body {
 
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <canvas id="particles-canvas"></canvas>
@@ -6148,25 +6149,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 </script>
-<!-- Mobile Settings Drawer -->
-
-    <div class="mobile-setting-item">
-      <label>Text Size</label>
-      <input type="range" min="80" max="140" value="100" oninput="setTextSize(this.value)" style="width:100%;accent-color:var(--primary);">
-    </div>
-    <div class="mobile-setting-item">
-      <label>Brightness</label>
-      <input type="range" min="50" max="150" value="100" oninput="setBrightness(this.value)" style="width:100%;accent-color:var(--primary);">
-    </div>
-    <div class="mobile-setting-item">
-      <label>Jump to Module</label>
-      <button class="module-dialog-btn" onclick="openModuleDialog();toggleMobileSettings();" style="width:100%;">
-        <i class="fa-solid fa-layer-group"></i> Select Module
-      </button>
-    </div>
-  </div>
-</div>
-<!-- All your existing HTML content above -->
 
 <!-- ============================================ -->
 <!-- FINAL MOBILE OVERRIDE — place this last -->
@@ -6306,12 +6288,8 @@ padding-top: 0.5rem !important;
 padding-bottom: 5.5rem !important;
 }
 
-/* 3. Force mobile settings panel to viewport */
+/* 3. Force 3D panel to viewport */
 }
 </style>
-
-<script>
-
-</script>
 </body>
 </html>
