@@ -591,89 +591,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 }
 
 /* ============================================
-   MOBILE SETTINGS DRAWER & 3D FIX
-   ============================================ */
-
-.mobile-settings {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--card);
-  border-top: 2px solid var(--primary);
-  border-radius: 20px 20px 0 0;
-  z-index: 2500;
-  padding: 1.2rem 1.2rem calc(1.2rem + env(safe-area-inset-bottom));
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-.mobile-settings.show {
-  display: block;
-  transform: translateY(0);
-}
-.mobile-settings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.2rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--card-border);
-}
-.mobile-setting-item {
-  margin-bottom: 1.2rem;
-}
-.mobile-setting-item label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-.mobile-settings-trigger {
-  position: fixed;
-  bottom: 90px;
-  left: 20px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--purple));
-  border: none;
-  color: white;
-  font-size: 1.3rem;
-  z-index: 1500;
-  box-shadow: 0 4px 20px var(--shadow-color);
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-.mobile-settings-trigger:active {
-  transform: scale(0.9);
-}
-
-@media (max-width: 768px) {
-  .mobile-settings-trigger {
-    display: flex;
-  }
-  /* Hide desktop nav-right on mobile (moved to drawer) */
-  .main-nav .nav-right {
-    display: none !important;
-  }
-  /* Fix squished 3D view */
-  #three-container {
-    height: auto !important;
-    aspect-ratio: 4/3;
-    min-height: 260px;
-    touch-action: none;
-  }
-}
-
-/* ============================================
    MOBILE & PWA ENHANCEMENTS
    Paste this at the very end of <style>
    ============================================ */
@@ -1086,15 +1003,7 @@ html, body {
     font-size: 1.6rem;
   }
   /* Keep settings gear above bottom nav */
-  .mobile-settings-trigger {
-    bottom: 80px !important;
-    z-index: 2501;
   }
-  .mobile-settings {
-    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom) + 70px);
-    z-index: 2500;
-  }
-}
 
 /* ---- FIX 2: Force content to fit viewport or scroll internally ---- */
 @media (max-width: 768px) {
@@ -1287,6 +1196,7 @@ html, body {
 }
 </style>
 
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -4130,30 +4040,7 @@ CAN.<span class="function">send</span>(<span class="number">0x605</span>, [<span
 
 <script>
 
-function toggleMobileSettings() {
-  const panel = document.getElementById('mobileSettings');
-  if (!panel) {
-    console.warn('mobileSettings panel not found in DOM');
-    return;
-  }
-  // If panel is inside a hidden parent, move it to body so it can always show
-  if (panel.closest('.section-container:not(.active)')) {
-    document.body.appendChild(panel);
-  }
-  panel.classList.toggle('show');
-  
-  // Close on outside click
-  if (panel.classList.contains('show')) {
-    setTimeout(() => {
-      document.addEventListener('click', function closeOnClick(e) {
-        if (!panel.contains(e.target) && !e.target.closest('.mobile-settings-trigger')) {
-          panel.classList.remove('show');
-          document.removeEventListener('click', closeOnClick);
-        }
-      });
-    }, 10);
-  }
-}
+
 function toggleThreeFullscreen() {
   const container = document.getElementById('three-container');
   const isFullscreen = container.classList.toggle('fullscreen');
@@ -4285,13 +4172,6 @@ function printChecklist(containerId) {
 }
 
 /* Make inventory rows clickable */
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#inventoryTable tr.ws-comparison-row').forEach(row => {
-    row.style.cursor = 'pointer';
-    row.addEventListener('click', () => showInventoryDetail(row));
-  });
-});
-
 // JS test: add a class to body if JS is enabled
 document.documentElement.classList.add('js-enabled');
 
@@ -6269,23 +6149,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 </script>
 <!-- Mobile Settings Drawer -->
-<div id="mobileSettings" class="mobile-settings">
-  <div class="mobile-settings-header">
-    <span style="color:var(--cyan);font-weight:700;font-size:1.1rem;">Settings & Tools</span>
-    <button onclick="toggleMobileSettings()" style="background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-  </div>
-  <div class="mobile-settings-body">
-    <div class="mobile-setting-item">
-      <label>Theme</label>
-      <div class="theme-switcher" style="display:flex;gap:0.5rem;">
-        <button class="theme-btn dark active" onclick="setTheme('dark')" title="Dark"></button>
-        <button class="theme-btn light" onclick="setTheme('light')" title="Light"></button>
-        <button class="theme-btn industrial" onclick="setTheme('industrial')" title="Industrial"></button>
-        <button class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight"></button>
-      </div>
-    </div>
+
     <div class="mobile-setting-item">
       <label>Text Size</label>
       <input type="range" min="80" max="140" value="100" oninput="setTextSize(this.value)" style="width:100%;accent-color:var(--primary);">
@@ -6302,9 +6166,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     </div>
   </div>
 </div>
-<button class="mobile-settings-trigger" onclick="toggleMobileSettings()" title="Settings">
-  <i class="fa-solid fa-gear"></i>
-</button>
 <!-- All your existing HTML content above -->
 
 <!-- ============================================ -->
@@ -6446,35 +6307,11 @@ padding-bottom: 5.5rem !important;
 }
 
 /* 3. Force mobile settings panel to viewport */
-.mobile-settings {
-position: fixed !important;
-bottom: 0 !important;
-left: 0 !important;
-right: 0 !important;
-z-index: 9999 !important;
-}
-
-.mobile-settings-trigger {
-position: fixed !important;
-bottom: 90px !important;
-left: 20px !important;
-z-index: 9998 !important;
-}
 }
 </style>
 
 <script>
-/* 4. Guarantee settings panel lives at <body> level */
-document.addEventListener('DOMContentLoaded', function() {
-var panel = document.getElementById('mobileSettings');
-var trigger = document.querySelector('.mobile-settings-trigger');
-if (panel && panel.parentElement !== document.body) {
-document.body.appendChild(panel);
-}
-if (trigger && trigger.parentElement !== document.body) {
-document.body.appendChild(trigger);
-}
-});
+
 </script>
 </body>
 </html>
