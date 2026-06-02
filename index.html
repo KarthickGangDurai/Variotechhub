@@ -3785,6 +3785,7 @@ CAN.<span class="function">send</span>(<span class="number">0x605</span>, [<span
       </div>
     </div>
   </div>
+</div>
 
 <!-- ==================== TEST WORKSTATION SECTION ==================== -->
 <div class="section-container" id="ws-section">
@@ -4142,7 +4143,28 @@ CAN.<span class="function">send</span>(<span class="number">0x605</span>, [<span
 <script>
 
 function toggleMobileSettings() {
-  document.getElementById('mobileSettings').classList.toggle('show');
+  const panel = document.getElementById('mobileSettings');
+  if (!panel) {
+    console.warn('mobileSettings panel not found in DOM');
+    return;
+  }
+  // If panel is inside a hidden parent, move it to body so it can always show
+  if (panel.closest('.section-container:not(.active)')) {
+    document.body.appendChild(panel);
+  }
+  panel.classList.toggle('show');
+  
+  // Close on outside click
+  if (panel.classList.contains('show')) {
+    setTimeout(() => {
+      document.addEventListener('click', function closeOnClick(e) {
+        if (!panel.contains(e.target) && !e.target.closest('.mobile-settings-trigger')) {
+          panel.classList.remove('show');
+          document.removeEventListener('click', closeOnClick);
+        }
+      });
+    }, 10);
+  }
 }
 function toggleThreeFullscreen() {
   const container = document.getElementById('three-container');
