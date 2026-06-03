@@ -4118,58 +4118,156 @@ function closeInventoryDetail() {
 /* ===== Checklist Print ===== */
 function printChecklist(containerId) {
   const source = document.getElementById(containerId);
-  if (!source) return;
-
-  const heading = source.closest('.ws-glass').querySelector('h3').innerText;
-
-  // Remove any leftover print container from a previous attempt
-  let old = document.getElementById('printContainer');
-  if (old) old.remove();
-
-  // Create a fresh print container as a direct child of <body>
-  const printContainer = document.createElement('div');
-  printContainer.id = 'printContainer';
-  printContainer.style.cssText = 'display:none;position:fixed;left:0;top:0;width:100%;min-height:100%;background:#fff;z-index:99999;overflow:auto;';
-  document.body.appendChild(printContainer);
-
-  // Fill it with clean, printable content
-  printContainer.innerHTML = `
-    <div style="font-family:Inter,Arial,sans-serif;padding:24px;color:#1e293b;background:#fff;">
-      <h1 style="font-size:20px;font-weight:700;border-bottom:2px solid #1e293b;padding-bottom:12px;margin-bottom:20px;">${heading}</h1>
-      ${source.innerHTML}
-    </div>
-  `;
-
-  // Inject print-only CSS (hides everything except the print container)
-  let printStyle = document.getElementById('printStyle');
-  if (!printStyle) {
-    printStyle = document.createElement('style');
-    printStyle.id = 'printStyle';
-    printStyle.textContent = `
-      @media print {
-        body > *:not(#printContainer) { display: none !important; }
-        #printContainer { display: block !important; position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: white !important; color: black !important; }
-        #printContainer * { color: #1e293b !important; background: white !important; }
-        .checkbox { display: inline-block !important; width: 16px !important; height: 16px !important; border: 2px solid #334155 !important; margin-right: 12px !important; vertical-align: middle !important; border-radius: 3px !important; }
-        button, input, .toggle-switch, i { display: none !important; }
-      }
-    `;
-    document.head.appendChild(printStyle);
+  if (!source) {
+    console.warn('Print checklist: source not found:', containerId);
+    return;
   }
 
-  // Open the browser print dialog
-  window.print();
+  // Get the heading from the parent card
+  const glass = source.closest('.ws-glass');
+  const headingEl = glass ? glass.querySelector('h3') : null;
+  const heading = headingEl ? headingEl.innerText.trim() : 'Checklist';
 
-  // Clean up after the dialog closes
-  const cleanup = () => {
-    const pc = document.getElementById('printContainer');
-    if (pc) pc.remove();
-    window.removeEventListener('afterprint', cleanup);
-  };
-  window.addEventListener('afterprint', cleanup);
+  // Remove any previous print container/style
+  let old = document.getElementById('printContainer');
+  if (old) old.remove();
+  old = document.getElementById('printStyle');
+  if (old) old.remove();
 
-  // Fallback cleanup if afterprint doesn't fire (Safari, some mobile browsers)
-  setTimeout(cleanup, 2000);
+  // Create print container OFF-SCREEN instead of display:none
+  // (display:none prevents the browser from laying out children for print)
+  const printContainer = document.createElement('div');
+  printContainer.id = 'printContainer';
+  printContainer.style.cssText =
+    'position:absolute;left:-9999px;top:-9999px;width:100%;min-height:100%;' +
+    'background:#fff;z-index:-1;overflow:auto;visibility:hidden;';
+  document.body.appendChild(printContainer);
+
+  // Build the printable wrapper
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText =
+    'font-family:Inter,Arial,sans-serif;padding:24px;color:#1e293b;' +
+    'background:#fff;max-width:900px;';
+
+  const h1 = document.createElement('h1');
+  h1.style.cssText =
+    'font-size:22px;font-weight:700;border-bottom:2px solid #1e293b;' +
+    'padding-bottom:12px;margin-bottom:24px;';
+  h1.textContent = heading;
+  wrapper.appendChild(h1);
+
+  // Clone the source node (preserves DOM structure and checkbox states)
+  const clone = source.cloneNode(true);
+
+  // Sync checkbox / radio checked states from the live DOM into the clone
+  const sourceInputs = source.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+  const cloneInputs = clone.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+  sourceInputs.forEach((input, i) => {
+    if (cloneInputs[i]) {
+      cloneInputs[i].checked = input.checked;
+      // Set attribute so the print engine knows it's checked
+      if (input.checked) {
+        cloneInputs[i].setAttribute('checked', 'checked');
+      } else {
+        cloneInputs[i].removeAttribute('checked');
+      }
+    }
+  });
+
+  // Convert any JS-driven "checked" classes into inline print styles
+  // so checked items remain highlighted on paper
+  clone.querySelectorAll('.ws-checklist-item, .checklist li').forEach((item, idx) => {
+    const srcItem = source.querySelectorAll('.ws-checklist-item, .checklist li')[idx];
+    if (srcItem) {
+      const isChecked =
+        srcItem.classList.contains('checked') ||
+        srcItem.querySelector('.ws-check-icon.checked, .check-icon.checked, .fa-check') !== null;
+      if (isChecked) {
+        item.style.cssText += 'border-left:4px solid #10b981 !important;background:#f0fdf4 !important;';
+      }
+    }
+  });
+
+  wrapper.appendChild(clone);
+  printContainer.appendChild(wrapper);
+
+  // Inject print-only CSS
+  const printStyle = document.createElement('style');
+  printStyle.id = 'printStyle';
+  printStyle.textContent = `
+    @media print {
+      /* Hide everything except our print container */
+      body > *:not(#printContainer) { display: none !important; }
+
+      /* Bring the print container into view */
+      #printContainer {
+        display: block !important;
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        visibility: visible !important;
+        width: 100% !important;
+        min-height: 100% !important;
+        background: white !important;
+        color: black !important;
+        z-index: auto !important;
+        overflow: visible !important;
+      }
+      #printContainer * {
+        color: #1e293b !important;
+        background: white !important;
+        box-shadow: none !important;
+      }
+
+      /* Preserve checklist item styling */
+      .ws-checklist-item, .checklist li, #printContainer .ws-checklist-item {
+        page-break-inside: avoid !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 10px !important;
+        margin-bottom: 8px !important;
+        background: white !important;
+        border-radius: 6px !important;
+      }
+
+      /* Show checkboxes as native boxes */
+      input[type="checkbox"], input[type="radio"] {
+        display: inline-block !important;
+        -webkit-appearance: checkbox !important;
+        appearance: checkbox !important;
+        width: 14px !important;
+        height: 14px !important;
+        margin-right: 8px !important;
+        vertical-align: middle !important;
+      }
+
+      /* Hide interactive controls */
+      button, input[type="button"], input[type="submit"],
+      .sim-btn, .nav-btn, .three-btn, .code-copy, .tab-btn,
+      .toggle-switch, i.fa-solid, i.fa-regular, .fa-check {
+        display: none !important;
+      }
+    }
+  `;
+  document.head.appendChild(printStyle);
+
+  // Wait two animation frames so the browser lays out the off-screen
+  // content before we open the print dialog
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.print();
+
+      // Cleanup after print (or fallback for Safari/mobile)
+      const cleanup = () => {
+        const pc = document.getElementById('printContainer');
+        if (pc) pc.remove();
+        const ps = document.getElementById('printStyle');
+        if (ps) ps.remove();
+        window.removeEventListener('afterprint', cleanup);
+      };
+      window.addEventListener('afterprint', cleanup);
+      setTimeout(cleanup, 3000);
+    });
+  });
 }
 
 /* Make inventory rows clickable */
