@@ -1194,6 +1194,66 @@ html, body {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+/* ============================================
+   MOBILE NAV FIX: Show Theme / Text Size / Modules
+   ============================================ */
+@media (max-width: 768px) {
+  /* 1. Bring .nav-right back into the bottom bar */
+  .main-nav > .nav-right {
+    display: flex !important;
+    width: 100%;
+    order: 2;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.2rem 0 0;
+  }
+
+  /* 2. Hide the logo text to save space (optional) */
+  .main-logo {
+    display: none !important;
+  }
+
+  /* 3. Show the accessibility sliders */
+  .accessibility-controls {
+    display: flex !important;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .accessibility-controls input[type="range"] {
+    width: 50px;
+    height: 3px;
+  }
+  .accessibility-controls i {
+    font-size: 0.65rem;
+  }
+
+  /* 4. Show the theme switcher and shrink buttons */
+  .theme-switcher {
+    display: flex !important;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  .theme-btn {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* 5. Show the module-selection button */
+  .nav-right > .three-btn {
+    display: inline-flex !important;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* 6. Keep search & progress hidden so the bar doesn't overflow */
+  .search-bar,
+  .nav-progress {
+    display: none !important;
+  }
+}
 </style>
 
 <base target="_blank">
