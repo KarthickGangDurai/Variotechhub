@@ -1254,8 +1254,250 @@ html, body {
     display: none !important;
   }
 }
+
+/* ============================================
+   VARIOTECH AI CHATBOT  (vtai- prefix)
+   ============================================ */
+
+#vtai-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.4rem;
+  z-index: 1600;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#vtai-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px var(--shadow-color); }
+
+#vtai-box {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  height: 540px;
+  max-height: calc(100vh - 120px);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  z-index: 1600;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+#vtai-box.show { display: flex; }
+
+#vtai-header {
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+#vtai-title { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
+#vtai-close {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+#vtai-close:hover { background: rgba(255,255,255,0.35); }
+
+#vtai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scroll-behavior: smooth;
+}
+#vtai-messages::-webkit-scrollbar { width: 5px; }
+#vtai-messages::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+
+#vtai-chips {
+  padding: 0.5rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  flex-shrink: 0;
+  border-top: 1px solid var(--card-border);
+}
+#vtai-chips::-webkit-scrollbar { height: 4px; }
+
+#vtai-inputarea {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  background: var(--darker);
+}
+#vtai-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+}
+#vtai-input:focus { border-color: var(--primary); }
+#vtai-input::placeholder { color: var(--text-muted); }
+
+#vtai-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+#vtai-send:hover { background: var(--primary-dark); }
+
+.vtai-user {
+  align-self: flex-end;
+  max-width: 85%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border-radius: 14px;
+  border-bottom-right-radius: 4px;
+  padding: 0.75rem 1rem;
+  word-wrap: break-word;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+.vtai-bot {
+  align-self: flex-start;
+  max-width: 90%;
+  background: var(--darker);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  padding: 0.75rem 1rem;
+  word-wrap: break-word;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+.vtai-bot strong { color: var(--cyan); }
+.vtai-bot ul, .vtai-bot ol { margin: 0.4rem 0; padding-left: 1.2rem; }
+.vtai-bot li { margin-bottom: 0.25rem; }
+.vtai-bot code {
+  background: rgba(0,0,0,0.25);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--cyan);
+}
+
+.vtai-chip {
+  white-space: nowrap;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0,102,255,0.1);
+  border: 1px solid rgba(0,102,255,0.25);
+  color: var(--cyan);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+.vtai-chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+.vtai-typing {
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  padding: 0.6rem 1rem;
+}
+.vtai-typing span {
+  width: 6px;
+  height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: vtai-bounce 1.2s infinite ease-in-out;
+}
+.vtai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.vtai-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes vtai-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  #vtai-box {
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 85vh !important;
+    max-height: 85vh !important;
+    border-radius: 16px 16px 0 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+  #vtai-fab {
+    bottom: 90px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+  }
+  #bookmarkBtnTop, #notesBtnTop {
+    position: fixed !important;
+    bottom: auto !important;
+    left: auto !important;
+  }
+  #bookmarkBtnTop { top: 90px !important; right: 15px !important; }
+  #notesBtnTop   { top: 150px !important; right: 15px !important; }
+  #bookmarkPanel, #notesPanel {
+    position: fixed !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 15px !important;
+    width: calc(100vw - 30px) !important;
+    max-width: 320px !important;
+  }
+  #bookmarkPanel { top: 150px !important; }
+  #notesPanel    { top: 210px !important; }
+}
 </style>
 
+<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
@@ -1311,15 +1553,20 @@ html, body {
   </div>
 </nav>
 
-<!-- Floating Action Buttons -->
-<button class="bookmark-btn" onclick="toggleBookmarkPanel()" title="Bookmarks"><i class="fa-solid fa-bookmark"></i></button>
-<div class="bookmark-panel" id="bookmarkPanel">
+<!-- TOP-RIGHT: Bookmark -->
+<button class="bookmark-btn" id="bookmarkBtnTop" onclick="toggleBookmarkPanel()" title="Bookmarks" style="top:90px; right:20px; bottom:auto;">
+  <i class="fa-solid fa-bookmark"></i>
+</button>
+<div class="bookmark-panel" id="bookmarkPanel" style="top:150px; right:20px; bottom:auto;">
   <h4><i class="fa-solid fa-bookmark mr-2"></i>Your Bookmarks</h4>
   <div id="bookmarkList"></div>
 </div>
 
-<button class="bookmark-btn" style="bottom:20px; right:20px; background:var(--secondary);" onclick="toggleNotesPanel()" title="Notes"><i class="fa-solid fa-note-sticky"></i></button>
-<div class="notes-panel" id="notesPanel">
+<!-- TOP-RIGHT: Notes -->
+<button class="bookmark-btn" id="notesBtnTop" onclick="toggleNotesPanel()" title="Notes" style="top:150px; right:20px; bottom:auto; background:var(--secondary);">
+  <i class="fa-solid fa-note-sticky"></i>
+</button>
+<div class="notes-panel" id="notesPanel" style="top:210px; right:20px; bottom:auto;">
   <h4><i class="fa-solid fa-pen mr-2"></i>Quick Notes</h4>
   <textarea class="notes-textarea" id="quickNotes" placeholder="Take notes while learning..." oninput="saveNotes()"></textarea>
   <div style="margin-top:0.5rem; text-align:right;">
@@ -6248,14 +6495,16 @@ if (document.readyState === 'loading') {
 </div>
 </div>
 <script>
-  // 1. Register Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('PWA ready:', reg.scope))
-        .catch(err => console.log('PWA failed:', err));
-    });
-  }
+  // Safe Service Worker registration — works on file:// AND http://
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.warn('SW registration skipped:', err.message));
+  });
+} else if (location.protocol === 'file:') {
+  console.log('Running from file:// — PWA features (offline cache) require a local server.');
+}
 
   // 2. Make wide tables scrollable on mobile
   document.addEventListener('DOMContentLoaded', () => {
@@ -6449,5 +6698,174 @@ padding-bottom: 5.5rem !important;
 /* 3. Force 3D panel to viewport */
 }
 </style>
+
 </body>
 </html>
+<script>
+  /* ========== VARIOTECH AI CHATBOT ========== */
+  
+  var VTAI_KB = [
+    {kw:['can bus','what is can','controller area network','can_h','can_l','two wires'],r:"CAN Bus is the communication backbone of modern elevators. All devices share just two twisted wires (CAN_H and CAN_L).\n\n- Differential signaling: Electrical noise cancels out because both wires are affected equally.\n- Arbitration: Lower message IDs always win when two devices talk at once.\n- Error detection: Every message includes a CRC checksum; corrupted frames are caught automatically.\n\nUse 125 kbps for long shafts (>50 m) and 250 kbps for standard buildings."},
+    {kw:['cia 301','canopen','application layer','object dictionary','od','nmt','pdo','sdo','heartbeat'],r:"CiA 301 is the core CANopen standard. It defines:\n\n- Object Dictionary: A numbered phone book of every parameter in a device.\n- NMT: Network Management states (Initializing, Pre-Operational, Operational, Stopped).\n- PDO: Fast, real-time process data (position, speed, status).\n- SDO: Slower, confirmed service data for configuration.\n- Heartbeat: Regular proof of life messages every 100-500 ms."},
+    {kw:['cia 306','safety','safety profile','crc-32','sequence counter','dual channel','watchdog','safe state'],r:"CiA 306 handles safety-critical communication in elevators.\n\n- Sequence Counter: Incrementing number in every safety message so missed messages are detected.\n- CRC-32: 32-bit checksum ensures not a single bit is corrupted unnoticed.\n- Safety Timeout: If no safety message arrives within ~50-200 ms, the system enters safe state immediately.\n- Dual-Channel Redundancy: Two independent CAN channels must agree; disagreement = safe state.\n\nSilence is treated as danger - this is called fail-safe design."},
+    {kw:['cia 406','sensor','actuator','door','limit switch','call button','input','output','digital'],r:"CiA 406 standardizes sensors and actuators for elevators:\n\n- Door controllers, limit switches, call buttons, and load weighers.\n- Digital inputs mapped to 0x6000 and outputs to 0x6200 in the Object Dictionary.\n- Any brand CiA 406 device works with any CiA 417 controller."},
+    {kw:['cia 407','encoder','position','feedback','resolution','ppr','counts'],r:"CiA 407 defines encoder communication for precise motor position feedback.\n\n- Position actual value lives at Object Dictionary index 0x6064.\n- Velocity is at 0x606C.\n- Resolution (pulses per revolution) is at 0x608F.\n\nThis enables floor-leveling accuracy of +/-3 mm."},
+    {kw:['node id','nodeid','cob-id','address','assignment','floor 1','0x01','0x11'],r:"CiA 417 assigns standard Node IDs so devices from different manufacturers interoperate:\n\n- Car Controller: 0x01\n- Door System: 0x02\n- Call Buttons: 0x03\n- VFD Drive: 0x0B\n- Encoder: 0x05\n- Landing Panels: 0x11 + floor number (e.g., Floor 1 = 0x11)\n- Safety PLC: 0x7F\n\nCOB-ID formulas: TPDO = 0x180 + Node ID, RPDO = 0x200 + Node ID, SDO Rx = 0x600 + Node ID."},
+    {kw:['termination','120 ohm','60 ohm','resistor','terminate','bus load'],r:"A healthy CAN bus needs 120 ohm termination resistors at both physical ends.\n\n- Power off the bus and measure resistance between CAN_H and CAN_L.\n- ~60 ohm = correct (two 120 ohm in parallel).\n- 120 ohm = one missing terminator.\n- Infinity = both missing or a cable break.\n- 0 ohm = short circuit between CAN_H and CAN_L."},
+    {kw:['troubleshoot','no communication','intermittent','error frame','bus off','debug'],r:"Follow this order when CAN bus fails:\n\n1. Check termination resistors (~60 ohm with power off).\n2. Verify all nodes use the same baud rate.\n3. Check for duplicate Node IDs.\n4. Inspect cable quality (twisted pair, shielded in noisy areas).\n5. Keep stubs under 30 cm; use daisy chain, not star topology.\n6. Ground the shield at one end only (controller side)."},
+    {kw:['emc','emi','noise','interference','shield','grounding','electromagnetic'],r:"Elevators are electrically noisy. Protect your CAN bus:\n\n- Use shielded twisted pair cable with 120 ohm impedance.\n- Maintain >30 cm separation from VFD motor cables.\n- Ground the shield at one end only to avoid ground loops.\n- Add common-mode chokes on nodes in high-EMI areas.\n- Keep stub lengths <30 cm."},
+    {kw:['en 81-20','en 81-50','ucm','unintended car movement','overspeed','safety gear','sil'],r:"EN 81-20 / EN 81-50 define elevator safety testing:\n\n- UCM: Detect within 150-200 mm; stop within 1,200 mm.\n- Overspeed: Governor triggers at 115% rated speed.\n- SIL: Safety circuits require SIL 1-3 depending on risk.\n- 10 drop tests required: 5 empty car up, 5 rated load down."},
+    {kw:['test workstation','equipment','multimeter','oscilloscope','power supply','soldering','tools'],r:"The Variotech Test Workstation includes:\n\n- Essential: Fluke 87V multimeter, 4-ch oscilloscope, bench power supply, CAN interface, ESD mat.\n- Recommended: Function generator, LCR meter, linear test rail.\n- Safety: Isolation transformer, 30 mA RCD, common earth bar <0.1 ohm.\n\nSwitch to the Test Workstation tab for the full interactive equipment guide."},
+    {kw:['boot up','boot-up','initialization','sequence','startup','pre-operational','operational'],r:"CANopen boot-up sequence:\n\n1. Node powers on and runs POST (self-test).\n2. Node sends boot-up message (COB-ID 0x700+ID, data 0x00).\n3. Node enters Pre-Operational state automatically.\n4. Master reads Object Dictionary and writes configuration via SDO.\n5. Master sends NMT Start (0x01, 0x00) to all nodes.\n6. All nodes enter Operational and begin PDOs."},
+    {kw:['eds','electronic data sheet','configuration file','ini','canopen node'],r:"An EDS file (Electronic Data Sheet) is an INI-format file describing a device's Object Dictionary.\n\n- Configuration tools read it to show human-readable parameter names.\n- It defines data types, limits, defaults, and PDO mappability.\n- Always keep EDS files version-matched to firmware."},
+    {kw:['hello','hi','hey','greetings','start','help'],r:"Hello! I am your Variotech Engineering Assistant. Ask me about:\n\n- CAN bus basics\n- CiA 301, 306, 406, or 407 protocols\n- Node IDs or COB-ID formulas\n- Termination and troubleshooting\n- EN 81-20 safety requirements\n- Test workstation equipment\n\nOr click a quick chip below."}
+  ];
+  
+  var VTAI_CHIPS = [
+    'What is CAN bus?',
+    'CiA 306 safety?',
+    'Node IDs?',
+    'Termination?',
+    'Troubleshoot?',
+    'EN 81-20?'
+  ];
+  
+  function vtaiMd2html(t){
+    t = t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    t = t.replace(/\n\n/g,'</p><p>');
+    t = t.replace(/\n- /g,'</li><li>');
+    t = t.replace(/\n\d+\. /g,'</li><li>');
+    t = '<p>' + t + '</p>';
+    t = t.replace(/<<p><\/li><li>/g,'<<ul><li>');
+    t = t.replace(/<<li>([^<<]*)<<\/p>/g,'<<li>$1</li></ul>');
+    t = t.replace(/<<p><li>/g,'<<ul><li>');
+    t = t.replace(/<<\/li><\/p>/g,'</li></ul>');
+    t = t.replace(/<<p><\/p>/g,'');
+    return t;
+  }
+  
+  function vtaiAppend(html, who){
+    var box = document.getElementById('vtai-messages');
+    if(!box) return;
+    var d = document.createElement('div');
+    d.className = who === 'user' ? 'vtai-user' : 'vtai-bot';
+    d.innerHTML = html;
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+  
+  function vtaiShowTyping(){
+    var box = document.getElementById('vtai-messages');
+    if(!box) return '';
+    var id = 'vtai-typing-' + Date.now();
+    var d = document.createElement('div');
+    d.id = id;
+    d.className = 'vtai-bot vtai-typing';
+    d.innerHTML = '<span></span><span></span><span></span>';
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+    return id;
+  }
+  
+  function vtaiRemoveTyping(id){
+    var el = document.getElementById(id);
+    if(el) el.remove();
+  }
+  
+  function vtaiFindAnswer(query){
+    var q = query.toLowerCase();
+    for(var i = 0; i < VTAI_KB.length; i++){
+      for(var k = 0; k < VTAI_KB[i].kw.length; k++){
+        if(q.indexOf(VTAI_KB[i].kw[k]) !== -1) return vtaiMd2html(VTAI_KB[i].r);
+      }
+    }
+    return vtaiMd2html('I do not have a specific answer for that yet. Try asking about CAN bus, CiA protocols, Node IDs, termination, troubleshooting, or EN 81-20 safety.');
+  }
+  
+  function vtaiRenderChips(){
+    var c = document.getElementById('vtai-chips');
+    if(!c) return;
+    var html = '';
+    for(var i = 0; i < VTAI_CHIPS.length; i++){
+      html += '<button class="vtai-chip">' + VTAI_CHIPS[i] + '</button>';
+    }
+    c.innerHTML = html;
+  }
+  
+  // Event delegation for chip clicks
+  document.addEventListener('click', function(e){
+    if(e.target.classList.contains('vtai-chip')){
+      vtaiChip(e.target.textContent);
+    }
+  });
+  
+  function vtaiToggle(){
+    var box = document.getElementById('vtai-box');
+    if(!box) return;
+    var open = box.classList.toggle('show');
+    if(open){
+      var inp = document.getElementById('vtai-input');
+      if(inp) inp.focus();
+      if(!box.dataset.greeted){
+        box.dataset.greeted = '1';
+        setTimeout(function(){
+          vtaiAppend(vtaiFindAnswer('hello'), 'bot');
+          vtaiRenderChips();
+        }, 300);
+      }
+    }
+  }
+  
+  function vtaiSend(){
+    var inp = document.getElementById('vtai-input');
+    if(!inp) return;
+    var text = inp.value.trim();
+    if(!text) return;
+    inp.value = '';
+    vtaiAppend(text, 'user');
+    var tid = vtaiShowTyping();
+    var ans = vtaiFindAnswer(text);
+    setTimeout(function(){
+      vtaiRemoveTyping(tid);
+      vtaiAppend(ans, 'bot');
+      vtaiRenderChips();
+    }, 500 + Math.random() * 400);
+  }
+  
+  function vtaiChip(text){
+    vtaiAppend(text, 'user');
+    var tid = vtaiShowTyping();
+    var ans = vtaiFindAnswer(text);
+    setTimeout(function(){
+      vtaiRemoveTyping(tid);
+      vtaiAppend(ans, 'bot');
+      vtaiRenderChips();
+    }, 400 + Math.random() * 300);
+  }
+  
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', vtaiRenderChips);
+  } else {
+    vtaiRenderChips();
+  }
+  console.log('Variotech AI Chatbot loaded');
+  /* ========== END CHATBOT ========== */
+  </script>
+
+<!-- ========== VARIOTECH AI CHATBOT ========== -->
+<button id="vtai-fab" onclick="vtaiToggle()" title="Ask Variotech AI" aria-label="Open chatbot">
+  <i class="fa-solid fa-robot"></i>
+</button>
+<div id="vtai-box" role="dialog" aria-label="Variotech AI chat">
+  <div id="vtai-header">
+    <div id="vtai-title"><i class="fa-solid fa-robot"></i><span>Variotech AI</span></div>
+    <button id="vtai-close" onclick="vtaiToggle()" aria-label="Close chatbot"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="vtai-messages"></div>
+  <div id="vtai-chips"></div>
+  <div id="vtai-inputarea">
+    <input type="text" id="vtai-input" placeholder="Ask about CAN, CiA, elevators..." onkeydown="if(event.key==='Enter')vtaiSend()" aria-label="Chat input">
+    <button id="vtai-send" onclick="vtaiSend()" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+<!-- ========== END CHATBOT ========== -->
