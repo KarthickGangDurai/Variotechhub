@@ -437,22 +437,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .calc-input:focus { outline: none; border-color: var(--primary); }
 .calc-result { background: rgba(0,102,255,0.05); border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.9rem; color: var(--cyan); }
 
-/* Bookmark system */
-.bookmark-btn { position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); border: none; color: white; cursor: pointer; font-size: 1.2rem; z-index: 1500; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
-.bookmark-btn:hover { transform: scale(1.1); }
-.bookmark-panel { position: fixed; bottom: 140px; right: 20px; width: 300px; max-height: 400px; background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 1rem; z-index: 1500; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow-y: auto; }
-.bookmark-panel.show { display: block; }
-.bookmark-panel h4 { color: var(--cyan); margin-bottom: 0.75rem; font-size: 0.9rem; }
-.bookmark-item { padding: 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; border-bottom: 1px solid var(--card-border); }
-.bookmark-item:hover { background: rgba(0,102,255,0.1); }
-
-/* Note taking */
-.notes-panel { position: fixed; bottom: 140px; right: 20px; width: 320px; background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 1rem; z-index: 1500; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-.notes-panel.show { display: block; }
-.notes-panel h4 { color: var(--cyan); margin-bottom: 0.75rem; font-size: 0.9rem; }
-.notes-textarea { width: 100%; min-height: 150px; background: var(--darker); border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem; color: var(--text); font-size: 0.85rem; resize: vertical; }
-.notes-textarea:focus { outline: none; border-color: var(--primary); }
-
 /* Troubleshooting tree */
 .trouble-node { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; cursor: pointer; transition: all 0.3s; }
 .trouble-node:hover { border-color: var(--primary); }
@@ -690,24 +674,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
   }
   .hero { min-height: 70vh; padding-bottom: 6rem; }
   .progress-bar { display: none; }
-
-  /* Floating buttons moved above bottom nav */
-  .bookmark-btn {
-    bottom: 90px !important;
-    right: 15px !important;
-    width: 48px;
-    height: 48px;
-  }
-  .bookmark-btn[style*="bottom:20px"] {
-    bottom: 150px !important;
-  }
-  .bookmark-panel,
-  .notes-panel {
-    bottom: 160px !important;
-    right: 15px !important;
-    width: calc(100vw - 30px);
-    max-width: 320px;
-  }
 
   /* Larger touch targets */
   .floor-btn { height: 56px; font-size: 1.2rem; }
@@ -1584,18 +1550,6 @@ html, body {
     max-height: calc(100vh - 160px - env(safe-area-inset-bottom));
     z-index: 9998;
   }
-
-  /* Move top-right floating buttons to left side on mobile so they don't fight chatbot */
-  #bookmarkBtnTop,
-  #notesBtnTop {
-    right: auto !important;
-    left: 12px !important;
-  }
-  #bookmarkPanel,
-  #notesPanel {
-    right: auto !important;
-    left: 12px !important;
-  }
 }
 </style>
 
@@ -1657,27 +1611,6 @@ html, body {
     </button>
   </div>
 </nav>
-
-<!-- TOP-RIGHT: Bookmark -->
-<button class="bookmark-btn" id="bookmarkBtnTop" onclick="toggleBookmarkPanel()" title="Bookmarks" style="top:90px; right:20px; bottom:auto;">
-  <i class="fa-solid fa-bookmark"></i>
-</button>
-<div class="bookmark-panel" id="bookmarkPanel" style="top:150px; right:20px; bottom:auto;">
-  <h4><i class="fa-solid fa-bookmark mr-2"></i>Your Bookmarks</h4>
-  <div id="bookmarkList"></div>
-</div>
-
-<!-- TOP-RIGHT: Notes -->
-<button class="bookmark-btn" id="notesBtnTop" onclick="toggleNotesPanel()" title="Notes" style="top:150px; right:20px; bottom:auto; background:var(--secondary);">
-  <i class="fa-solid fa-note-sticky"></i>
-</button>
-<div class="notes-panel" id="notesPanel" style="top:210px; right:20px; bottom:auto;">
-  <h4><i class="fa-solid fa-pen mr-2"></i>Quick Notes</h4>
-  <textarea class="notes-textarea" id="quickNotes" placeholder="Take notes while learning..." oninput="saveNotes()"></textarea>
-  <div style="margin-top:0.5rem; text-align:right;">
-    <button onclick="clearNotes()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;">Clear</button>
-  </div>
-</div>
 
 <!-- ==================== CAN MASTERCLASS SECTION ==================== -->
 <div class="section-container active" id="can-section">
@@ -4802,58 +4735,6 @@ document.addEventListener('click', function(e) {
     document.getElementById('searchResults').classList.remove('show');
   }
 });
-
-// ==================== BOOKMARKS & NOTES ====================
-let bookmarks = JSON.parse(localStorage.getItem('canBookmarks') || '[]');
-
-function toggleBookmarkPanel() {
-  document.getElementById('bookmarkPanel').classList.toggle('show');
-  document.getElementById('notesPanel').classList.remove('show');
-  renderBookmarks();
-}
-
-function renderBookmarks() {
-  const list = document.getElementById('bookmarkList');
-  if (bookmarks.length === 0) {
-    list.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">No bookmarks yet. Click the bookmark icon on any section.</p>';
-    return;
-  }
-  list.innerHTML = bookmarks.map((bm, i) => `
-    <div class="bookmark-item" onclick="goToBookmark(${bm.module})">
-      <div style="font-weight: 600; color: var(--text);">${bm.title}</div>
-      <div style="font-size: 0.75rem; color: var(--text-muted);">Module ${bm.module + 1}</div>
-    </div>
-  `).join('');
-}
-
-function addBookmark(title, module) {
-  if (!bookmarks.find(b => b.module === module)) {
-    bookmarks.push({ title, module, date: new Date().toISOString() });
-    localStorage.setItem('canBookmarks', JSON.stringify(bookmarks));
-  }
-}
-
-function goToBookmark(module) {
-  document.getElementById('bookmarkPanel').classList.remove('show');
-  goToModule(module);
-}
-
-function toggleNotesPanel() {
-  document.getElementById('notesPanel').classList.toggle('show');
-  document.getElementById('bookmarkPanel').classList.remove('show');
-}
-
-function saveNotes() {
-  localStorage.setItem('canNotes', document.getElementById('quickNotes').value);
-}
-
-function clearNotes() {
-  document.getElementById('quickNotes').value = '';
-  localStorage.setItem('canNotes', '');
-}
-
-// Load saved notes
-document.getElementById('quickNotes').value = localStorage.getItem('canNotes') || '';
 
 // ==================== PARTICLES ====================
 const particleCanvas = document.getElementById('particles-canvas');
