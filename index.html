@@ -1255,103 +1255,173 @@ html, body {
   }
 }
 
-/* ============================================
-   VARIOTECH AI CHATBOT  (vtai- prefix)
-   ============================================ */
+/* ===== VARIOTECH AI CHATBOT ===== */
+/* Theme-aware: uses existing CSS variables so it works across dark/light/industrial/midnight */
 
-#vtai-fab {
+#vtai-launcher {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 24px;
+  right: 24px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--purple));
   border: none;
-  color: white;
-  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff;
   font-size: 1.4rem;
-  z-index: 1600;
+  cursor: pointer;
   box-shadow: 0 4px 20px var(--shadow-color);
-  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform .2s, opacity .2s;
 }
-#vtai-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px var(--shadow-color); }
+#vtai-launcher:hover { transform: scale(1.08); }
 
-#vtai-box {
+#vtai-chat {
   position: fixed;
   bottom: 90px;
-  right: 20px;
-  width: 400px;
-  max-width: calc(100vw - 40px);
-  height: 540px;
+  right: 24px;
+  width: 440px;
+  max-width: calc(100vw - 48px);
+  height: 600px;
   max-height: calc(100vh - 120px);
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: 16px;
-  z-index: 1600;
-  display: none;
+  display: flex;
   flex-direction: column;
   overflow: hidden;
+  z-index: 9998;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.96);
+  transition: opacity .25s ease, transform .25s ease;
 }
-#vtai-box.show { display: flex; }
+#vtai-chat.vtai-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
 
 #vtai-header {
-  padding: 0.9rem 1.2rem;
-  background: linear-gradient(135deg, var(--primary), var(--purple));
-  color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  background: linear-gradient(90deg, var(--darker), var(--card));
+  border-bottom: 1px solid var(--card-border);
 }
-#vtai-title { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
-#vtai-close {
-  background: rgba(255,255,255,0.2);
+#vtai-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--text);
+  font-weight: 600;
+  font-size: .95rem;
+}
+#vtai-title i { color: var(--cyan); }
+
+#vtai-lang {
+  background: var(--card-border);
   border: none;
-  color: white;
+  color: var(--text);
+  padding: .25rem .6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 700;
+  margin-right: .4rem;
+}
+#vtai-lang:hover { background: var(--primary); color: #fff; }
+
+#vtai-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all .2s;
 }
-#vtai-close:hover { background: rgba(255,255,255,0.35); }
+#vtai-close:hover { background: var(--danger); color: #fff; }
 
-#vtai-messages {
+#vtai-body {
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  scroll-behavior: smooth;
+  gap: .75rem;
 }
-#vtai-messages::-webkit-scrollbar { width: 5px; }
-#vtai-messages::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+#vtai-body::-webkit-scrollbar { width: 6px; }
+#vtai-body::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
 
-#vtai-chips {
-  padding: 0.5rem 1rem;
-  display: flex;
-  gap: 0.5rem;
+.vtai-msg { display: flex; }
+.vtai-msg.vtai-user { justify-content: flex-end; }
+.vtai-msg.vtai-bot { justify-content: flex-start; }
+
+.vtai-bubble {
+  max-width: 92%;
+  padding: .65rem .9rem;
+  border-radius: 12px;
+  font-size: .85rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+.vtai-user .vtai-bubble {
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.vtai-bot .vtai-bubble {
+  background: var(--darker);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  border-bottom-left-radius: 4px;
+}
+.vtai-bubble p { margin: 0 0 .5rem 0; }
+.vtai-bubble p:last-child { margin-bottom: 0; }
+.vtai-bubble ul { margin: .4rem 0; padding-left: 1.2rem; }
+.vtai-bubble li { margin: .2rem 0; }
+.vtai-bubble strong { color: var(--cyan); }
+.vtai-bubble code {
+  background: rgba(0,102,255,0.1);
+  color: var(--purple);
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: .8em;
+}
+.vtai-bubble pre {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: .75rem;
   overflow-x: auto;
-  flex-shrink: 0;
-  border-top: 1px solid var(--card-border);
+  font-size: .78rem;
+  line-height: 1.5;
+  margin: .5rem 0;
 }
-#vtai-chips::-webkit-scrollbar { height: 4px; }
+.vtai-bubble pre code {
+  background: none;
+  padding: 0;
+  color: #c9d1d9;
+  font-size: inherit;
+}
 
-#vtai-inputarea {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid var(--card-border);
+#vtai-footer {
   display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
+  gap: .5rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--card-border);
   background: var(--darker);
 }
 #vtai-input {
@@ -1359,141 +1429,173 @@ html, body {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: 10px;
-  padding: 0.6rem 0.9rem;
+  padding: .55rem .8rem;
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: .85rem;
   outline: none;
-  font-family: inherit;
 }
 #vtai-input:focus { border-color: var(--primary); }
 #vtai-input::placeholder { color: var(--text-muted); }
-
 #vtai-send {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--purple));
   border: none;
-  color: white;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
-  flex-shrink: 0;
+  transition: transform .15s;
 }
-#vtai-send:hover { background: var(--primary-dark); }
+#vtai-send:hover { transform: scale(1.05); }
 
-.vtai-user {
-  align-self: flex-end;
-  max-width: 85%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  border-radius: 14px;
-  border-bottom-right-radius: 4px;
-  padding: 0.75rem 1rem;
-  word-wrap: break-word;
-  line-height: 1.5;
-  font-size: 0.9rem;
-}
-.vtai-bot {
-  align-self: flex-start;
-  max-width: 90%;
-  background: var(--darker);
-  color: var(--text);
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  border-bottom-left-radius: 4px;
-  padding: 0.75rem 1rem;
-  word-wrap: break-word;
-  line-height: 1.6;
-  font-size: 0.9rem;
-}
-.vtai-bot strong { color: var(--cyan); }
-.vtai-bot ul, .vtai-bot ol { margin: 0.4rem 0; padding-left: 1.2rem; }
-.vtai-bot li { margin-bottom: 0.25rem; }
-.vtai-bot code {
-  background: rgba(0,0,0,0.25);
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.82rem;
-  color: var(--cyan);
+#vtai-typing .vtai-bubble {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: .4rem .9rem;
 }
 
-.vtai-chip {
-  white-space: nowrap;
-  padding: 0.4rem 0.8rem;
-  background: rgba(0,102,255,0.1);
-  border: 1px solid rgba(0,102,255,0.25);
-  color: var(--cyan);
-  border-radius: 100px;
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex-shrink: 0;
-  font-family: inherit;
+@media (max-width: 480px) {
+  #vtai-chat { width: 100%; right: 0; bottom: 0; max-height: 100vh; border-radius: 16px 16px 0 0; }
+  #vtai-launcher { right: 16px; bottom: 16px; }
 }
-.vtai-chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-.vtai-typing {
-  align-self: flex-start;
-  display: flex;
-  gap: 4px;
-  padding: 0.6rem 1rem;
-}
-.vtai-typing span {
-  width: 6px;
-  height: 6px;
-  background: var(--text-muted);
-  border-radius: 50%;
-  animation: vtai-bounce 1.2s infinite ease-in-out;
-}
-.vtai-typing span:nth-child(2) { animation-delay: 0.15s; }
-.vtai-typing span:nth-child(3) { animation-delay: 0.3s; }
-@keyframes vtai-bounce {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-  40% { transform: scale(1); opacity: 1; }
-}
+/* ============================================
+   MOBILE SETTINGS DRAWER — keeps chatbot clear
+   ============================================ */
 
 @media (max-width: 768px) {
-  #vtai-box {
-    bottom: 0 !important;
-    right: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 85vh !important;
-    max-height: 85vh !important;
-    border-radius: 16px 16px 0 0 !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-bottom: none !important;
+  /* Gear button inside section-tabs */
+  .mobile-settings-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--darker);
+    border: 1px solid var(--card-border);
+    color: var(--cyan);
+    font-size: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 0.25rem;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.15);
   }
-  #vtai-fab {
-    bottom: 90px !important;
-    right: 15px !important;
-    width: 50px !important;
-    height: 50px !important;
-    font-size: 1.2rem !important;
+  .mobile-settings-toggle:active {
+    transform: scale(0.92);
   }
-  #bookmarkBtnTop, #notesBtnTop {
-    position: fixed !important;
-    bottom: auto !important;
-    left: auto !important;
+  .main-nav.settings-open .mobile-settings-toggle {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
   }
-  #bookmarkBtnTop { top: 90px !important; right: 15px !important; }
-  #notesBtnTop   { top: 150px !important; right: 15px !important; }
-  #bookmarkPanel, #notesPanel {
-    position: fixed !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: 15px !important;
-    width: calc(100vw - 30px) !important;
-    max-width: 320px !important;
+
+  /* Default: hide the control row (overrides earlier mobile-nav-fix) */
+  .main-nav:not(.settings-open) > .nav-right {
+    display: none !important;
   }
-  #bookmarkPanel { top: 150px !important; }
-  #notesPanel    { top: 210px !important; }
+
+  /* Open: nav-right becomes a slide-up drawer above the bottom bar */
+  .main-nav.settings-open > .nav-right {
+    display: flex !important;
+    position: fixed;
+    bottom: calc(58px + env(safe-area-inset-bottom));
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px 16px 0 0;
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+    z-index: 2500;
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    animation: drawerUp 0.25s ease-out;
+  }
+
+  @keyframes drawerUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+
+  /* Drawer internals */
+  .main-nav.settings-open .nav-right .search-bar {
+    position: relative;
+    width: 100%;
+  }
+  .main-nav.settings-open .nav-right .search-bar input {
+    width: 100%;
+  }
+  .main-nav.settings-open .nav-right .search-results {
+    position: static;
+    width: 100%;
+    margin-top: 0.5rem;
+    max-height: 180px;
+    box-shadow: none;
+    border: 1px solid var(--card-border);
+  }
+  .main-nav.settings-open .nav-right .accessibility-controls {
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+    padding: 0.25rem 0;
+  }
+  .main-nav.settings-open .nav-right .accessibility-controls input[type="range"] {
+    flex: 1;
+  }
+  .main-nav.settings-open .nav-right .theme-switcher {
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+  }
+  .main-nav.settings-open .nav-right .theme-btn {
+    width: 32px;
+    height: 32px;
+  }
+  .main-nav.settings-open .nav-right .nav-progress {
+    display: none !important;
+  }
+  .main-nav.settings-open .nav-right > .three-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+
+  /* Chatbot: sit above the minimal bottom bar */
+  #vtai-launcher {
+    bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    z-index: 9999;
+  }
+  #vtai-chat {
+    bottom: calc(130px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    max-height: calc(100vh - 160px - env(safe-area-inset-bottom));
+    z-index: 9998;
+  }
+
+  /* Move top-right floating buttons to left side on mobile so they don't fight chatbot */
+  #bookmarkBtnTop,
+  #notesBtnTop {
+    right: auto !important;
+    left: 12px !important;
+  }
+  #bookmarkPanel,
+  #notesPanel {
+    right: auto !important;
+    left: 12px !important;
+  }
 }
 </style>
 
@@ -1514,6 +1616,9 @@ html, body {
   <div class="section-tabs">
     <button class="section-tab active" onclick="switchMainSection('can')" id="tab-can">CAN Masterclass</button>
     <button class="section-tab" onclick="switchMainSection('ws')" id="tab-ws">Test Workstation</button>
+    <button class="mobile-settings-toggle" onclick="toggleMobileSettings()" aria-label="Settings">
+      <i class="fa-solid fa-gear"></i>
+    </button>
   </div>
   <div class="nav-right">
     <!-- Search -->
@@ -6475,6 +6580,30 @@ if (document.readyState === 'loading') {
 } else {
   initApp();
 }
+/* ----- Mobile Settings Drawer ----- */
+function toggleMobileSettings() {
+  document.getElementById('mainNav').classList.toggle('settings-open');
+}
+
+// Close drawer when tapping outside it
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('mainNav');
+  if (!nav || !nav.classList.contains('settings-open')) return;
+  if (!e.target.closest('.nav-right') && !e.target.closest('.mobile-settings-toggle')) {
+    nav.classList.remove('settings-open');
+  }
+});
+
+// Close drawer on scroll (optional UX polish)
+let drawerScrollTimer;
+window.addEventListener('scroll', function() {
+  const nav = document.getElementById('mainNav');
+  if (!nav || !nav.classList.contains('settings-open')) return;
+  clearTimeout(drawerScrollTimer);
+  drawerScrollTimer = setTimeout(function() {
+    nav.classList.remove('settings-open');
+  }, 800);
+}, { passive: true });
 </script>
 <!-- Module Jump Dialog -->
 <div id="module-dialog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;justify-content:center;align-items:center;padding:2rem;">
@@ -6698,174 +6827,718 @@ padding-bottom: 5.5rem !important;
 /* 3. Force 3D panel to viewport */
 }
 </style>
-
-</body>
-</html>
-<script>
-  /* ========== VARIOTECH AI CHATBOT ========== */
-  
-  var VTAI_KB = [
-    {kw:['can bus','what is can','controller area network','can_h','can_l','two wires'],r:"CAN Bus is the communication backbone of modern elevators. All devices share just two twisted wires (CAN_H and CAN_L).\n\n- Differential signaling: Electrical noise cancels out because both wires are affected equally.\n- Arbitration: Lower message IDs always win when two devices talk at once.\n- Error detection: Every message includes a CRC checksum; corrupted frames are caught automatically.\n\nUse 125 kbps for long shafts (>50 m) and 250 kbps for standard buildings."},
-    {kw:['cia 301','canopen','application layer','object dictionary','od','nmt','pdo','sdo','heartbeat'],r:"CiA 301 is the core CANopen standard. It defines:\n\n- Object Dictionary: A numbered phone book of every parameter in a device.\n- NMT: Network Management states (Initializing, Pre-Operational, Operational, Stopped).\n- PDO: Fast, real-time process data (position, speed, status).\n- SDO: Slower, confirmed service data for configuration.\n- Heartbeat: Regular proof of life messages every 100-500 ms."},
-    {kw:['cia 306','safety','safety profile','crc-32','sequence counter','dual channel','watchdog','safe state'],r:"CiA 306 handles safety-critical communication in elevators.\n\n- Sequence Counter: Incrementing number in every safety message so missed messages are detected.\n- CRC-32: 32-bit checksum ensures not a single bit is corrupted unnoticed.\n- Safety Timeout: If no safety message arrives within ~50-200 ms, the system enters safe state immediately.\n- Dual-Channel Redundancy: Two independent CAN channels must agree; disagreement = safe state.\n\nSilence is treated as danger - this is called fail-safe design."},
-    {kw:['cia 406','sensor','actuator','door','limit switch','call button','input','output','digital'],r:"CiA 406 standardizes sensors and actuators for elevators:\n\n- Door controllers, limit switches, call buttons, and load weighers.\n- Digital inputs mapped to 0x6000 and outputs to 0x6200 in the Object Dictionary.\n- Any brand CiA 406 device works with any CiA 417 controller."},
-    {kw:['cia 407','encoder','position','feedback','resolution','ppr','counts'],r:"CiA 407 defines encoder communication for precise motor position feedback.\n\n- Position actual value lives at Object Dictionary index 0x6064.\n- Velocity is at 0x606C.\n- Resolution (pulses per revolution) is at 0x608F.\n\nThis enables floor-leveling accuracy of +/-3 mm."},
-    {kw:['node id','nodeid','cob-id','address','assignment','floor 1','0x01','0x11'],r:"CiA 417 assigns standard Node IDs so devices from different manufacturers interoperate:\n\n- Car Controller: 0x01\n- Door System: 0x02\n- Call Buttons: 0x03\n- VFD Drive: 0x0B\n- Encoder: 0x05\n- Landing Panels: 0x11 + floor number (e.g., Floor 1 = 0x11)\n- Safety PLC: 0x7F\n\nCOB-ID formulas: TPDO = 0x180 + Node ID, RPDO = 0x200 + Node ID, SDO Rx = 0x600 + Node ID."},
-    {kw:['termination','120 ohm','60 ohm','resistor','terminate','bus load'],r:"A healthy CAN bus needs 120 ohm termination resistors at both physical ends.\n\n- Power off the bus and measure resistance between CAN_H and CAN_L.\n- ~60 ohm = correct (two 120 ohm in parallel).\n- 120 ohm = one missing terminator.\n- Infinity = both missing or a cable break.\n- 0 ohm = short circuit between CAN_H and CAN_L."},
-    {kw:['troubleshoot','no communication','intermittent','error frame','bus off','debug'],r:"Follow this order when CAN bus fails:\n\n1. Check termination resistors (~60 ohm with power off).\n2. Verify all nodes use the same baud rate.\n3. Check for duplicate Node IDs.\n4. Inspect cable quality (twisted pair, shielded in noisy areas).\n5. Keep stubs under 30 cm; use daisy chain, not star topology.\n6. Ground the shield at one end only (controller side)."},
-    {kw:['emc','emi','noise','interference','shield','grounding','electromagnetic'],r:"Elevators are electrically noisy. Protect your CAN bus:\n\n- Use shielded twisted pair cable with 120 ohm impedance.\n- Maintain >30 cm separation from VFD motor cables.\n- Ground the shield at one end only to avoid ground loops.\n- Add common-mode chokes on nodes in high-EMI areas.\n- Keep stub lengths <30 cm."},
-    {kw:['en 81-20','en 81-50','ucm','unintended car movement','overspeed','safety gear','sil'],r:"EN 81-20 / EN 81-50 define elevator safety testing:\n\n- UCM: Detect within 150-200 mm; stop within 1,200 mm.\n- Overspeed: Governor triggers at 115% rated speed.\n- SIL: Safety circuits require SIL 1-3 depending on risk.\n- 10 drop tests required: 5 empty car up, 5 rated load down."},
-    {kw:['test workstation','equipment','multimeter','oscilloscope','power supply','soldering','tools'],r:"The Variotech Test Workstation includes:\n\n- Essential: Fluke 87V multimeter, 4-ch oscilloscope, bench power supply, CAN interface, ESD mat.\n- Recommended: Function generator, LCR meter, linear test rail.\n- Safety: Isolation transformer, 30 mA RCD, common earth bar <0.1 ohm.\n\nSwitch to the Test Workstation tab for the full interactive equipment guide."},
-    {kw:['boot up','boot-up','initialization','sequence','startup','pre-operational','operational'],r:"CANopen boot-up sequence:\n\n1. Node powers on and runs POST (self-test).\n2. Node sends boot-up message (COB-ID 0x700+ID, data 0x00).\n3. Node enters Pre-Operational state automatically.\n4. Master reads Object Dictionary and writes configuration via SDO.\n5. Master sends NMT Start (0x01, 0x00) to all nodes.\n6. All nodes enter Operational and begin PDOs."},
-    {kw:['eds','electronic data sheet','configuration file','ini','canopen node'],r:"An EDS file (Electronic Data Sheet) is an INI-format file describing a device's Object Dictionary.\n\n- Configuration tools read it to show human-readable parameter names.\n- It defines data types, limits, defaults, and PDO mappability.\n- Always keep EDS files version-matched to firmware."},
-    {kw:['hello','hi','hey','greetings','start','help'],r:"Hello! I am your Variotech Engineering Assistant. Ask me about:\n\n- CAN bus basics\n- CiA 301, 306, 406, or 407 protocols\n- Node IDs or COB-ID formulas\n- Termination and troubleshooting\n- EN 81-20 safety requirements\n- Test workstation equipment\n\nOr click a quick chip below."}
-  ];
-  
-  var VTAI_CHIPS = [
-    'What is CAN bus?',
-    'CiA 306 safety?',
-    'Node IDs?',
-    'Termination?',
-    'Troubleshoot?',
-    'EN 81-20?'
-  ];
-  
-  function vtaiMd2html(t){
-    t = t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    t = t.replace(/\n\n/g,'</p><p>');
-    t = t.replace(/\n- /g,'</li><li>');
-    t = t.replace(/\n\d+\. /g,'</li><li>');
-    t = '<p>' + t + '</p>';
-    t = t.replace(/<<p><\/li><li>/g,'<<ul><li>');
-    t = t.replace(/<<li>([^<<]*)<<\/p>/g,'<<li>$1</li></ul>');
-    t = t.replace(/<<p><li>/g,'<<ul><li>');
-    t = t.replace(/<<\/li><\/p>/g,'</li></ul>');
-    t = t.replace(/<<p><\/p>/g,'');
-    return t;
-  }
-  
-  function vtaiAppend(html, who){
-    var box = document.getElementById('vtai-messages');
-    if(!box) return;
-    var d = document.createElement('div');
-    d.className = who === 'user' ? 'vtai-user' : 'vtai-bot';
-    d.innerHTML = html;
-    box.appendChild(d);
-    box.scrollTop = box.scrollHeight;
-  }
-  
-  function vtaiShowTyping(){
-    var box = document.getElementById('vtai-messages');
-    if(!box) return '';
-    var id = 'vtai-typing-' + Date.now();
-    var d = document.createElement('div');
-    d.id = id;
-    d.className = 'vtai-bot vtai-typing';
-    d.innerHTML = '<span></span><span></span><span></span>';
-    box.appendChild(d);
-    box.scrollTop = box.scrollHeight;
-    return id;
-  }
-  
-  function vtaiRemoveTyping(id){
-    var el = document.getElementById(id);
-    if(el) el.remove();
-  }
-  
-  function vtaiFindAnswer(query){
-    var q = query.toLowerCase();
-    for(var i = 0; i < VTAI_KB.length; i++){
-      for(var k = 0; k < VTAI_KB[i].kw.length; k++){
-        if(q.indexOf(VTAI_KB[i].kw[k]) !== -1) return vtaiMd2html(VTAI_KB[i].r);
-      }
-    }
-    return vtaiMd2html('I do not have a specific answer for that yet. Try asking about CAN bus, CiA protocols, Node IDs, termination, troubleshooting, or EN 81-20 safety.');
-  }
-  
-  function vtaiRenderChips(){
-    var c = document.getElementById('vtai-chips');
-    if(!c) return;
-    var html = '';
-    for(var i = 0; i < VTAI_CHIPS.length; i++){
-      html += '<button class="vtai-chip">' + VTAI_CHIPS[i] + '</button>';
-    }
-    c.innerHTML = html;
-  }
-  
-  // Event delegation for chip clicks
-  document.addEventListener('click', function(e){
-    if(e.target.classList.contains('vtai-chip')){
-      vtaiChip(e.target.textContent);
-    }
-  });
-  
-  function vtaiToggle(){
-    var box = document.getElementById('vtai-box');
-    if(!box) return;
-    var open = box.classList.toggle('show');
-    if(open){
-      var inp = document.getElementById('vtai-input');
-      if(inp) inp.focus();
-      if(!box.dataset.greeted){
-        box.dataset.greeted = '1';
-        setTimeout(function(){
-          vtaiAppend(vtaiFindAnswer('hello'), 'bot');
-          vtaiRenderChips();
-        }, 300);
-      }
-    }
-  }
-  
-  function vtaiSend(){
-    var inp = document.getElementById('vtai-input');
-    if(!inp) return;
-    var text = inp.value.trim();
-    if(!text) return;
-    inp.value = '';
-    vtaiAppend(text, 'user');
-    var tid = vtaiShowTyping();
-    var ans = vtaiFindAnswer(text);
-    setTimeout(function(){
-      vtaiRemoveTyping(tid);
-      vtaiAppend(ans, 'bot');
-      vtaiRenderChips();
-    }, 500 + Math.random() * 400);
-  }
-  
-  function vtaiChip(text){
-    vtaiAppend(text, 'user');
-    var tid = vtaiShowTyping();
-    var ans = vtaiFindAnswer(text);
-    setTimeout(function(){
-      vtaiRemoveTyping(tid);
-      vtaiAppend(ans, 'bot');
-      vtaiRenderChips();
-    }, 400 + Math.random() * 300);
-  }
-  
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', vtaiRenderChips);
-  } else {
-    vtaiRenderChips();
-  }
-  console.log('Variotech AI Chatbot loaded');
-  /* ========== END CHATBOT ========== */
-  </script>
-
-<!-- ========== VARIOTECH AI CHATBOT ========== -->
-<button id="vtai-fab" onclick="vtaiToggle()" title="Ask Variotech AI" aria-label="Open chatbot">
-  <i class="fa-solid fa-robot"></i>
-</button>
-<div id="vtai-box" role="dialog" aria-label="Variotech AI chat">
+<div id="vtai-chat">
   <div id="vtai-header">
     <div id="vtai-title"><i class="fa-solid fa-robot"></i><span>Variotech AI</span></div>
-    <button id="vtai-close" onclick="vtaiToggle()" aria-label="Close chatbot"><i class="fa-solid fa-xmark"></i></button>
+    <div style="display:flex;align-items:center;">
+      <button id="vtai-lang" onclick="vtaiSwitchLang()" title="Switch Language">EN</button>
+      <button id="vtai-close" onclick="vtaiToggle()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
   </div>
-  <div id="vtai-messages"></div>
-  <div id="vtai-chips"></div>
-  <div id="vtai-inputarea">
-    <input type="text" id="vtai-input" placeholder="Ask about CAN, CiA, elevators..." onkeydown="if(event.key==='Enter')vtaiSend()" aria-label="Chat input">
-    <button id="vtai-send" onclick="vtaiSend()" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button>
+  <div id="vtai-body">
+    <div class="vtai-msg vtai-bot">
+      <div class="vtai-bubble">
+        <p>I have read this entire page. Ask me anything:</p>
+        <ul>
+          <li><em>"Show me the CAN init code"</em></li>
+          <li><em>"What fn handles the OD?"</em></li>
+          <li><em>"Obj dic 0x6064"</em></li>
+          <li><em>"Module 3"</em></li>
+          <li><em>"CRC32 function"</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="vtai-footer">
+    <input type="text" id="vtai-input" placeholder="Ask about content on this page..." autocomplete="off" />
+    <button id="vtai-send" onclick="vtaiSend()" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button>
   </div>
 </div>
-<!-- ========== END CHATBOT ========== -->
+
+<button id="vtai-launcher" onclick="vtaiToggle()" aria-label="Open chat"><i class="fa-solid fa-robot"></i></button>
+
+<script>
+/* ===== VARIOTECH AI CHATBOT ENGINE v2 ===== */
+/* ===== VARIOTECH AI CHATBOT ENGINE v3 (Bilingual EN/DE) ===== */
+(function() {
+  'use strict';
+
+  /* ---------- 0. I18N STRINGS ---------- */
+  const LANG = {
+    en: {
+      greeting: "👋 <strong>Variotech AI</strong> is online!<br><br>{context}I understand typos, abbreviations, and shorthand. Ask me anything!<br><br><strong>Examples:</strong> <code>OD mapping</code>, <code>CiA 306 safety</code>, <code>termination resistor</code>, <code>fn for heartbeat</code>, <code>UCM limit</code>, <code>EMC test</code>, <code>node id table</code>",
+      placeholder: "Ask about content on this page…",
+      searching: "🔍 Searching page content for best match…",
+      noResults: `<p>I couldn't find a direct match for "<strong>{q}</strong>" on the current page section.</p><p><strong>Try rephrasing with keywords like:</strong></p><ul><li><code>CAN bus</code>, <code>termination</code>, <code>baud rate</code></li><li><code>CiA 301</code>, <code>CiA 306</code>, <code>CiA 406/407/417</code></li><li><code>Object Dictionary</code>, <code>PDO</code>, <code>SDO</code>, <code>NMT</code>, <code>heartbeat</code></li><li><code>safety</code>, <code>UCM</code>, <code>EN 81-20</code>, <code>overspeed</code></li><li><code>test equipment</code>, <code>oscilloscope</code>, <code>multimeter</code></li></ul><p><em>Tip: I understand abbreviations like <code>OD</code>, <code>fn</code>, <code>EMC</code>, <code>EMI</code>, <code>EDS</code>, and even typos!</em></p>`,
+      sections: "📌 Relevant Sections:",
+      code: "💻 Code & Registers:",
+      details: "📝 Details:",
+      seeGuide: "See the step-by-step guide in the <strong>{h}</strong> section above.",
+      langLabel: "EN"
+    },
+    de: {
+      greeting: "👋 <strong>Variotech AI</strong> ist online!<br><br>{context}Ich verstehe Tippfehler, Abkürzungen und Kurzformen. Fragen Sie mich einfach!<br><br><strong>Beispiele:</strong> <code>OD Mapping</code>, <code>CiA 306 Sicherheit</code>, <code>Abschlusswiderstand</code>, <code>fn für Heartbeat</code>, <code>UCM Grenzwert</code>, <code>EMC Test</code>, <code>Node-ID Tabelle</code>",
+      placeholder: "Fragen Sie den Seiteninhalt…",
+      searching: "🔍 Durchsuche Seiteninhalt nach bester Übereinstimmung…",
+      noResults: `<p>Ich konnte keine direkte Übereinstimmung für „<<strong>{q}</strong>“ auf der aktuellen Seite finden.</p><p><strong>Versuchen Sie es mit Stichworten wie:</strong></p><ul><li><code>CAN-Bus</code>, <code>Abschlusswiderstand</code>, <code>Baudrate</code></li><li><code>CiA 301</code>, <code>CiA 306</code>, <code>CiA 406/407/417</code></li><li><code>Object Dictionary</code>, <code>PDO</code>, <code>SDO</code>, <code>NMT</code>, <code>Heartbeat</code></li><li><code>Sicherheit</code>, <code>UCM</code>, <code>EN 81-20</code>, <code>Übergeschwindigkeit</code></li><li><code>Prüfmittel</code>, <code>Oszilloskop</code>, <code>Multimeter</code></li></ul><p><em>Tipp: Ich verstehe Abkürzungen wie <code>OD</code>, <code>fn</code>, <code>EMC</code>, <code>EMI</code>, <code>EDS</code> und sogar Tippfehler!</em></p>`,
+      sections: "📌 Relevante Abschnitte:",
+      code: "💻 Code & Register:",
+      details: "📝 Details:",
+      seeGuide: "Siehe die Schritt-für-Schritt-Anleitung im Abschnitt <strong>{h}</strong> oben.",
+      langLabel: "DE"
+    }
+  };
+
+  let currentLang = 'en';
+
+  function t(key, vars) {
+    let s = LANG[currentLang][key] || LANG.en[key] || key;
+    if (vars) {
+      Object.keys(vars).forEach(k => { s = s.replace(new RegExp('{' + k + '}', 'g'), vars[k]); });
+    }
+    return s;
+  }
+
+  /* ---------- 1. SYNONYM & ABBREVIATION DICTIONARY (EN + DE) ---------- */
+  const SYNONYMS = {
+    // English
+    'can': 'can bus controller area network',
+    'canbus': 'can bus',
+    'bus': 'can bus network',
+    'network': 'can bus network',
+    'msg': 'message',
+    'msgs': 'messages',
+    'frame': 'can frame message',
+    'packet': 'message packet',
+    'signal': 'can signal',
+    'arb': 'arbitration priority id',
+    'id': 'identifier node id',
+    'node': 'node id',
+    'nodeid': 'node id',
+    'cob': 'cob-id communication object',
+    'cobid': 'cob-id',
+    'baud': 'baud rate bitrate speed',
+    'bitrate': 'baud rate',
+    'speed': 'baud rate velocity',
+    'wire': 'wiring cable physical layer',
+    'cable': 'wiring cable',
+    'term': 'termination resistor',
+    'terminator': 'termination resistor 120 ohm',
+    'resistor': 'termination resistor',
+    'ohm': 'resistance termination',
+    'stub': 'stub length wiring',
+    'shield': 'shield grounding emi',
+    'ground': 'grounding earth',
+    'emc': 'emc electromagnetic compatibility',
+    'emi': 'emi electromagnetic interference noise',
+    'noise': 'emi interference',
+    'impedance': 'impedance 120 ohm characteristic',
+    'cia': 'cia can in automation',
+    'cia301': 'cia 301 canopen application layer',
+    'cia306': 'cia 306 safety profile',
+    'cia406': 'cia 406 sensors actuators io',
+    'cia407': 'cia 407 encoder position',
+    'cia417': 'cia 417 lift elevator profile',
+    'canopen': 'canopen cia 301',
+    'profile': 'device profile cia',
+    'standard': 'standard protocol cia',
+    'protocol': 'protocol cia canopen',
+    'od': 'object dictionary',
+    'obj': 'object',
+    'objdic': 'object dictionary',
+    'obj dic': 'object dictionary',
+    'objectdict': 'object dictionary',
+    'dictionary': 'object dictionary',
+    'index': 'object dictionary index subindex',
+    'subindex': 'subindex object dictionary',
+    'sub': 'subindex',
+    'entry': 'object dictionary entry',
+    'eds': 'eds electronic data sheet',
+    'map': 'mapping pdo mapping',
+    'mapping': 'pdo mapping parameter',
+    'pdo': 'pdo process data object',
+    'rpdo': 'rpdo receive pdo',
+    'tpdo': 'tpdo transmit pdo',
+    'sdo': 'sdo service data object',
+    'upload': 'sdo upload read',
+    'download': 'sdo download write',
+    'nmt': 'nmt network management state',
+    'state': 'nmt state operational pre-operational',
+    'boot': 'boot-up initializing startup',
+    'bootup': 'boot-up',
+    'heartbeat': 'heartbeat node guarding life guard',
+    'beat': 'heartbeat',
+    'guard': 'node guarding heartbeat',
+    'emcy': 'emcy emergency object',
+    'emergency': 'emergency emcy safety',
+    'sync': 'synchronization sync object',
+    'lss': 'lss layer setting services node id configuration',
+    'config': 'configuration configure parameter',
+    'fn': 'function',
+    'func': 'function',
+    'function': 'function code implementation',
+    'void': 'function void return',
+    'init': 'initialization setup begin start',
+    'setup': 'initialization setup',
+    'start': 'start operational boot',
+    'stop': 'stop stopped emergency',
+    'reset': 'reset node reboot',
+    'code': 'code example implementation',
+    'example': 'example code',
+    'impl': 'implementation',
+    'handler': 'handler function callback',
+    'callback': 'callback handler',
+    'struct': 'structure data struct',
+    'enum': 'enumeration enum state',
+    'safety': 'safety cia 306 en 81 protection',
+    'safe': 'safety safe state',
+    'ucm': 'ucm unintended car movement',
+    'overspeed': 'overspeed governor speed',
+    'governor': 'overspeed governor',
+    'brake': 'brake emergency stop',
+    'door': 'door system interlock',
+    'interlock': 'door interlock safety',
+    'edge': 'safety edge light curtain',
+    'curtain': 'light curtain door',
+    'obstruction': 'obstruction door blocked',
+    'blocked': 'obstruction blocked door',
+    'en81': 'en 81 standard',
+    'en8120': 'en 81-20',
+    'en8150': 'en 81-50',
+    'iso22201': 'iso 22201',
+    'iec61508': 'iec 61508 sil',
+    'sil': 'sil safety integrity level',
+    'crc': 'crc checksum cyclic redundancy check',
+    'checksum': 'crc checksum',
+    'sequence': 'sequence counter safety',
+    'timeout': 'timeout watchdog safety',
+    'watchdog': 'watchdog timeout',
+    'fail': 'fail safe failure',
+    'failsafe': 'fail-safe safe state',
+    'redundancy': 'redundancy dual channel',
+    'vfd': 'vfd drive motor inverter',
+    'drive': 'vfd drive motor',
+    'motor': 'motor vfd drive',
+    'encoder': 'encoder position feedback cia 407',
+    'position': 'encoder position floor leveling',
+    'leveling': 'leveling floor position accuracy',
+    'display': 'floor display indicator',
+    'button': 'call button landing panel',
+    'panel': 'call panel landing button',
+    'controller': 'car controller master',
+    'master': 'master controller',
+    'slave': 'slave node device',
+    'plc': 'safety plc programmable logic controller',
+    'sensor': 'sensor switch limit',
+    'switch': 'limit switch sensor',
+    'limit': 'limit switch top bottom',
+    'test': 'testing test procedure compliance',
+    'compliance': 'compliance test standard',
+    'calibration': 'calibration adjust',
+    'fixture': 'test fixture setup',
+    'equipment': 'equipment tool instrument',
+    'tool': 'tool equipment',
+    'instrument': 'instrument equipment',
+    'scope': 'oscilloscope',
+    'oscilloscope': 'oscilloscope scope',
+    'multi': 'multimeter meter',
+    'meter': 'multimeter',
+    'supply': 'power supply',
+    'psu': 'power supply',
+    'rail': 'din rail test rack',
+    'rack': 'test rack 19 inch',
+    'esd': 'esd electrostatic discharge',
+    'mat': 'anti-static mat esd',
+    'solder': 'soldering station rework',
+    'rework': 'hot air rework soldering',
+    'what': 'what is explain definition',
+    'how': 'how to procedure steps',
+    'why': 'why reason explanation',
+    'when': 'when timing time',
+    'where': 'where location place',
+    'which': 'which selection choose',
+    'who': 'who responsible person',
+    'help': 'help assistance support',
+    'about': 'about information',
+    'info': 'information details',
+    'detail': 'details information',
+    'explain': 'explanation describe',
+    'meaning': 'meaning definition',
+    'def': 'definition',
+    'diff': 'difference versus compare',
+    'vs': 'versus comparison',
+    'compare': 'comparison difference',
+    'list': 'list inventory checklist',
+    'inventory': 'equipment inventory list',
+    'check': 'checklist check list',
+    'checklist': 'checklist procedure',
+    'print': 'print pdf checklist',
+    'pdf': 'print pdf document',
+    'table': 'table chart data',
+    'chart': 'chart graph diagram',
+    'diagram': 'diagram chart',
+    'fig': 'figure diagram',
+    'step': 'step procedure instruction',
+    'instruction': 'instruction step',
+    'guide': 'guide manual procedure',
+    'manual': 'manual guide',
+    'trouble': 'troubleshooting fault problem',
+    'fault': 'fault error problem troubleshooting',
+    'error': 'error fault problem',
+    'problem': 'problem fault error troubleshoot',
+    'fix': 'fix repair solution',
+    'repair': 'repair fix',
+    'solution': 'solution fix answer',
+    'answer': 'answer solution response',
+
+    // German
+    'canbus': 'can bus controller area network',
+    'knoten': 'node id',
+    'knotenid': 'node id',
+    'nodeid': 'node id',
+    'adresse': 'address node id',
+    'objekt': 'object dictionary',
+    'objektwörterbuch': 'object dictionary',
+    'wörterbuch': 'object dictionary',
+    'objektverzeichnis': 'object dictionary',
+    'verzeichnis': 'object dictionary',
+    'sicherheit': 'safety cia 306 en 81 protection',
+    'sicherheits': 'safety',
+    'aufzug': 'elevator lift',
+    'lift': 'elevator lift',
+    'fahrstuhl': 'elevator lift',
+    'geschwindigkeit': 'speed velocity baud rate',
+    'baudrate': 'baud rate bitrate speed',
+    'bitzeit': 'baud rate',
+    'datenrate': 'baud rate',
+    'leitung': 'wiring cable physical layer',
+    'kabel': 'wiring cable',
+    'abschluss': 'termination resistor',
+    'abschlusswiderstand': 'termination resistor 120 ohm',
+    'widerstand': 'termination resistor resistance',
+    'stummelleitung': 'stub length wiring',
+    'schirm': 'shield grounding emi',
+    'erdung': 'grounding earth',
+    'masse': 'grounding earth',
+    'elektromagnetisch': 'emc electromagnetic compatibility',
+    'störung': 'emi electromagnetic interference noise',
+    'störfestigkeit': 'emc immunity',
+    'impedanz': 'impedance 120 ohm characteristic',
+    'norm': 'standard protocol cia en',
+    'protokoll': 'protocol cia canopen',
+    'profil': 'device profile cia',
+    'index': 'object dictionary index subindex',
+    'unterindex': 'subindex object dictionary',
+    'eintrag': 'object dictionary entry',
+    'edsdatei': 'eds electronic data sheet',
+    'datei': 'file eds',
+    'zuordnung': 'mapping pdo mapping',
+    'abbildung': 'mapping pdo mapping',
+    'nachricht': 'message frame packet',
+    'botschaft': 'message frame packet',
+    'rahmen': 'can frame message',
+    'telegramm': 'message packet',
+    'priorität': 'arbitration priority id',
+    'schiedsrichter': 'arbitration',
+    'dominant': 'dominant recessive',
+    'rezessiv': 'dominant recessive',
+    'funktion': 'function code implementation',
+    'implementierung': 'implementation',
+    'beispiel': 'example code',
+    'quellcode': 'code example implementation',
+    'programm': 'code software',
+    'software': 'code software stack',
+    'initialisierung': 'initialization setup begin start',
+    'einrichtung': 'initialization setup',
+    'anfang': 'start operational boot',
+    'betrieb': 'operational running state',
+    'vorbetrieb': 'pre-operational configuration',
+    'gestoppt': 'stop stopped emergency',
+    'notaus': 'emergency stop safety',
+    'neustart': 'reset node reboot',
+    'rücksetzen': 'reset',
+    'zustand': 'state nmt status',
+    'status': 'state nmt status',
+    'zustandsautomat': 'state machine',
+    'zustandsmaschine': 'state machine',
+    'herzschlag': 'heartbeat node guarding life guard',
+    'lebenszeichen': 'heartbeat node guarding',
+    'überwachung': 'guard node guarding heartbeat',
+    'notfall': 'emergency emcy safety',
+    'synchronisation': 'synchronization sync object',
+    'konfiguration': 'configuration configure parameter',
+    'einstellung': 'configuration parameter',
+    'parameter': 'configuration parameter object dictionary',
+    'fehler': 'error fault problem troubleshooting',
+    'störung': 'fault error problem',
+    'problem': 'problem fault error troubleshoot',
+    'ausfall': 'failure fault error',
+    'diagnose': 'troubleshooting fault diagnosis',
+    'wartung': 'maintenance repair fix',
+    'reparatur': 'repair fix',
+    'lösung': 'solution fix answer',
+    'antwort': 'answer solution response',
+    'antriebsregelung': 'vfd drive motor inverter',
+    'frequenzumrichter': 'vfd drive motor inverter',
+    'motorsteuerung': 'vfd drive motor',
+    'motor': 'motor vfd drive',
+    'drehzahlgeber': 'encoder position feedback cia 407',
+    'geber': 'encoder sensor',
+    'position': 'encoder position floor leveling',
+    'nivellierung': 'leveling floor position accuracy',
+    'etagenanzeige': 'floor display indicator',
+    'anzeige': 'floor display indicator',
+    'taste': 'call button landing panel',
+    'rufknopf': 'call button landing panel',
+    'bedienfeld': 'call panel landing button',
+    'steuerung': 'car controller master control',
+    'sps': 'safety plc programmable logic controller',
+    'schalter': 'limit switch sensor',
+    'endschalter': 'limit switch top bottom',
+    'grenze': 'limit switch top bottom',
+    'prüfung': 'testing test procedure compliance',
+    'test': 'testing test procedure compliance',
+    'messung': 'measurement test instrument',
+    'prüfmittel': 'equipment tool instrument',
+    'werkzeug': 'tool equipment',
+    'instrument': 'instrument equipment',
+    'oszilloskop': 'oscilloscope scope',
+    'multimeter': 'multimeter meter',
+    'netzteil': 'power supply',
+    'stromversorgung': 'power supply',
+    'hutschiene': 'din rail test rack',
+    'schrank': 'test rack 19 inch',
+    'elektrostatisch': 'esd electrostatic discharge',
+    'entladung': 'esd discharge',
+    'löten': 'soldering station rework',
+    'lötstation': 'soldering station rework',
+    'rework': 'hot air rework soldering',
+    'nacharbeit': 'hot air rework soldering',
+    'was': 'what is explain definition',
+    'wie': 'how to procedure steps',
+    'warum': 'why reason explanation',
+    'wann': 'when timing time',
+    'wo': 'where location place',
+    'welche': 'which selection choose',
+    'wer': 'who responsible person',
+    'hilfe': 'help assistance support',
+    'info': 'information details',
+    'information': 'information details',
+    'erklärung': 'explanation describe',
+    'bedeutung': 'meaning definition',
+    'definition': 'definition meaning',
+    'unterschied': 'difference versus compare',
+    'vergleich': 'comparison difference',
+    'liste': 'list inventory checklist',
+    'inventar': 'equipment inventory list',
+    'inventur': 'equipment inventory list',
+    'checkliste': 'checklist procedure',
+    'drucken': 'print pdf checklist',
+    'tabelle': 'table chart data',
+    'diagramm': 'diagram chart',
+    'grafik': 'chart graph diagram',
+    'schritt': 'step procedure instruction',
+    'anleitung': 'instruction step guide manual',
+    'handbuch': 'manual guide',
+    'leitfaden': 'guide manual procedure',
+    'fehlersuche': 'troubleshooting fault problem',
+    'fehlerbehebung': 'troubleshooting fix repair',
+    'behebung': 'fix repair solution',
+    'reparatur': 'repair fix'
+  };
+
+  /* ---------- 2. LEVENSHTEIN (FUZZY) ENGINE ---------- */
+  function levenshtein(a, b) {
+    const m = a.length, n = b.length;
+    if (!m) return n; if (!n) return m;
+    const matrix = [];
+    for (let i = 0; i <= m; i++) { matrix[i] = [i]; }
+    for (let j = 0; j <= n; j++) { matrix[0][j] = j; }
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+      }
+    }
+    return matrix[m][n];
+  }
+
+  function fuzzyScore(query, text) {
+    if (!query || !text) return 0;
+    const q = query.toLowerCase().trim();
+    const t = text.toLowerCase();
+    if (!q || !t) return 0;
+
+    if (t === q) return 100;
+    if (t.includes(q)) return 80 + (q.length / t.length) * 20;
+
+    const words = t.split(/[\W_]+/).filter(w => w.length > 1);
+    for (const w of words) {
+      if (w === q) return 75;
+      if (w.startsWith(q)) return 60 + (q.length / w.length) * 15;
+    }
+
+    let best = 0;
+    for (const w of words) {
+      if (w.length < 3) continue;
+      const dist = levenshtein(q, w);
+      const maxLen = Math.max(q.length, w.length);
+      const sim = 1 - dist / maxLen;
+      if (sim > 0.75) best = Math.max(best, sim * 55);
+      else if (sim > 0.55 && q.length > 3) best = Math.max(best, sim * 35);
+    }
+
+    const initials = words.map(w => w[0]).join('');
+    if (initials.includes(q)) return 40;
+    if (q.length > 2) {
+      for (let i = 0; i <= initials.length - q.length; i++) {
+        if (levenshtein(q, initials.substring(i, i + q.length)) <= 1) return 35;
+      }
+    }
+    return best;
+  }
+
+  /* ---------- 3. QUERY EXPANSION ---------- */
+  function expandQuery(raw) {
+    let q = ' ' + raw.toLowerCase().trim() + ' ';
+    const multi = Object.keys(SYNONYMS).filter(k => k.includes(' ')).sort((a, b) => b.length - a.length);
+    for (const abbr of multi) {
+      const esc = abbr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      q = q.replace(new RegExp(' ' + esc + ' ', 'g'), ' ' + SYNONYMS[abbr] + ' ');
+    }
+    const single = Object.keys(SYNONYMS).filter(k => !k.includes(' '));
+    for (const abbr of single) {
+      const esc = abbr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      q = q.replace(new RegExp(' ' + esc + ' ', 'g'), ' ' + SYNONYMS[abbr] + ' ');
+    }
+    return q.trim();
+  }
+
+  /* ---------- 4. PAGE INDEXER ---------- */
+  let pageIndex = [];
+
+  function buildIndex() {
+    pageIndex = [];
+    const add = (type, text, el, weight, extra) => {
+      const t = text.replace(/\s+/g, ' ').trim();
+      if (t.length > 3) pageIndex.push({ type, text: t, element: el, weight: weight || 1, ...extra });
+    };
+
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => add('heading', el.textContent, el, 3));
+    document.querySelectorAll('.card p, .step-content p, .highlight-box p, .popup-section p, .scenario-subtitle, .step-simple-explanation p').forEach(el => add('paragraph', el.textContent, el, 1.2));
+    document.querySelectorAll('li').forEach(el => add('list', el.textContent, el, 1));
+    document.querySelectorAll('td, th').forEach(el => add('table', el.textContent, el, 0.9));
+
+    document.querySelectorAll('.code-body pre, .code-body code, .json-body pre').forEach(el => {
+      const full = el.textContent;
+      add('code', full, el, 1.5);
+      const lines = full.split('\n');
+      lines.forEach(line => {
+        line = line.trim();
+        if (line.length < 5) return;
+        const funcMatch = line.match(/(?:function|void|int|bool|float|static)\s+(?:\w+\s+)?(\w+)\s*\(/);
+        if (funcMatch) add('function', funcMatch[1] + ' function ' + line, el, 2.5, { code: line });
+        const hexMatches = line.match(/0x[0-9A-Fa-f]{4}/g);
+        if (hexMatches) hexMatches.forEach(h => add('hex', 'Object Dictionary ' + h + ' ' + line, el, 2, { code: line }));
+        if (line.startsWith('//') || line.startsWith('/*') || line.startsWith('*')) add('comment', line.replace(/^[/*\s]+/, ''), el, 1.3);
+      });
+    });
+
+    document.querySelectorAll('.badge, .glossary-term, .module-number').forEach(el => add('label', el.textContent, el, 1.4));
+  }
+
+  /* ---------- 5. SEARCH ENGINE ---------- */
+  function searchPage(rawQuery) {
+    if (!rawQuery || rawQuery.length < 2) return [];
+    const expanded = expandQuery(rawQuery);
+    const terms = expanded.split(/\s+/).filter(t => t.length > 1);
+    if (!terms.length) return [];
+
+    const scored = pageIndex.map(item => {
+      let score = fuzzyScore(expanded, item.text) * item.weight;
+      terms.forEach(term => { score += fuzzyScore(term, item.text) * item.weight * 0.4; });
+      const q = rawQuery.toLowerCase();
+      if (q.includes('how') && item.type === 'function') score *= 1.2;
+      if (q.includes('what') && item.type === 'heading') score *= 1.3;
+      if (q.includes('code') && (item.type === 'function' || item.type === 'code')) score *= 1.4;
+      if (q.includes('error') && item.text.toLowerCase().includes('error')) score *= 1.3;
+      if (q.includes('wie') && item.type === 'function') score *= 1.2;
+      if (q.includes('was') && item.type === 'heading') score *= 1.3;
+      if (q.includes('code') && (item.type === 'function' || item.type === 'code')) score *= 1.4;
+      if (q.includes('fehler') && item.text.toLowerCase().includes('error')) score *= 1.3;
+      return { item, score };
+    }).filter(r => r.score > 12);
+
+    scored.sort((a, b) => b.score - a.score);
+    const seen = new Set();
+    const out = [];
+    for (const r of scored) {
+      const key = r.item.text.slice(0, 90);
+      if (!seen.has(key)) { seen.add(key); out.push(r); }
+      if (out.length >= 10) break;
+    }
+    return out;
+  }
+
+  /* ---------- 6. RESPONSE GENERATOR ---------- */
+  function escapeHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function generateResponse(query, results) {
+    if (!results.length) {
+      return t('noResults', { q: escapeHtml(query) });
+    }
+
+    let html = `<p>${currentLang === 'de' ? 'Hier ist, was ich für' : 'Here is what I found for'} "<strong>${escapeHtml(query)}</strong>"${currentLang === 'de' ? ' gefunden habe' : ''}:</p>`;
+
+    const headings = results.filter(r => r.item.type === 'heading');
+    const functions = results.filter(r => r.item.type === 'function' || r.item.type === 'hex');
+    const codes = results.filter(r => r.item.type === 'code' && !functions.includes(r));
+    const paragraphs = results.filter(r => r.item.type === 'paragraph' || r.item.type === 'comment' || r.item.type === 'list');
+
+    if (headings.length) {
+      html += `<p><strong>${t('sections')}</strong></p><ul>`;
+      headings.slice(0, 4).forEach(r => {
+        html += `<li><strong style="color:var(--cyan);">${escapeHtml(r.item.text)}</strong></li>`;
+      });
+      html += `</ul>`;
+    }
+
+    if (functions.length || (query.toLowerCase().includes('code') && codes.length)) {
+      const codeItems = functions.length ? functions : codes;
+      html += `<p><strong>${t('code')}</strong></p>`;
+      codeItems.slice(0, 3).forEach(r => {
+        const snippet = escapeHtml((r.item.code || r.item.text).trim());
+        html += `<pre style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:0.6rem;margin:0.4rem 0;overflow-x:auto;font-size:0.75rem;line-height:1.4;"><code style="color:#c9d1d9;">${snippet}</code></pre>`;
+      });
+    }
+
+    if (paragraphs.length) {
+      html += `<p><strong>${t('details')}</strong></p>`;
+      paragraphs.slice(0, 4).forEach(r => {
+        let txt = r.item.text;
+        if (txt.length > 320) txt = txt.substring(0, 320) + '…';
+        html += `<p style="margin:0.35rem 0;padding:0.5rem 0.6rem;background:rgba(0,102,255,0.06);border-radius:6px;border-left:3px solid var(--primary);font-size:0.82rem;line-height:1.5;">${escapeHtml(txt)}</p>`;
+      });
+    }
+
+    if (query.toLowerCase().includes('how') && !paragraphs.length && headings.length) {
+      html += `<p><em>${t('seeGuide', { h: escapeHtml(headings[0].item.text) })}</em></p>`;
+    }
+    if ((query.toLowerCase().includes('wie') || query.toLowerCase().includes('wie kann')) && !paragraphs.length && headings.length) {
+      html += `<p><em>${t('seeGuide', { h: escapeHtml(headings[0].item.text) })}</em></p>`;
+    }
+
+    return html;
+  }
+
+  /* ---------- 7. CHAT UI ---------- */
+  const launcher = document.getElementById('vtai-launcher');
+  const chat = document.getElementById('vtai-chat');
+  const input = document.getElementById('vtai-input');
+  const body = document.getElementById('vtai-body');
+  const sendBtn = document.getElementById('vtai-send');
+  const closeBtn = document.getElementById('vtai-close');
+  const langBtn = document.getElementById('vtai-lang');
+
+  if (!launcher || !chat) return;
+
+  setTimeout(buildIndex, 800);
+
+  const observer = new MutationObserver(() => setTimeout(buildIndex, 600));
+  document.querySelectorAll('.section-container, .module-container, .ws-section').forEach(el => {
+    observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  function addUserMsg(text) {
+    const div = document.createElement('div');
+    div.className = 'vtai-msg vtai-user';
+    div.innerHTML = `<div class="vtai-bubble">${escapeHtml(text)}</div>`;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function addBotMsg(html) {
+    const div = document.createElement('div');
+    div.className = 'vtai-msg vtai-bot';
+    div.innerHTML = `<div class="vtai-bubble">${html}</div>`;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'vtai-msg vtai-bot';
+    div.id = 'vtai-typing';
+    div.innerHTML = `<div class="vtai-bubble"><em>${t('searching')}</em></div>`;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('vtai-typing');
+    if (t) t.remove();
+  }
+
+  function handleSend() {
+    const text = input.value.trim();
+    if (!text) return;
+    addUserMsg(text);
+    input.value = '';
+    showTyping();
+
+    setTimeout(() => {
+      removeTyping();
+      const results = searchPage(text);
+      const response = generateResponse(text, results);
+      addBotMsg(response);
+    }, 350 + Math.random() * 250);
+  }
+
+  function getContextHint() {
+    let hint = '';
+    const activeModule = document.querySelector('.module-container.active');
+    const activeWS = document.querySelector('.ws-section.active, #ws-section.active') || document.getElementById('ws-section')?.classList.contains('active');
+    if (activeWS) {
+      hint = currentLang === 'de' ? `Sie befinden sich aktuell im <strong>Test Workstation</strong>-Bereich. ` : `You are currently viewing the <strong>Test Workstation</strong> section. `;
+    } else if (activeModule) {
+      const heading = activeModule.querySelector('h2');
+      if (heading) {
+        hint = currentLang === 'de' ? `Sie sind in <strong>${escapeHtml(heading.textContent)}</strong>. ` : `You are in <strong>${escapeHtml(heading.textContent)}</strong>. `;
+      }
+    }
+    return hint;
+  }
+
+  function setLang(l) {
+    currentLang = l;
+    if (langBtn) langBtn.textContent = l.toUpperCase();
+    if (input) input.placeholder = t('placeholder');
+  }
+
+  if (langBtn) {
+    langBtn.addEventListener('click', () => {
+      setLang(currentLang === 'en' ? 'de' : 'en');
+    });
+  }
+
+  launcher.addEventListener('click', () => {
+    const isOpen = chat.classList.toggle('vtai-open');
+    if (isOpen && body.children.length === 0) {
+      const context = getContextHint();
+      addBotMsg(t('greeting', { context: context }));
+    }
+  });
+
+  closeBtn.addEventListener('click', () => chat.classList.remove('vtai-open'));
+  sendBtn.addEventListener('click', handleSend);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') handleSend(); });
+
+  // Initialize placeholder
+  if (input) input.placeholder = t('placeholder');
+
+})();
+</script>
